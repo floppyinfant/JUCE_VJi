@@ -14,22 +14,31 @@ cmake_minimum_required(VERSION 3.22)
 # `project()` command. `project()` sets up some helpful variables that describe source/binary
 # directories, and the current project version. This is a standard CMake command.
 
-project(VJi VERSION 0.0.1)
+project(VJi VERSION 0.1.0)
 
 # If you've installed JUCE somehow (via a package manager, or directly using the CMake install
 # target), you'll need to tell this project that it depends on the installed copy of JUCE. If you've
 # included JUCE directly in your source tree (perhaps as a submodule), you'll need to tell CMake to
 # include that subdirectory as part of the build.
 
+# fi:
+set(CMAKE_CXX_STANDARD 20)
+
+# ----------------------------------------------------------------------------
+
 # find_package(JUCE CONFIG REQUIRED)        # If you've installed JUCE to your system
 # or
-add_subdirectory("L:/WORKSPACES/AUDIO_WS/ALL_SDK/JUCE" JUCE)  # If you've put JUCE in a subdirectory called JUCE
+add_subdirectory(libs/juce)  # If you've put JUCE in a subdirectory called JUCE
+
+# ---
 
 # If you are building a VST2 or AAX plugin, CMake needs to be told where to find these SDKs on your
 # system. This setup should be done before calling `juce_add_plugin`.
 
 # juce_set_vst2_sdk_path(...)
 # juce_set_aax_sdk_path(...)
+
+# ----------------------------------------------------------------------------
 
 # `juce_add_plugin` adds a static library target with the name passed as the first argument
 # (VJi here). This target is a normal CMake target, but has a lot of extra properties set
@@ -41,18 +50,20 @@ juce_add_plugin(VJi
     # VERSION ...                               # Set this if the plugin version is different to the project version
     # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
     # ICON_SMALL ...
-    # COMPANY_NAME ...                          # Specify the name of the plugin's author
+    COMPANY_NAME floppyinfant                   # Specify the name of the plugin's author
     # IS_SYNTH TRUE/FALSE                       # Is this a synth or an effect?
     # NEEDS_MIDI_INPUT TRUE/FALSE               # Does the plugin need midi input?
     # NEEDS_MIDI_OUTPUT TRUE/FALSE              # Does the plugin need midi output?
     # IS_MIDI_EFFECT TRUE/FALSE                 # Is this plugin a MIDI effect?
     # EDITOR_WANTS_KEYBOARD_FOCUS TRUE/FALSE    # Does the editor need keyboard focus?
     # COPY_PLUGIN_AFTER_BUILD TRUE/FALSE        # Should the plugin be installed to a default location after building?
-    PLUGIN_MANUFACTURER_CODE Fiif               # A four-character manufacturer id with at least one upper-case character
-    PLUGIN_CODE VJi1                            # A unique four-character plugin id with exactly one upper-case character
+    PLUGIN_MANUFACTURER_CODE Flin               # A four-character manufacturer id with at least one upper-case character
+    PLUGIN_CODE Vji1                            # A unique four-character plugin id with exactly one upper-case character
                                                 # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
     FORMATS AU VST3 Standalone                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
     PRODUCT_NAME "VJi")                         # The name of the final executable, which can differ from the target name
+
+# ---
 
 # `juce_generate_juce_header` will create a JuceHeader.h for a given target, which will be generated
 # into your build tree. This should be included with `#include <JuceHeader.h>`. The include path for
@@ -62,6 +73,8 @@ juce_add_plugin(VJi
 
 juce_generate_juce_header(VJi)
 
+# ----------------------------------------------------------------------------
+
 # `target_sources` adds source files to a target. We pass the target that needs the sources as the
 # first argument, then a visibility parameter for the sources which should normally be PRIVATE.
 # Finally, we supply a list of source files that will be built into the target. This is a standard
@@ -69,8 +82,16 @@ juce_generate_juce_header(VJi)
 
 target_sources(VJi
     PRIVATE
-        PluginEditor.cpp
-        PluginProcessor.cpp)
+        src/PluginEditor.cpp
+        src/PluginProcessor.cpp
+)
+
+# ----------------------------------------------------------------------------
+
+# fi:
+target_include_directories(VJi PRIVATE includes)
+
+# ----------------------------------------------------------------------------
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
 # project, these might be passed in the 'Preprocessor Definitions' field. JUCE modules also make use
@@ -86,6 +107,8 @@ target_compile_definitions(VJi
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
+# ----------------------------------------------------------------------------
+
 # If your target needs extra binary assets, you can add them here. The first argument is the name of
 # a new static library target that will include all the binary resources. There is an optional
 # `NAMESPACE` argument that can specify the namespace of the generated binary data class. Finally,
@@ -94,6 +117,8 @@ target_compile_definitions(VJi
 # Conversion to binary-data will happen when your target is built.
 
 # juce_add_binary_data(AudioPluginData SOURCES ...)
+
+# ----------------------------------------------------------------------------
 
 # `target_link_libraries` links libraries and JUCE modules to other libraries or executables. Here,
 # we're linking our executable target to the `juce::juce_audio_utils` module. Inter-module

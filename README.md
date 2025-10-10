@@ -13,8 +13,9 @@ git submodule --init --recursive
 
 # ---
 git add .
-git commit -m "first commit"
-git remote add origin https://github.com/Vladimir-Lin/VJi.git
+git commit -m "initial commit"
+# create remote repo
+git remote add origin https://github.com/floppyinfant/vji.git
 git push -u origin master
 ```
 
@@ -22,6 +23,9 @@ git push -u origin master
 ## Tutorials
 
 https://www.jetbrains.com/clion/learn/
+
+- https://www.jetbrains.com/help/clion/clion-quick-start-guide.html
+- https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html (CMake Tutorial)
 
 https://cmake.org/cmake/help/latest/guide/tutorial/A%20Basic%20Starting%20Point.html
 
