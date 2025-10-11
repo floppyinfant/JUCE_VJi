@@ -16,7 +16,7 @@ git submodule --init --recursive
 git add .
 git commit -m "initial commit"
 # create remote repo
-git remote add origin https://github.com/floppyinfant/vji.git
+git remote add origin https://github.com/floppyinfant/JUCE_VJi.git
 git push -u origin master
 # ---
 # Configure and Build
