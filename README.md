@@ -4,21 +4,32 @@ A Music Visualizer Plugin (VST) for DAWs
 
 made with JUCE Framework
 
-Protocol:
+---
+
+Terminal Commands Protocol:
 
 ```shell
 git init .
 git submodule add https://github.com/juce-framework/JUCE.git libs/juce
 git submodule --init --recursive
-
 # ---
 git add .
 git commit -m "initial commit"
 # create remote repo
 git remote add origin https://github.com/floppyinfant/vji.git
 git push -u origin master
+# ---
+# Configure and Build
+cmake -S . -B build
+cmake --build build
+.\build\VJi_artefacts\Debug\Standalone\VJi.exe
+# ---
+# Install WebView2 on Windows
+Register-PackageSource -provider NuGet -name nugetRepository -location https://www.nuget.org/api/v2
+Install-Package Microsoft.Web.WebView2 -Scope CurrentUser -RequiredVersion 1.0.1901.177 -Source nugetRepository
 ```
 
+---
 
 ## Tutorials
 
@@ -32,6 +43,8 @@ https://cmake.org/cmake/help/latest/guide/tutorial/A%20Basic%20Starting%20Point.
 https://cmake.org/cmake/help/book/mastering-cmake/cmake/Help/guide/tutorial/
 
 https://www.youtube.com/watch?v=0ALLRitFE34&list=PLrJPU5Myec8ZGjG3dpd7ZH3TX4Wn6Z5RE&index=2 (JUCE WebView2)
+
+https://github.com/JanWilczek/juce-webview-tutorial (Repo of the above video)
 
 https://thewolfsound.com/how-to-build-audio-plugin-with-juce-cpp-framework-cmake-and-unit-tests/ (WolfSound)
 

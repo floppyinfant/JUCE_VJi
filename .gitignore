@@ -1,4 +1,7 @@
-/JUCE-IDEAs-2025-10-06.txt
-/.idea/workspace.xml
-/build
+JUCE-IDEAs-2025-10-06.txt
+.idea/workspace.xml
+.vs
+build/
+libs/
+examples/
 
