@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "ShaderEditor.h"
 #include "WebViewEditor.h"
-//#include "vj/ShaderEditor.cpp"
 
 //==============================================================================
 PluginAudioProcessor::PluginAudioProcessor()
@@ -164,8 +164,8 @@ bool PluginAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 {
     //return new PluginAudioProcessorEditor (*this);
-    //return new ShaderEditor (*this);  // how to include that file?
-    return new PluginWebViewEditor (*this);
+    return new ShaderEditor (*this);
+    //return new PluginWebViewEditor (*this);
 }
 
 //==============================================================================

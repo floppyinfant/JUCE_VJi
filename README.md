@@ -31,6 +31,8 @@ Install-Package Microsoft.Web.WebView2 -Scope CurrentUser -RequiredVersion 1.0.1
 
 ---
 
+---
+
 ## Tutorials
 
 ### Jetbrains Tutorials
@@ -95,7 +97,55 @@ http://docs.juce.com/master/index.html (Documentation)
 
 ---
 
-## OpenGL Shader Language (GLSL)
+---
+
+## APIs: Frameworks, Libraries, Software and Tools
+
+---
+
+### OpenGL Shader Language (GLSL)
+
+https://github.com/KhronosGroup/GLSL
+
+https://www.khronos.org/
+
+https://www.khronos.org/opengl/
+
+https://wikis.khronos.org/opengl/
+
+https://wikis.khronos.org/opengl/OpenGL_Shading_Language
+
+https://www.khronos.org/developers/reference-cards
+
+https://www.opengl.org/
+
+https://github.com/g-truc/ogl-samples (Shaders in Data/)
+
+---
+
+Rendering APIs / Backends:
+- OpenGL
+- Vulkan
+- DirectX  12, Direct3D (Microsoft)
+- CUDA (Nvidia), ROCm (AMD)
+- Metal (Apple)
+- Wayland (Linux), Xorg / X11 (Linux)
+
+OpenPBR (Physically Based Rendering)
+- https://github.com/AcademySoftwareFoundation/OpenPBR 
+- https://academysoftwarefoundation.github.io/OpenPBR/
+
+GLFW (OpenGL Framework)
+- https://www.glfw.org/
+
+Glew (OpenGL Extension Wrangler Library)
+- https://github.com/nigels-com/glew
+
+Dear ImGui (GUI Framework)
+- https://github.com/ocornut/imgui
+
+SDL (Simple DirectMedia Layer)
+- https://www.libsdl.org/
 
 ---
 
@@ -127,13 +177,13 @@ https://github.com/msfeldstein/interactive-shader-format-js (JS / WebGL Library)
 
 ---
 
-## GLSL Sandbox
+### GLSL Sandbox
 
 https://glslsandbox.com/
 
 ---
 
-## ShaderToy
+### ShaderToy
 
 https://www.shadertoy.com/
 
@@ -159,7 +209,7 @@ https://addons.mozilla.org/firefox/addon/shadertoy-unofficial-plugin/ (Firefox E
 
 ---
 
-### Code
+#### Code
 
 Shader Inputs
 
@@ -178,31 +228,31 @@ uniform vec4      iDate;                 // (year, month, day, time in seconds)
 
 ---
 
-## OpenProcessing
+### OpenProcessing
 
 https://openprocessing.org/
 
-Learn: https://openprocessing.org/learn/
+https://openprocessing.org/learn/
 
-Create: https://openprocessing.org/sketch/create
+https://openprocessing.org/sketch/create
 
-Browse: https://openprocessing.org/browse
+https://openprocessing.org/browse
 
-Shaders: https://openprocessing.org/discover/#/shader
+https://openprocessing.org/discover/#/shader
 
-Generative Art: https://openprocessing.org/discover/#/generativeart
+https://openprocessing.org/discover/#/generativeart
 
-Particles: https://openprocessing.org/discover/#/particles
+https://openprocessing.org/discover/#/particles
 
 https://openprocessing.org/browse?time=anytime&type=tags&q=particle&offset=0#
 
 ---
 
-## P5.js
+### P5.js
 
 https://p5js.org/
 
-### Example p5.js sketch
+#### Example p5.js sketch
 
 ```javascript
 function setup() {
@@ -215,11 +265,49 @@ function draw() {
 }
 ```
 
-## WebGL
+---
+
+### Py5
+based on Processing (needs Java)
+https://py5coding.org/
+https://github.com/py5coding/py5
 
 ---
 
-## openFrameworks
+### Three.js
+
+https://threejs.org/
+
+https://github.com/mrdoob/three.js
+
+WebGL
+WebGPU
+WebAsm / WA
+SVG
+CSS3D
+
+https://developer.chrome.com/docs/web-platform/webgpu/overview?hl=de
+https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
+https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
+
+https://gpuweb.github.io/gpuweb/wgsl/ (WGSL - WebGPU Shading Language)
+
+https://webassembly.org/ (WA)
+
+
+#### Three.js Example: NASA Solar System
+
+https://eyes.nasa.gov/apps/solar-system/#/home
+
+---
+
+### Processing
+
+https://processing.org/
+
+---
+
+### openFrameworks
 
 https://openframeworks.cc/learning/
 
@@ -231,7 +319,7 @@ https://openframeworks.cc/documentation/
 
 ---
 
-## Max/MSP Jitter
+### Max/MSP Jitter
 
 https://cycling74.com/products/jitter
 
@@ -240,76 +328,76 @@ https://cycling74.com/articles/jitter-resources-an-overview
 
 ---
 
-## Pure Data GEM
+### Pure Data GEM
+
+https://puredata.info/
+
+- https://gem.iem.at/documentation/manual
+- https://puredata.info/downloads/gem/documentation/tutorial/particles/gem-outline_en.pdf
+
+https://www.youtube.com/@SoundSimulator/playlists
+
+- https://www.youtube.com/watch?v=y1rBa_STq64
+- https://www.youtube.com/watch?v=Vyp6_SJlWAs
+
+https://www.youtube.com/@cheetomoskeeto/playlists
+
+- https://www.youtube.com/watch?v=cinOFA1pT1k&list=PLn3ODBv0ka5hS5areRFSTi2aydPMiUq3B (libPd for Android)
+
+https://www.automatonism.com/
+
+Andy Farnell
+
+- https://mitpress.mit.edu/9780262014410/designing-sound/
+- https://cycling74.com/projects/andy-farnell%27s-designing-sound-examples-for-maxmsp
+
+https://www.evl.uic.edu/drew/courses/AD405/PDGEM_resources.htm
+
+https://www.kreidler-net.de/theorie/pd-tutorial.htm
+
+http://www.pd-tutorial.com/
 
 ---
 
-## Synesthesia
+---
+
+### Synesthesia
 
 https://www.synesthesia.live/
 
 ---
 
-## TouchDesigner
+### TouchDesigner
 
 ---
 
-## TouchVIZ (iPad)
+### TouchVIZ (iPad)
 
 https://hexler.net/touchviz
 
 ---
 
-## awesome
+### Motion Graphics
+
+- Blender (e.g. Ducky3D)
+- Unreal Engine Motion Design
+- DaVinci Resolve Fusion Compositor
+
+---
+
+---
+
+### awesome
 https://github.com/terkelg/awesome-creative-coding
 https://github.com/LimeLimeW/awesome-vjing
-https://github.com/toplap/awesome-livecoding 
+https://github.com/toplap/awesome-livecoding
 
-Music Visualizer
-
-Live Coding
-
----
-
-## Motion Graphics
-
-Blender (e.g. Ducky3D)
-Unreal Engine Motion Design
-DaVinci Resolve Fusion
-
----
-
-https://github.com/AcademySoftwareFoundation/OpenPBR (OpenPBR)
-https://academysoftwarefoundation.github.io/OpenPBR/
-
-OpenGL
-Vulkan
-DirectX  12, Direct 3D (Microsoft)
-CUDA (Nvidia), ROCm (AMD)
-Metal (Apple)
-Wayland (Linux), Xorg / X11 (Linux)
-
----
-
-## Py5
-based on Processing (needs Java)
-https://py5coding.org/
-https://github.com/py5coding/py5
-
-
-## Three.js
-
-WebGL
-WebGPU
-WebAsm / WA
-
-https://developer.chrome.com/docs/web-platform/webgpu/overview?hl=de
-https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
-https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
-
-https://gpuweb.github.io/gpuweb/wgsl/ (WGSL - WebGPU Shading Language)
-
-https://webassembly.org/ (WA)
-
----
+- Creative Coding
+- Live Coding
+- VJing
+- Generative Visuals
+- Music Visualizer
+- Op Art (Optical Art)
+- Optical Illusions
+- ...
 

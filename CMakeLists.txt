@@ -123,6 +123,7 @@ target_sources(VJi
         src/PluginEditor.cpp
         src/PluginProcessor.cpp
         src/WebViewEditor.cpp
+        src/ShaderEditor.cpp
 )
 
 # ----------------------------------------------------------------------------
@@ -142,6 +143,7 @@ target_link_libraries(VJi
     PRIVATE
         PluginData           # If we'd created a binary data target, we'd link to it here; fi
         juce::juce_audio_utils
+        juce::juce_opengl
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
