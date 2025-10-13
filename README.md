@@ -99,7 +99,7 @@ http://docs.juce.com/master/index.html (Documentation)
 
 ---
 
-### ISF
+### Interactive Shader Format (ISF)
 
 https://isf.video/
 
@@ -251,6 +251,65 @@ https://www.synesthesia.live/
 ---
 
 ## TouchDesigner
+
+---
+
+## TouchVIZ (iPad)
+
+https://hexler.net/touchviz
+
+---
+
+## awesome
+https://github.com/terkelg/awesome-creative-coding
+https://github.com/LimeLimeW/awesome-vjing
+https://github.com/toplap/awesome-livecoding 
+
+Music Visualizer
+
+Live Coding
+
+---
+
+## Motion Graphics
+
+Blender (e.g. Ducky3D)
+Unreal Engine Motion Design
+DaVinci Resolve Fusion
+
+---
+
+https://github.com/AcademySoftwareFoundation/OpenPBR (OpenPBR)
+https://academysoftwarefoundation.github.io/OpenPBR/
+
+OpenGL
+Vulkan
+DirectX  12, Direct 3D (Microsoft)
+CUDA (Nvidia), ROCm (AMD)
+Metal (Apple)
+Wayland (Linux), Xorg / X11 (Linux)
+
+---
+
+## Py5
+based on Processing (needs Java)
+https://py5coding.org/
+https://github.com/py5coding/py5
+
+
+## Three.js
+
+WebGL
+WebGPU
+WebAsm / WA
+
+https://developer.chrome.com/docs/web-platform/webgpu/overview?hl=de
+https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
+https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
+
+https://gpuweb.github.io/gpuweb/wgsl/ (WGSL - WebGPU Shading Language)
+
+https://webassembly.org/ (WA)
 
 ---
 
