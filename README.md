@@ -19,14 +19,14 @@ git commit -m "initial commit"
 git remote add origin https://github.com/floppyinfant/JUCE_VJi.git
 git push -u origin master
 # ---
-# Configure and Build
-cmake -S . -B build
-cmake --build build
-.\build\VJi_artefacts\Debug\Standalone\VJi.exe
-# ---
 # Install WebView2 on Windows
 Register-PackageSource -provider NuGet -name nugetRepository -location https://www.nuget.org/api/v2
 Install-Package Microsoft.Web.WebView2 -Scope CurrentUser -RequiredVersion 1.0.1901.177 -Source nugetRepository
+# ---
+# Configure, Build, execute
+cmake -S . -B build
+cmake --build build
+.\build\VJi_artefacts\Debug\Standalone\VJi.exe
 ```
 
 ---
@@ -120,6 +120,14 @@ https://www.khronos.org/developers/reference-cards
 https://www.opengl.org/
 
 https://github.com/g-truc/ogl-samples (Shaders in Data/)
+
+File Extensions: vert.glsl, frag.glsl, *.vert, *.frag, *.fs, *.vs, ... , *.geom, *.tesc, *.tese, *.comp, *.spv
+
+Attribute
+
+Uniform
+
+Varying
 
 ---
 
@@ -374,6 +382,12 @@ https://www.synesthesia.live/
 ### TouchVIZ (iPad)
 
 https://hexler.net/touchviz
+
+### KodeLife
+
+https://hexler.net/kodelife
+
+https://hexler.net/kodelife/manual/introduction
 
 ---
 

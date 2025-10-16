@@ -56,5 +56,16 @@ private:
 
     static juce::Array<ShaderPreset> getPresets();
 
+
+    // fi:
+    int frameCounter = 0;
+    double startTime = 0.0;
+
+    // Add method to convert ShaderToy code
+    juce::String convertShaderToyToJUCE(const juce::String& shaderToyCode);
+
+    // Add method to create wrapper with uniforms
+    juce::String wrapWithUniforms(const juce::String& shaderCode);
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShaderEditor)
 };

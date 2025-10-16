@@ -16,19 +16,19 @@ cmake_minimum_required(VERSION 3.22)
 
 project(VJi VERSION 0.1.0)
 
-# If you've installed JUCE somehow (via a package manager, or directly using the CMake install
-# target), you'll need to tell this project that it depends on the installed copy of JUCE. If you've
-# included JUCE directly in your source tree (perhaps as a submodule), you'll need to tell CMake to
-# include that subdirectory as part of the build.
-
 # fi:
 set(CMAKE_CXX_STANDARD 20)
 
 # ----------------------------------------------------------------------------
 
-# find_package(JUCE CONFIG REQUIRED)        # If you've installed JUCE to your system
+# If you've installed JUCE somehow (via a package manager, or directly using the CMake install
+# target), you'll need to tell this project that it depends on the installed copy of JUCE. If you've
+# included JUCE directly in your source tree (perhaps as a submodule), you'll need to tell CMake to
+# include that subdirectory as part of the build.
+
+# find_package(JUCE CONFIG REQUIRED)    # If you've installed JUCE to your system
 # or
-add_subdirectory(libs/juce)  # If you've put JUCE in a subdirectory called JUCE
+add_subdirectory(libs/juce)             # If you've put JUCE in a subdirectory called JUCE
 
 # ---
 
@@ -38,13 +38,22 @@ add_subdirectory(libs/juce)  # If you've put JUCE in a subdirectory called JUCE
 # juce_set_vst2_sdk_path(...)
 # juce_set_aax_sdk_path(...)
 
+# fi: AU, CLAP ?
+
 # ----------------------------------------------------------------------------
 
-# targets
-# fi: conventional cmake target
-#add_executable(app main.cpp)
-#add_library()
-#add_custom_target()
+# Targets
+
+# fi: conventional cmake targets
+# add_executable(app main.cpp)
+# add_library()
+# add_custom_target()
+
+# fi: example with library
+# add_library(MyLibrary src/MyClass.cpp)              # compile library
+# target_include_directories(MyLibrary PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)  # add headers / include dir
+# add_executable(MyProgram main.cpp)                  # compile program
+# target_link_libraries(MyProgram PRIVATE MyLibrary)  # link program with library
 
 # ---
 
@@ -120,16 +129,30 @@ juce_add_binary_data(PluginData SOURCES res/open-source.png)  # fi
 
 target_sources(VJi
     PRIVATE
-        src/PluginEditor.cpp
         src/PluginProcessor.cpp
+        src/PluginEditor.cpp
         src/WebViewEditor.cpp
         src/ShaderEditor.cpp
 )
 
 # ----------------------------------------------------------------------------
 
-# fi:
-target_include_directories(VJi PRIVATE includes)
+# fi: include directory
+# this translates to compiler flags like: "g++ -I/include main.cpp"
+target_include_directories(VJi
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/src
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/dsp
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/sq
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/vj
+        PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/includes
+)
+
+
+# Legacy Style; Note: This applies globally to all targets, which is less ideal for modern CMake
+# include_directories()
 
 # ----------------------------------------------------------------------------
 
@@ -148,3 +171,11 @@ target_link_libraries(VJi
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags)
+
+
+# fi: library path for compiled libraries
+# this translates to linker flags like: "g++ main.o -L/lib -lMyLibrary -o MyProgram"
+# target_link_directories(VJi PRIVATE /lib)
+
+# ----------------------------------------------------------------------------
+
