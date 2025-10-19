@@ -35,6 +35,8 @@ cmake --build build
 
 ## Tutorials
 
+@see docs/tools/README.md
+
 ### Jetbrains Tutorials
 
 https://www.jetbrains.com/clion/learn/
@@ -101,9 +103,34 @@ http://docs.juce.com/master/index.html (Documentation)
 
 ## APIs: Frameworks, Libraries, Software and Tools
 
+### Rendering APIs / Backends
+
+- OpenGL
+- Vulkan
+- DirectX  12, Direct3D (Microsoft)
+- CUDA (Nvidia), ROCm (AMD)
+- Metal (Apple)
+- Wayland (Linux), Xorg / X11 (Linux)
+
+OpenPBR (Physically Based Rendering)
+- https://github.com/AcademySoftwareFoundation/OpenPBR
+- https://academysoftwarefoundation.github.io/OpenPBR/
+
+GLFW (OpenGL Framework)
+- https://www.glfw.org/
+
+Glew (OpenGL Extension Wrangler Library)
+- https://github.com/nigels-com/glew
+
+Dear ImGui (GUI Framework)
+- https://github.com/ocornut/imgui
+
+SDL (Simple DirectMedia Layer)
+- https://www.libsdl.org/
+
 ---
 
-### OpenGL Shader Language (GLSL)
+### OpenGL Shading Language (GLSL)
 
 https://github.com/KhronosGroup/GLSL
 
@@ -131,29 +158,19 @@ Varying
 
 ---
 
-Rendering APIs / Backends:
-- OpenGL
-- Vulkan
-- DirectX  12, Direct3D (Microsoft)
-- CUDA (Nvidia), ROCm (AMD)
-- Metal (Apple)
-- Wayland (Linux), Xorg / X11 (Linux)
+### Open Shading Language (OSL)
 
-OpenPBR (Physically Based Rendering)
-- https://github.com/AcademySoftwareFoundation/OpenPBR 
-- https://academysoftwarefoundation.github.io/OpenPBR/
+*.osl
 
-GLFW (OpenGL Framework)
-- https://www.glfw.org/
+Blender: Text Editor --> Script Node in Shader Editor
 
-Glew (OpenGL Extension Wrangler Library)
-- https://github.com/nigels-com/glew
+https://docs.blender.org/manual/en/latest/render/cycles/osl/index.html
 
-Dear ImGui (GUI Framework)
-- https://github.com/ocornut/imgui
+https://open-shading-language.readthedocs.io/en/latest/
 
-SDL (Simple DirectMedia Layer)
-- https://www.libsdl.org/
+https://github.com/imageworks/OpenShadingLanguage
+
+https://www.youtube.com/watch?v=H8nHxRO7eX0 (CGMatter Fractals)
 
 ---
 

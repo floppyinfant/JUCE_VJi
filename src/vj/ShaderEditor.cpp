@@ -5,9 +5,10 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
 {
     setOpaque(true);
     if (auto* peer = getPeer())
-        peer->setCurrentRenderingEngine(0);
+        peer->setCurrentRenderingEngine(1);
 
-    openGLContext.attachTo(*getTopLevelComponent());
+    //openGLContext.attachTo(*getTopLevelComponent());
+    openGLContext.attachTo(*this);
 
     addAndMakeVisible(statusLabel);
     statusLabel.setJustificationType(juce::Justification::topLeft);
@@ -22,7 +23,7 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
     presetLabel.attachToComponent(&presetBox, true);
 
     addAndMakeVisible(presetBox);
-    presetBox.onChange = [this] { selectPreset(presetBox.getSelectedItemIndex()); };
+    presetBox.onChange = [this] {selectPreset(presetBox.getSelectedItemIndex());};
 
     fragmentEditorComp.setOpaque(false);
     fragmentDocument.addListener(this);
@@ -44,8 +45,8 @@ ShaderEditor::~ShaderEditor()
 
 void ShaderEditor::paint(juce::Graphics& g)
 {
-    g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::lightgrey, juce::Colours::white);
-    //g.fillCheckerBoard (getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::black);
+    //g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::lightgrey, juce::Colours::white);
+    g.fillCheckerBoard (getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::black);
 
 
     if (shader.get() == nullptr || shader->getFragmentShaderCode() != fragmentCode)
@@ -67,36 +68,59 @@ void ShaderEditor::paint(juce::Graphics& g)
         }
     }
 
+    // -----------------------------------------------------------------------
+
     if (shader.get() != nullptr)
     {
         statusLabel.setText ({}, juce::NotificationType::dontSendNotification);
 
         // fi: begin of ShaderToy Compatibility Code
-        // Set ShaderToy-compatible uniforms
-        auto& glContext = g.getInternalContext();
+        if (isShaderToyCode) {
+            // set Uniforms
+            if (auto* shaderProgram = shader->getProgram(g.getInternalContext()))
+            {
+                shaderProgram->use();
 
-        if (auto* shaderProgram = shader->getProgram(glContext))
-        {
-            shaderProgram->use();
+                //if (shaderProgram->getUniformIDFromName("iResolution") >= 0) {
+                    shaderProgram->setUniform("iResolution", (float)getWidth(), (float)getHeight(), 1.0f);  //  500.0f, 500.0f
+                    DBG("iResolution = " + std::to_string(getWidth()) +  ", " + std::to_string(getHeight()) + ", 1.0f");
+                //}
+                if (shaderProgram->getUniformIDFromName("iTime") >= 0) {
+                    shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001 - startTime));  //  - startTime (?)
+                    DBG("iTime = " + std::to_string(juce::Time::getMillisecondCounterHiRes() * 0.001 - startTime));
+                }
+                if (shaderProgram->getUniformIDFromName("iMouse") >= 0)
+                    shaderProgram->setUniform("iMouse", 0.0f, 0.0f, 0.0f, 0.0f);
+                if (shaderProgram->getUniformIDFromName("iFrame") >= 0)
+                    shaderProgram->setUniform("iFrame", frameCounter++);
 
-            // Setting Uniform Values
-            //if (shaderProgram->getUniformIDFromName("iResolution") >= 0) {
-                shaderProgram->setUniform("iResolution", (float)getWidth(), (float)getHeight(), 1.0f);  //  500.0f, 500.0f
-                DBG("iResolution = " + std::to_string(getWidth()) +  ", " + std::to_string(getHeight()) + ", 1.0f");
-            //}
-            if (shaderProgram->getUniformIDFromName("iTime") >= 0)
-                shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001));  //  - startTime (?)
-            if (shaderProgram->getUniformIDFromName("iMouse") >= 0)
-                shaderProgram->setUniform("iMouse", 0.0f, 0.0f, 0.0f, 0.0f);
-            if (shaderProgram->getUniformIDFromName("iFrame") >= 0)
-                shaderProgram->setUniform("iFrame", frameCounter++);
+                DBG("uniforms set in paint()");
 
-            DBG("set uniforms");
-        }
-        // end of ShaderToy Compatibility Code
-        
+                // -------------------------------------------------------------------
+                // Debugging
+                DBG("GLSL version: " + juce::OpenGLHelpers::getGLSLVersionString());
+                // Query attribute locations that JUCE expects (names vary by program).
+                // In JUCE’s custom-shader pipeline, attributes are usually named "position" and "colour".
+                //GLint pos = g.getInternalContext().extensions.glGetAttribLocation(shaderProgram->getProgramID(), "position");
+                //GLint col = g.getInternalContext().extensions.glGetAttribLocation(shaderProgram->getProgramID(), "colour");
+                //DBG("attrib position=" + juce::String(pos) + ", colour=" + juce::String(col));
+
+                // You don’t need the context’s extensions; use juce::gl::* directly in JUCE 8
+                const auto programID = shaderProgram->getProgramID();
+
+                // glGetAttribLocation doesn’t require the program to be bound, but it’s fine either way
+                GLint pos = juce::gl::glGetAttribLocation(programID, "position");
+                GLint col = juce::gl::glGetAttribLocation(programID, "colour");
+
+                DBG("attrib position=" + juce::String(pos) + ", colour=" + juce::String(col));
+            }
+        } // end of ShaderToy Compatibility Code
+
         shader->fillRect(g.getInternalContext(), getLocalBounds());
     }
+
+    // -----------------------------------------------------------------------
+
 }
 
 void ShaderEditor::resized() {
@@ -228,8 +252,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
             JUCE_MEDIUMP
             "void mainImage(out vec4 fragColor, in vec2 fragCoord)\n"
             "{\n"
-            "    " JUCE_MEDIUMP "vec2 uv = fragCoord / iResolution.xy;\n"
-            "    " JUCE_MEDIUMP "vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
+            "    " JUCE_MEDIUMP " vec2 uv = fragCoord / iResolution.xy;\n"
+            "    " JUCE_MEDIUMP " vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
             "    fragColor = vec4(col, 1.0);\n"
             "}\n"
             "\n"
@@ -250,11 +274,11 @@ juce::String ShaderEditor::convertShaderToyToJUCE(const juce::String& shaderToyC
     
     // Add JUCE-compatible uniforms header
     juceShader += "// Converted from ShaderToy\n\n";
-    juceShader += "uniform " JUCE_MEDIUMP "vec3 iResolution;\n";
-    juceShader += "uniform " JUCE_MEDIUMP "float iTime;\n";
-    juceShader += "uniform " JUCE_MEDIUMP "vec4 iMouse;\n";
-    juceShader += "uniform " JUCE_MEDIUMP "float iTimeDelta;\n";
-    juceShader += "uniform " JUCE_MEDIUMP "int iFrame;\n\n";
+    juceShader += "uniform " JUCE_MEDIUMP " vec3 iResolution;\n";
+    juceShader += "uniform " JUCE_MEDIUMP " float iTime;\n";
+    juceShader += "uniform " JUCE_MEDIUMP " vec4 iMouse;\n";
+    juceShader += "uniform " JUCE_MEDIUMP " float iTimeDelta;\n";
+    juceShader += "uniform " JUCE_MEDIUMP " int iFrame;\n\n";
     
     // Add the ShaderToy code (keep mainImage function)
     juceShader += shaderToyCode;
@@ -263,7 +287,7 @@ juce::String ShaderEditor::convertShaderToyToJUCE(const juce::String& shaderToyC
     // Add JUCE main() wrapper
     juceShader += "void main()\n";
     juceShader += "{\n";
-    juceShader += "    " JUCE_MEDIUMP "vec4 fragColor;\n";
+    juceShader += "    " JUCE_MEDIUMP " vec4 fragColor;\n";
     juceShader += "    mainImage(fragColor, pixelPos);\n";
     juceShader += "    gl_FragColor = pixelAlpha * fragColor;\n";
     juceShader += "}\n";
@@ -273,9 +297,10 @@ juce::String ShaderEditor::convertShaderToyToJUCE(const juce::String& shaderToyC
 
 juce::String ShaderEditor::wrapWithUniforms(const juce::String& shaderCode)
 {
-    // Check if it's already a ShaderToy shader (has mainImage)
+    // Check if it's a ShaderToy shader (has mainImage)
     if (shaderCode.contains("mainImage"))
     {
+        isShaderToyCode = true;
         return convertShaderToyToJUCE(shaderCode);
     }
     

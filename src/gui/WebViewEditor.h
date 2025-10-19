@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PluginProcessor.h"
+#include "../PluginProcessor.h"
 #include <juce_gui_extra/juce_gui_extra.h>
 
 class PluginWebViewEditor final : public juce::AudioProcessorEditor

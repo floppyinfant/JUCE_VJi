@@ -1,5 +1,4 @@
 #include "WebViewEditor.h"
-#include "PluginProcessor.h"
 
 namespace {
     const char* getMimeForExtension (const juce::String& extension)

@@ -68,10 +68,10 @@ juce_add_plugin(VJi
     # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
     # ICON_SMALL ...
     COMPANY_NAME floppyinfant                   # Specify the name of the plugin's author
-    # IS_SYNTH TRUE/FALSE                       # Is this a synth or an effect?
-    # NEEDS_MIDI_INPUT TRUE/FALSE               # Does the plugin need midi input?
-    # NEEDS_MIDI_OUTPUT TRUE/FALSE              # Does the plugin need midi output?
-    # IS_MIDI_EFFECT TRUE/FALSE                 # Is this plugin a MIDI effect?
+    IS_SYNTH TRUE                       # Is this a synth or an effect?
+    NEEDS_MIDI_INPUT TRUE               # Does the plugin need midi input?
+    NEEDS_MIDI_OUTPUT TRUE              # Does the plugin need midi output?
+    IS_MIDI_EFFECT TRUE                 # Is this plugin a MIDI effect?
     # EDITOR_WANTS_KEYBOARD_FOCUS TRUE/FALSE    # Does the editor need keyboard focus?
     # COPY_PLUGIN_AFTER_BUILD TRUE/FALSE        # Should the plugin be installed to a default location after building?
     PLUGIN_MANUFACTURER_CODE Flin               # A four-character manufacturer id with at least one upper-case character
@@ -131,8 +131,10 @@ target_sources(VJi
     PRIVATE
         src/PluginProcessor.cpp
         src/PluginEditor.cpp
-        src/WebViewEditor.cpp
-        src/ShaderEditor.cpp
+        src/gui/WebViewEditor.cpp
+        src/vj/ShaderEditor.cpp
+        src/dsp/DspProcessor.cpp
+        #src/sq/MidiProcessor.cpp
 )
 
 # ----------------------------------------------------------------------------
@@ -144,7 +146,9 @@ target_include_directories(VJi
             ${CMAKE_CURRENT_SOURCE_DIR}/src
             ${CMAKE_CURRENT_SOURCE_DIR}/src/dsp
             ${CMAKE_CURRENT_SOURCE_DIR}/src/gui
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/components
             ${CMAKE_CURRENT_SOURCE_DIR}/src/sq
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/synth
             ${CMAKE_CURRENT_SOURCE_DIR}/src/vj
         PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}/includes

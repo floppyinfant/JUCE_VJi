@@ -1,6 +1,9 @@
 #pragma once
 
-#include <juce_audio_processors/juce_audio_processors.h>
+#include <JuceHeader.h>
+//#include <juce_audio_processors/juce_audio_processors.h>
+#include "dsp/DspProcessor.h"
+#include "sq/MidiProcessor.h"
 
 //==============================================================================
 class PluginAudioProcessor final : public juce::AudioProcessor
@@ -43,6 +46,10 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    // fi:
+    DspProcessor dspProcessor;
+    MidiProcessor midiProcessor;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessor)
 };

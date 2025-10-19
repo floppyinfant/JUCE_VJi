@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "JuceHeader.h"
+#include <JuceHeader.h>
 
 class SynthComponent : public juce::GroupComponent  // Component || Editor ???
     , public juce::Slider::Listener

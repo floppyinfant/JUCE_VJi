@@ -14,7 +14,8 @@
 
 #pragma once
 
-#include "JuceHeader.h"
+#include <JuceHeader.h>
+
 using namespace juce;
 
 constexpr int interval = 4;
@@ -28,6 +29,7 @@ public:
 		// 1. delete old messages
 		processedBuffer.clear();
 
+		/*
 		// 2. processMidiInput
 		MidiBuffer::Iterator it(midiMessages);
 		MidiMessage currentMessage;
@@ -47,6 +49,7 @@ public:
 			}
 			processedBuffer.addEvent(currentMessage, samplePos);
 		}
+		*/
 
 		// 3. send back to host
 		midiMessages.swapWith(processedBuffer);

@@ -1,0 +1,273 @@
+class ShaderEditor final : public juce::AudioProcessorEditor
+
+PluginAudioProcessor& processor;
+juce::OpenGLContext openGLContext;
+
+openGLContext.attachTo(*getTopLevelComponent());
+
+
+
+struct ShaderPreset
+    {
+        const char* name;
+        const char* fragmentShader;
+    };
+static juce::Array<ShaderPreset> getPresets();
+
+
+
+juce::CodeDocument fragmentDocument;
+juce::CodeEditorComponent fragmentEditorComp  { fragmentDocument, nullptr };
+juce::String fragmentCode;
+
+fragmentDocument.addListener(this);
+fragmentCode = fragmentDocument.getAllContent();
+
+
+
+// local variable in wrapWithUniforms(shaderCode) invoked at selectPreset(int preset)
+shaderCode = wrapWithUniforms(getPresets()[preset].fragmentShader;
+
+std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
+	if (shader.get() == nullptr || shader->getFragmentShaderCode() != fragmentCode)
+    {
+        shader.reset();
+		shader.reset(new juce::OpenGLGraphicsContextCustomShader(fragmentCode));
+		shader->checkCompilation(g.getInternalContext());
+	}
+	if (shader.get() != nullptr)
+	{
+		// only if ShaderToy
+		if (auto* shaderProgram = shader->getProgram(g.getInternalContext()))
+		{
+			shaderProgram->use();
+			shaderProgram->setUniform("iResolution", (float)getWidth(), (float)getHeight(), 1.0f);  //  500.0f, 500.0f
+			
+		}
+		shader->fillRect(g.getInternalContext(), getLocalBounds());
+	}
+	
+---
+
+// Debugger
+
+// fragmentCode.text.data
+
+// shader
+
+varying  vec4 frontColour;
+varying  vec2 pixelPos;
+#define pixelAlpha frontColour.a
+
+OpenGL DBG message: GL_INVALID_VALUE error generated. <index> out of range.
+JUCE Assertion failure in opengl/juce_OpenGLContext.cpp:658
+***** GL_INVALID_VALUE  at L:\WORKSPACES\AUDIO_WS\Projects\VJi\libs\juce\modules\juce_opengl\opengl/juce_OpenGLGraphicsContext.cpp : 1502
+JUCE Assertion failure in juce_opengl.cpp:214
+
+---
+
+// Junie help
+
+fragCoord mapping: You pass pixelPos to mainImage. JUCE defines pixelPos and pixelAlpha for custom shaders; this is consistent with your presets. Just be aware ShaderToy assumes origin at bottom-left, whereas JUCE’s pixelPos origin is top-left; many ShaderToy examples account for that via iResolution. If you see vertically flipped visuals, apply vec2 fragCoord = vec2(pixelPos.x, iResolution.y - pixelPos.y); before calling mainImage.
+
+Time uniforms: You define iTimeDelta but don’t set it. That’s fine if the shader doesn’t use it. If needed, compute and set it similarly to iTime using a small moving average to avoid 0 values on the first frame.
+
+Drive animation and repaint:
+◦
+You call startTimer(1) in selectPreset, but there’s no timerCallback() shown. Add one to call repaint() and increment any animation state as needed:
+void ShaderEditor::timerCallback() {
+    repaint();
+}
+This ensures iTime updates and the ShaderToy presets animate.
+•
+HiDPI correctness for iResolution:
+◦
+On high-DPI displays, pixelPos is in physical pixels, but getWidth()/getHeight() are logical units. Provide physical pixel resolution:
+auto scale = (float) openGLContext.getRenderingScale();
+shaderProgram->setUniform("iResolution",
+                          getWidth() * scale,
+                          getHeight() * scale,
+                          1.0f);
+
+Vertical flip (optional):
+◦
+ShaderToy’s fragCoord origin is bottom-left, JUCE’s pixelPos is top-left. Most ShaderToy demos still render fine but vertically flipped. If you see a black screen due to assumptions in the shader, pass a flipped coord to mainImage:
+// In your generated wrapper
+// mediump vec4 fragColor;
+// vec2 fragCoord = vec2(pixelPos.x, iResolution.y - pixelPos.y);
+// mainImage(fragColor, fragCoord);
+•
+Extra uniforms in presets:
+◦
+Your “ShaderToy Tutorial” preset declares uniforms like iFrameRate, iChannelTime, etc. They’re unused and unset. That’s fine on desktop GL. On GLES targets you may need precision qualifiers for those as well, or remove those declarations.
+
+
+
+Fixes
+Pick the first approach that fits your code best.
+1) Make sure your fragment shader actually uses JUCE’s varyings
+•
+Always multiply your output by pixelAlpha. You already do this in the ShaderToy wrapper:
+◦
+gl_FragColor = pixelAlpha * fragColor; This keeps the alpha varying alive (and therefore the colour attribute feeding it).
+•
+Make sure pixelPos is consumed in the fragment shader too. Your wrapper currently calls mainImage(fragColor, pixelPos);, which consumes pixelPos. Good.
+•
+If you ever end up with a fragment that doesn’t need pixelPos or pixelAlpha, keep them alive with a no-op, e.g.:
+◦
+fragColor += 0.0 * vec4(pixelPos, 0.0, 0.0);
+◦
+fragColor *= 1.0 + 0.0 * pixelAlpha; This prevents the linker from stripping those varyings and their upstream attributes.
+
+2) Don’t declare unused uniforms/arrays that may disturb linking on GLES
+•
+In your “ShaderToy Tutorial” preset, you declare several uniforms (e.g. iChannelTime[4], iChannelResolution[4], iFrameRate, iDate, iSampleRate) that you don’t set or use. On desktop GL this is mostly harmless, but on GLES drivers, mismatched precision or unused arrays can change the linker’s optimisation decisions.
+•
+Either remove these declarations in the preset, or mark them as comments unless they’re used. Keep only what you use.
+3) Ensure uniforms are set only when the program is active
+•
+You’re doing the right thing by calling prog->use() before setting uniforms. Keep the uniform sets between prog->use() and fillRect() inside the same paint call.
+•
+Do not set uniforms from another thread or outside the render/paint call; JUCE ensures the GL context is current only during its render phase.
+
+4) Use HiDPI-correct resolution and (optionally) flip Y
+•
+Provide physical pixel resolution so shaders that rely on pixel coordinates behave well on HiDPI:
+auto scale = (float) openGLContext.getRenderingScale();
+shaderProgram->setUniform("iResolution", getWidth() * scale, getHeight() * scale, 1.0f);
+•
+If a ShaderToy assumes origin at bottom-left, consider calling mainImage with flipped Y:
+
+
+mainImage(fragColor, vec2(pixelPos.x, iResolution.y - pixelPos.y));
+This also guarantees pixelPos is used.
+5) Make sure the GL pipeline is actually OpenGL-backed
+•
+You already switched to openGLContext.attachTo(*this); which is correct.
+•
+You don’t need to force peer->setCurrentRenderingEngine(1) if you attach an OpenGLContext. If you keep it, ensure it runs after the component has a peer (e.g. in resized() or visibilityChanged()), otherwise it’s a no-op. This isn’t the direct cause of the current error, but it helps avoid confusion.
+
+
+Minimal concrete change you can try now
+Update the ShaderToy wrapper to both use pixelPos (with optional Y-flip) and always multiply by pixelAlpha (you already do). Here’s a robust wrapper snippet that ensures both varyings are used, preventing attribute stripping:
+juce::String ShaderEditor::convertShaderToyToJUCE (const juce::String& shaderToyCode)
+{
+    juce::String s;
+    s += "// Converted from ShaderToy\n\n";
+    s += "uniform " JUCE_MEDIUMP " vec3 iResolution;\n";
+    s += "uniform " JUCE_MEDIUMP " float iTime;\n";
+    s += "uniform " JUCE_MEDIUMP " vec4 iMouse;\n";
+    s += "uniform " JUCE_MEDIUMP " float iTimeDelta;\n";
+    s += "uniform " JUCE_MEDIUMP " int iFrame;\n\n";
+
+    s += shaderToyCode + "\n\n";
+
+    s += "void main()\n";
+    s += "{\n";
+    s += "    " JUCE_MEDIUMP " vec4 fragColor;\n";
+	
+    // Ensure pixelPos is consumed, and flip Y to ShaderToy convention
+    s += "    vec2 fragCoord = vec2(pixelPos.x, iResolution.y - pixelPos.y);\n";
+    s += "    mainImage(fragColor, fragCoord);\n";
+    // Ensure pixelAlpha is consumed to keep colour attribute alive
+    s += "    gl_FragColor = pixelAlpha * fragColor;\n";
+    s += "}\n";
+
+    return s;
+}
+
+If the error was caused by attribute stripping, this will eliminate the GL_INVALID_VALUE and your ShaderToy shader should render.
+If the error persists
+•
+Print the attribute locations as shown above. If either location is still -1, paste the log here.
+•
+Also paste the exact GL debug message text following “OpenGL DBG message: …” — sometimes drivers include which function and index failed.
+•
+Finally, confirm that shader->checkCompilation(...) returns success and that the shader->getProgram(...) pointer is non-null when you’re setting uniforms.
+
+Summary
+The error you’re seeing is most consistent with GL linking optimising-out attributes that JUCE later tries to enable, leading to GL_INVALID_VALUE (index out of range). Ensure your fragment shader uses pixelPos and pixelAlpha (as in the wrapper above), and avoid declaring unused uniforms. This keeps the vertex attributes alive and prevents the invalid attribute index at draw time. If you still hit the error after these changes, log the attribute locations and we’ll pinpoint the next step.
+
+---
+
+// Debugger LLDB Console
+
+JUCE v8.0.10
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+
+JUCE Assertion failure in opengl/juce_OpenGLShaderProgram.cpp:176
+iResolution = 500, 500, 1.0f
+uniforms set in paint()
+
+GLSL version: #version 150
+attrib position=0, colour=-1
+OpenGL DBG message: GL_INVALID_VALUE error generated. Index out of range.
+JUCE Assertion failure in opengl/juce_OpenGLContext.cpp:658
+
+OpenGL DBG message: GL_INVALID_VALUE error generated. <index> out of range.
+JUCE Assertion failure in opengl/juce_OpenGLContext.cpp:658
+***** GL_INVALID_VALUE  at L:\WORKSPACES\AUDIO_WS\Projects\VJi\libs\juce\modules\juce_opengl\opengl/juce_OpenGLGraphicsContext.cpp : 1502
+JUCE Assertion failure in juce_opengl.cpp:214
+
+OpenGL DBG message: GL_INVALID_VALUE error generated. <index> out of range.
+JUCE Assertion failure in opengl/juce_OpenGLContext.cpp:658
+***** GL_INVALID_VALUE  at L:\WORKSPACES\AUDIO_WS\Projects\VJi\libs\juce\modules\juce_opengl\opengl/juce_OpenGLGraphicsContext.cpp : 1502
+JUCE Assertion failure in juce_opengl.cpp:214
+
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 2 (bound to GL_ELEMENT_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+OpenGL DBG message: Buffer detailed info: Buffer object 1 (bound to GL_ARRAY_BUFFER_ARB, usage hint is GL_STATIC_DRAW) will use VIDEO memory as the source for buffer object operations.
+
+JUCE Assertion failure in opengl/juce_OpenGLShaderProgram.cpp:176
+iResolution = 500, 500, 1.0f
+uniforms set in paint()
+
+GLSL version: #version 150
+attrib position=0, colour=-1
+OpenGL DBG message: GL_INVALID_VALUE error generated. Index out of range.
+JUCE Assertion failure in opengl/juce_OpenGLContext.cpp:658
+OpenGL DBG message: GL_INVALID_VALUE error generated. <index> out of range.
+JUCE Assertion failure in opengl/juce_OpenGLContext.cpp:658
+***** GL_INVALID_VALUE  at L:\WORKSPACES\AUDIO_WS\Projects\VJi\libs\juce\modules\juce_opengl\opengl/juce_OpenGLGraphicsContext.cpp : 1502
+JUCE Assertion failure in juce_opengl.cpp:214
+
+---
+
