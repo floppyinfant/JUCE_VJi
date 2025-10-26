@@ -1,5 +1,7 @@
 #include "ShaderEditor.h"
 
+// ===========================================================================
+
 ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
     : juce::AudioProcessorEditor(&p), processor(p)
 {
@@ -39,6 +41,11 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
     // --------------------------------
 
     setSize(500, 500);
+    setResizable(true, true);
+
+    setFramesPerSecond(60);
+
+    // --------------------------------
 
     // fi: ShaderToy Compatibility Code
     startTime = juce::Time::getMillisecondCounterHiRes() * 0.001;
@@ -49,6 +56,8 @@ ShaderEditor::~ShaderEditor()
     openGLContext.detach();
     shader.reset();
 }
+
+// ===========================================================================
 
 void ShaderEditor::paint(juce::Graphics& g)
 {
@@ -82,6 +91,8 @@ void ShaderEditor::paint(juce::Graphics& g)
     if (shader.get() != nullptr)
     {
         statusLabel.setText ({}, juce::NotificationType::dontSendNotification);
+
+        // -------------------------------------------------------------------
 
         // fi: begin of ShaderToy Compatibility Code
         if (isShaderToyCode) {
@@ -125,10 +136,9 @@ void ShaderEditor::paint(juce::Graphics& g)
         } // end of ShaderToy Compatibility Code
 
         shader->fillRect(g.getInternalContext(), getLocalBounds());
+        // start timer again
+        updateSync();
     }
-
-    // -----------------------------------------------------------------------
-
 }
 
 void ShaderEditor::resized() {
@@ -146,10 +156,12 @@ void ShaderEditor::resized() {
     fragmentEditorComp.setBounds(area);
 }
 
+// ===========================================================================
+
 void ShaderEditor::selectPreset(int preset) {
     //fragmentDocument.replaceAllContent (getPresets()[preset].fragmentShader);
     // fi: ShaderToy Compatibility
-    fragmentDocument.replaceAllContent(wrapWithUniforms(getPresets()[preset].fragmentShader));
+    fragmentDocument.replaceAllContent(convert(getPresets()[preset].fragmentShader));
     startTimer(1);
 }
 
@@ -269,7 +281,25 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
 // ---------------------------------------------------------------------------
 
-juce::String ShaderEditor::convertShaderToyToJUCE(const juce::String& shaderToyCode)
+/**
+ * Convert GLSL fragment shader code from other sources to run in JUCE
+ * @param shaderCode
+ * @return converted shaderCode
+ */
+juce::String ShaderEditor::convert(const juce::String& shaderCode)
+{
+    // Check if it's a ShaderToy shader (has mainImage)
+    if (shaderCode.contains("mainImage"))
+    {
+        isShaderToyCode = true;
+        return convertShadertoy(shaderCode);
+    }
+
+    // Otherwise assume it's already JUCE-compatible
+    return shaderCode;
+}
+
+juce::String ShaderEditor::convertShadertoy(const juce::String& shaderToyCode)
 {
     juce::String juceShader;
     
@@ -309,15 +339,116 @@ juce::String ShaderEditor::convertShaderToyToJUCE(const juce::String& shaderToyC
     return juceShader;
 }
 
-juce::String ShaderEditor::wrapWithUniforms(const juce::String& shaderCode)
+// ===========================================================================
+
+void ShaderEditor::setFramesPerSecond (int framesPerSecondIn)
 {
-    // Check if it's a ShaderToy shader (has mainImage)
-    if (shaderCode.contains("mainImage"))
-    {
-        isShaderToyCode = true;
-        return convertShaderToyToJUCE(shaderCode);
-    }
-    
-    // Otherwise assume it's already JUCE-compatible
-    return shaderCode;
+    jassert (0 < framesPerSecond && framesPerSecond < 1000);
+    framesPerSecond = framesPerSecondIn;
+    updateSync();
 }
+
+void ShaderEditor::updateSync()
+{
+    if (useVBlank)
+    {
+        stopTimer();
+
+        if (vBlankAttachment.isEmpty())
+            vBlankAttachment = { this, [this] { timerCallback(); } };
+    }
+    else
+    {
+        vBlankAttachment = {};
+
+        const auto timerInterval = 1000 / framesPerSecond;
+
+        if (getTimerInterval() != timerInterval)
+            startTimer (timerInterval);
+    }
+}
+
+void ShaderEditor::setSynchroniseToVBlank (bool syncToVBlank)
+{
+    useVBlank = syncToVBlank;
+    updateSync();
+}
+
+int ShaderEditor::getMillisecondsSinceLastUpdate() const noexcept
+{
+    return (int) (Time::getCurrentTime() - lastUpdateTime).inMilliseconds();
+}
+
+void ShaderEditor::timerCallback()
+{
+    // OpenGL 2D Demo App
+    stopTimer();
+    fragmentCode = fragmentDocument.getAllContent();
+    //repaint();
+
+    // AnimatedAppComponent
+    ++totalUpdates;
+    update();
+    repaint();
+    lastUpdateTime = Time::getCurrentTime();
+}
+
+void ShaderEditor::update() {
+}
+
+// ===========================================================================
+
+// juce::MouseListener
+// https://docs.juce.com/master/classjuce_1_1MouseListener.html
+
+
+void ShaderEditor::mouseEnter(const MouseEvent &event) {
+    AudioProcessorEditor::mouseEnter(event);
+}
+
+void ShaderEditor::mouseExit(const MouseEvent &event) {
+    AudioProcessorEditor::mouseExit(event);
+}
+
+void ShaderEditor::mouseMove(const MouseEvent &event) {
+    AudioProcessorEditor::mouseMove(event);
+}
+
+void ShaderEditor::mouseDown(const MouseEvent &event) {
+    AudioProcessorEditor::mouseDown(event);
+}
+
+void ShaderEditor::mouseUp(const MouseEvent &event) {
+    AudioProcessorEditor::mouseUp(event);
+}
+
+void ShaderEditor::mouseDrag(const MouseEvent &event) {
+    AudioProcessorEditor::mouseDrag(event);
+}
+
+void ShaderEditor::mouseDoubleClick(const MouseEvent &event) {
+    AudioProcessorEditor::mouseDoubleClick(event);
+}
+
+void ShaderEditor::mouseWheelMove(const MouseEvent &event, const MouseWheelDetails &wheel) {
+    AudioProcessorEditor::mouseWheelMove(event, wheel);
+}
+
+void ShaderEditor::mouseMagnify(const MouseEvent &event, float scaleFactor) {
+    AudioProcessorEditor::mouseMagnify(event, scaleFactor);
+}
+
+bool ShaderEditor::keyPressed(const KeyPress &key) {
+    return AudioProcessorEditor::keyPressed(key);
+}
+
+bool ShaderEditor::keyStateChanged(bool isKeyDown) {
+    return AudioProcessorEditor::keyStateChanged(isKeyDown);
+}
+
+void ShaderEditor::modifierKeysChanged(const ModifierKeys &modifiers) {
+    AudioProcessorEditor::modifierKeysChanged(modifiers);
+}
+
+// ===========================================================================
+

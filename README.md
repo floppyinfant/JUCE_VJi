@@ -54,19 +54,14 @@ https://cmake.org/cmake/help/book/mastering-cmake/cmake/Help/guide/tutorial/
 
 ### JUCE Tutorials
 
-https://www.youtube.com/watch?v=0ALLRitFE34&list=PLrJPU5Myec8ZGjG3dpd7ZH3TX4Wn6Z5RE&index=2 (JUCE WebView2)
-
-https://github.com/JanWilczek/juce-webview-tutorial (Repo of the above video)
-
-https://thewolfsound.com/how-to-build-audio-plugin-with-juce-cpp-framework-cmake-and-unit-tests/ (WolfSound)
-
 https://juce.com/learn/tutorials/
 
 - https://juce.com/tutorials/tutorial_choosing_projucer_template/
 - Audio: 
   - AudioAppComponent
   - https://docs.juce.com/master/classjuce_1_1AudioAppComponent.html
-  - AudioProcessor, AudioProcessorEditor
+  - AudioProcessor
+  - AudioProcessorEditor https://docs.juce.com/master/classjuce_1_1AudioProcessorEditor.html
 - Synth:
   - https://juce.com/tutorials/tutorial_synth_using_midi_input/ (Keyboard)
 - MIDI:
@@ -80,7 +75,7 @@ https://juce.com/learn/tutorials/
   - Graphics Context https://docs.juce.com/master/classjuce_1_1Graphics.html
   - Animation: 
     - https://juce.com/tutorials/tutorial_animation/
-    - AnimatedAppComponent
+    - AnimatedAppComponent https://docs.juce.com/master/classjuce_1_1AnimatedAppComponent.html
   - OpenGL, Shader
     - https://juce.com/tutorials/tutorial_open_gl_application (OpenGL)  <=============
     - OpenGLAppComponent https://docs.juce.com/master/classjuce_1_1OpenGLAppComponent.html
@@ -117,6 +112,34 @@ http://docs.juce.com/master/index.html (Documentation)
 - osc
 - video
 - cryptography
+
+#### YouTube Tutorials
+
+https://www.youtube.com/@JUCElibrary (JUCE / WolfSound)
+
+https://www.youtube.com/watch?v=0ALLRitFE34&list=PLrJPU5Myec8ZGjG3dpd7ZH3TX4Wn6Z5RE&index=2 (JUCE WebView2)
+
+https://github.com/JanWilczek/juce-webview-tutorial (Repo of the above video)
+
+https://www.youtube.com/@WolfSoundAudio (WolfSound)
+
+https://www.youtube.com/playlist?list=PLJLybGgHYEIeW8OaapEOVelSm-gP9d0MV (WolfSound - Wavetable Synthesis)
+
+https://thewolfsound.com/how-to-build-audio-plugin-with-juce-cpp-framework-cmake-and-unit-tests/
+
+https://www.youtube.com/watch?v=i_Iq4_Kd7Rc (freeCodeCamp Matcatmusic: Learn Modern C++ with JUCE)
+
+https://www.youtube.com/watch?v=Mo0Oco3Vimo (freeCodeCamp Matcatmusic: 3-Band-Compressor)
+
+https://www.youtube.com/@TheAudioProgrammer (TheAudioProgrammer)
+
+https://www.youtube.com/playlist?list=PLLgJJsrdwhPxqkP5AgzZX9jKoKoBtRcu0 (TheAudioProgrammer - 2024)
+
+https://www.youtube.com/playlist?list=PLLgJJsrdwhPzu0H-n4cp8hJvBNjqhMCC0 (TheAudioProgrammer - CLion)
+
+https://www.youtube.com/playlist?list=PLLgJJsrdwhPxBKE-bWNPj1oq8k_upTWsa (TheAudioProgrammer - openFrameworks)
+
+https://www.youtube.com/playlist?list=PLLgJJsrdwhPwR6a2nG8XRvBkXbnKcexlO (TheAudioProgrammer - Unreal MetaSound)
 
 ---
 
