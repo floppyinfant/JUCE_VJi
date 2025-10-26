@@ -32,50 +32,6 @@ private:
 
     // GL
     juce::OpenGLContext openGLContext;
-    // ----------------
-    // not used:
-    // ----------------
-    // juce::OpenGLAppComponent openGLAppComponent;  // is a OpenGLRenderer implements initialize(), render(), shutdown()
-    // juce::OpenGLRenderer openGLRenderer;          // implements newOpenGLContextCreated(), renderOpenGL(), openGLContextClosing()
-    //      openGLContext.setRenderer(this); openGLContext.attachTo(*this);
-    // ----------------
-    // --- ::newOpenGLContextCreated() ---
-    // std::unique_ptr<juce::OpenGLShaderProgram> shaderProgram;
-    //      shaderProgram.reset(new OpenGLShaderProgram(openGLContext));
-    //      if (shaderProgram->addVertexShader(...) && shaderProgram->addFragmentShader(...) && shaderProgram->link()) { shaderProgram->use() }
-    // juce::String vertexShader;
-    // juce::String fragmentShader;
-    // attribute
-    // juce::OpenGLShaderProgram::Uniform uniform;
-    // shape
-    // ----------------
-    // --- RAW OpenGL ---
-    // std::vector<Vertex> vertexBuffer; std::vector<unsigned int> indexBuffer;
-    // GLuint vbo; GLuint ibo;
-    // openGLContext.extensions.glGenBuffers(1, &vbo);
-    // openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    // openGLContext.extensions.glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexBuffer.size(), vertexBuffer.data(), GL_STATIC_DRAW);
-    // --- ::renderOpenGL() ---
-    // OpenGLHelpers::clear(Colours::black);
-    // shaderProgram->use();
-    // openGLContext.extensions.glBindBuffer(..., vbo);
-    // openGLContext.extensions.glBindBuffer(..., ibo);
-    // openGLContext.extensions.glVertexAttribPointer(...);
-    // openGLContext.extensions.glEnableVertexAttribArray(0);  // position attribute
-    // openGLContext.extensions.glVertexAttribPointer(...);
-    // openGLContext.extensions.glEnableVertexAttribArray(1);  // color attribute
-    // glDrawElements(...);
-    // openGLContext.extensions.glDisableVertexAttribArray(0);
-    // openGLContext.extensions.glDisableVertexAttribArray(1);
-    // ----------------
-    // --- GLSL: vert, vs ---
-    // position = pixelPos;
-    // gl_Position = projectionMatrix * viewMatrix * position;
-    // ----------------
-    // --- GLSL: frag, fs ---
-    // fragColor = mix(...);
-    // gl_FragColor = pixelAlpha * fragColor;
-    // ----------------
 
     //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iResolutionUniform;
     //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iTimeUniform;

@@ -271,3 +271,19 @@ JUCE Assertion failure in juce_opengl.cpp:214
 
 ---
 
+DBG("GLSL version: " + juce::OpenGLHelpers::getGLSLVersionString());
+
+ // Query attribute locations that JUCE expects (names vary by program).
+// In JUCE’s custom-shader pipeline, attributes are usually named "position" and "colour".
+//GLint pos = g.getInternalContext().extensions.glGetAttribLocation(shaderProgram->getProgramID(), "position");
+//GLint col = g.getInternalContext().extensions.glGetAttribLocation(shaderProgram->getProgramID(), "colour");
+//DBG("attrib position=" + juce::String(pos) + ", colour=" + juce::String(col));
+
+// You don’t need the context’s extensions; use juce::gl::* directly in JUCE 8
+const auto programID = shaderProgram->getProgramID();
+
+// glGetAttribLocation doesn’t require the program to be bound, but it’s fine either way
+GLint pos = juce::gl::glGetAttribLocation(programID, "position");
+ col = juce::gl::glGetAttribLocation(programID, "colour");
+
+DBG("attrib position=" + juce::String(pos) + ", colour=" + juce::String(col));

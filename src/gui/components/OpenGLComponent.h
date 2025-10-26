@@ -88,7 +88,4 @@ private:
     // gl_FragColor = pixelAlpha * fragColor;
     // ----------------
 
-
-
-
 };

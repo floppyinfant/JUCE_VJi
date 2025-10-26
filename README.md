@@ -63,26 +63,45 @@ https://thewolfsound.com/how-to-build-audio-plugin-with-juce-cpp-framework-cmake
 https://juce.com/learn/tutorials/
 
 - https://juce.com/tutorials/tutorial_choosing_projucer_template/
-- Audio:
+- Audio: 
+  - AudioAppComponent
+  - https://docs.juce.com/master/classjuce_1_1AudioAppComponent.html
+  - AudioProcessor, AudioProcessorEditor
 - Synth:
-- https://juce.com/tutorials/tutorial_synth_using_midi_input/ (Keyboard)
+  - https://juce.com/tutorials/tutorial_synth_using_midi_input/ (Keyboard)
 - MIDI:
-- https://juce.com/tutorials/tutorial_midi_message/ (MIDI-Out: Arpeggiator)
-- https://juce.com/tutorials/tutorial_handling_midi_events/ (MIDI-In)
+  - https://juce.com/tutorials/tutorial_midi_message/ (MIDI-Out: Arpeggiator)
+  - https://juce.com/tutorials/tutorial_handling_midi_events/ (MIDI-In)
 - Plugins:
-- https://juce.com/tutorials/tutorial_audio_parameter/ (Plugin Parameters)
+  - https://juce.com/tutorials/tutorial_audio_parameter/ (Plugin Parameters)
 - DSP:
 - Graphics:
-- https://juce.com/tutorials/tutorial_main_window (Graphics)
-- https://juce.com/tutorials/tutorial_open_gl_application (OpenGL)  <=============
-- Interface Design:
+  - https://juce.com/tutorials/tutorial_main_window (Graphics)
+  - Graphics Context https://docs.juce.com/master/classjuce_1_1Graphics.html
+  - Animation: 
+    - https://juce.com/tutorials/tutorial_animation/
+    - AnimatedAppComponent
+  - OpenGL, Shader
+    - https://juce.com/tutorials/tutorial_open_gl_application (OpenGL)  <=============
+    - OpenGLAppComponent https://docs.juce.com/master/classjuce_1_1OpenGLAppComponent.html
+    - OpenGLGraphicsContextCustomShader https://docs.juce.com/master/structjuce_1_1OpenGLGraphicsContextCustomShader.html
+    - OpenGLContext https://docs.juce.com/master/classjuce_1_1OpenGLContext.html
+    - OpenGLRenderer https://docs.juce.com/master/classjuce_1_1OpenGLRenderer.html
+    - OpenGLShaderProgram https://docs.juce.com/master/classjuce_1_1OpenGLShaderProgram.html
+      - Uniform https://docs.juce.com/master/structjuce_1_1OpenGLShaderProgram_1_1Uniform.html
+    - OpenGLFrameBuffer https://docs.juce.com/master/classjuce_1_1OpenGLFrameBuffer.html
+    - OpenGLImageType https://docs.juce.com/master/classjuce_1_1OpenGLImageType.html
+    - OpenGLHelpers https://docs.juce.com/master/classjuce_1_1OpenGLHelpers.html
+- Interface Design (GUI):
+  - Component https://docs.juce.com/master/classjuce_1_1Component.html
+  - WebView2 (JavaScript)
 - Mobile:
 - Utility Classes:
-- https://juce.com/tutorials/tutorial_file_reading
-- https://juce.com/tutorials/tutorial_value_tree (AVT)
-- https://juce.com/tutorials/tutorial_undo_manager_value_tree (Undo)
-- https://juce.com/tutorials/tutorial_osc_sender_receiver (OSC)
-- https://juce.com/tutorials/tutorial_app_plugin_packaging (Distribution)
+  - https://juce.com/tutorials/tutorial_file_reading
+  - https://juce.com/tutorials/tutorial_osc_sender_receiver (OSC)
+  - https://juce.com/tutorials/tutorial_value_tree (AVT)
+  - https://juce.com/tutorials/tutorial_undo_manager_value_tree (Undo)
+  - https://juce.com/tutorials/tutorial_app_plugin_packaging (Distribution)
 
 http://docs.juce.com/master/index.html (Documentation)
 

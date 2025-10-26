@@ -55,21 +55,23 @@ void ShaderEditor::paint(juce::Graphics& g)
     //g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::lightgrey, juce::Colours::white);
     g.fillCheckerBoard (getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::black);
 
-
+    // no shader set OR new shader code in editor
     if (shader.get() == nullptr || shader->getFragmentShaderCode() != fragmentCode)
     {
         shader.reset();
 
         if (fragmentCode.isNotEmpty())
         {
+            // create shader
             shader.reset(new juce::OpenGLGraphicsContextCustomShader(fragmentCode));
 
             auto result = shader->checkCompilation(g.getInternalContext());
 
             if (result.failed())
             {
+                // compilation failed
                 statusLabel.setText (result.getErrorMessage(), juce::NotificationType::dontSendNotification);
-                DBG("Shader compilation error: " + result.getErrorMessage());  // ADD THIS LINE
+                DBG("Shader compilation error: " + result.getErrorMessage());
                 shader.reset();
             }
         }
@@ -83,43 +85,42 @@ void ShaderEditor::paint(juce::Graphics& g)
 
         // fi: begin of ShaderToy Compatibility Code
         if (isShaderToyCode) {
-            // set Uniforms
-            if (auto* shaderProgram = shader->getProgram(g.getInternalContext()))
-            {
+            if (auto* shaderProgram = shader->getProgram(g.getInternalContext())) {
                 shaderProgram->use();
 
-                //if (shaderProgram->getUniformIDFromName("iResolution") >= 0) {
-                    shaderProgram->setUniform("iResolution", (float)getWidth(), (float)getHeight(), 1.0f);  //  500.0f, 500.0f
-                    DBG("iResolution = " + std::to_string(getWidth()) +  ", " + std::to_string(getHeight()) + ", 1.0f");
-                //}
-                if (shaderProgram->getUniformIDFromName("iTime") >= 0) {
-                    shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001 - startTime));  //  - startTime (?)
-                    DBG("iTime = " + std::to_string(juce::Time::getMillisecondCounterHiRes() * 0.001 - startTime));
-                }
-                if (shaderProgram->getUniformIDFromName("iMouse") >= 0)
-                    shaderProgram->setUniform("iMouse", 0.0f, 0.0f, 0.0f, 0.0f);
-                if (shaderProgram->getUniformIDFromName("iFrame") >= 0)
-                    shaderProgram->setUniform("iFrame", frameCounter++);
+                // -------------------------------------------------------------------
 
-                DBG("uniforms set in paint()");
+                // Set Uniforms:
+
+                DBG("GLSL version: " + juce::OpenGLHelpers::getGLSLVersionString());
+                DBG("Uniforms set in paint():");
+
+                //if (shaderProgram->getUniformIDFromName("iResolution") >= 0) {
+                shaderProgram->setUniform("iResolution", (float)getWidth(), (float)getHeight(), 1.0f);  //  500.0f, 500.0f
+                DBG("iResolution = " + std::to_string(getWidth()) +  ", " + std::to_string(getHeight()) + ", 1.0f");
+                //}
+                shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001 - startTime));  //  - startTime (?)
+                DBG("iTime = " + std::to_string(juce::Time::getMillisecondCounterHiRes() * 0.001 - startTime));
+
+                shaderProgram->setUniform("iMouse", 0.0f, 0.0f, 0.0f, 0.0f);
+                DBG("iMouse");
+
+                shaderProgram->setUniform("iFrame", frameCounter++);
+                DBG("iFrame = " + std::to_string(frameCounter));
+
+                // uniform vec3      iResolution;           // viewport resolution (in pixels)
+                // uniform float     iTime;                 // shader playback time (in seconds)
+                // uniform float     iTimeDelta;            // render time (in seconds)
+                // uniform float     iFrameRate;            // shader frame rate
+                // uniform int       iFrame;                // shader playback frame
+                // uniform float     iChannelTime[4];       // channel playback time (in seconds)
+                // uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+                // uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
+                // uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
+                // uniform vec4      iDate;                 // (year, month, day, time in seconds)
+                // uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
 
                 // -------------------------------------------------------------------
-                // Debugging
-                DBG("GLSL version: " + juce::OpenGLHelpers::getGLSLVersionString());
-                // Query attribute locations that JUCE expects (names vary by program).
-                // In JUCE’s custom-shader pipeline, attributes are usually named "position" and "colour".
-                //GLint pos = g.getInternalContext().extensions.glGetAttribLocation(shaderProgram->getProgramID(), "position");
-                //GLint col = g.getInternalContext().extensions.glGetAttribLocation(shaderProgram->getProgramID(), "colour");
-                //DBG("attrib position=" + juce::String(pos) + ", colour=" + juce::String(col));
-
-                // You don’t need the context’s extensions; use juce::gl::* directly in JUCE 8
-                const auto programID = shaderProgram->getProgramID();
-
-                // glGetAttribLocation doesn’t require the program to be bound, but it’s fine either way
-                GLint pos = juce::gl::glGetAttribLocation(programID, "position");
-                GLint col = juce::gl::glGetAttribLocation(programID, "colour");
-
-                DBG("attrib position=" + juce::String(pos) + ", colour=" + juce::String(col));
             }
         } // end of ShaderToy Compatibility Code
 
@@ -192,7 +193,7 @@ juce::Array<ShaderEditor::ShaderPreset> ShaderEditor::getPresets()
 
         {
             "R-String",
-            JUCE_MEDIUMP
+
             R"(
             void main()
             {
@@ -208,20 +209,8 @@ juce::Array<ShaderEditor::ShaderPreset> ShaderEditor::getPresets()
 
         {
             "ShaderToy Tutorial",
-            JUCE_MEDIUMP
-            R"(/* https://www.shadertoy.com/view/mtyGWy */
 
-// uniform vec3      iResolution;           // viewport resolution (in pixels)
-// uniform float     iTime;                 // shader playback time (in seconds)
-// uniform float     iTimeDelta;            // render time (in seconds)
-uniform float     iFrameRate;            // shader frame rate
-// uniform int       iFrame;                // shader playback frame
-uniform float     iChannelTime[4];       // channel playback time (in seconds)
-uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
-// uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
-// uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
-uniform vec4      iDate;                 // (year, month, day, time in seconds)
-uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
+            R"(/* https://www.shadertoy.com/view/mtyGWy */
 
 vec3 palette( float t ) {
     vec3 a = vec3(0.5, 0.5, 0.5);
@@ -256,11 +245,16 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
 
         {
             "ShaderToy - Plasma",
-            JUCE_MEDIUMP
+
             "void mainImage(out vec4 fragColor, in vec2 fragCoord)\n"
             "{\n"
+#if JUCER_OPENGL_ES
             "    " JUCE_MEDIUMP " vec2 uv = fragCoord / iResolution.xy;\n"
             "    " JUCE_MEDIUMP " vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
+#else
+            "    vec2 uv = fragCoord / iResolution.xy;\n"
+            "    vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
+#endif
             "    fragColor = vec4(col, 1.0);\n"
             "}\n"
             "\n"
@@ -281,12 +275,25 @@ juce::String ShaderEditor::convertShaderToyToJUCE(const juce::String& shaderToyC
     
     // Add JUCE-compatible uniforms header
     juceShader += "// Converted from ShaderToy\n\n";
-    juceShader += "uniform " JUCE_MEDIUMP " vec3 iResolution;\n";
+    juceShader += "uniform " JUCE_MEDIUMP " vec3  iResolution;\n";
     juceShader += "uniform " JUCE_MEDIUMP " float iTime;\n";
-    juceShader += "uniform " JUCE_MEDIUMP " vec4 iMouse;\n";
+    juceShader += "uniform " JUCE_MEDIUMP " vec4  iMouse;\n";
     juceShader += "uniform " JUCE_MEDIUMP " float iTimeDelta;\n";
-    juceShader += "uniform " JUCE_MEDIUMP " int iFrame;\n\n";
-    
+    juceShader += "uniform " JUCE_MEDIUMP " int   iFrame;\n\n";
+
+    // uniform vec3      iResolution;           // viewport resolution (in pixels)
+    // uniform float     iTime;                 // shader playback time (in seconds)
+    // uniform float     iTimeDelta;            // render time (in seconds)
+    // uniform float     iFrameRate;            // shader frame rate
+    // uniform int       iFrame;                // shader playback frame
+    // uniform float     iChannelTime[4];       // channel playback time (in seconds)
+    // uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+    // uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
+    // uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
+    // uniform vec4      iDate;                 // (year, month, day, time in seconds)
+    // uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
+
+
     // Add the ShaderToy code (keep mainImage function)
     juceShader += shaderToyCode;
     juceShader += "\n\n";
@@ -294,7 +301,7 @@ juce::String ShaderEditor::convertShaderToyToJUCE(const juce::String& shaderToyC
     // Add JUCE main() wrapper
     juceShader += "void main()\n";
     juceShader += "{\n";
-    juceShader += "    " JUCE_MEDIUMP " vec4 fragColor;\n";
+    //juceShader += "    " JUCE_MEDIUMP " vec4 fragColor;\n";
     juceShader += "    mainImage(fragColor, pixelPos);\n";
     juceShader += "    gl_FragColor = pixelAlpha * fragColor;\n";
     juceShader += "}\n";
