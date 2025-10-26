@@ -10,14 +10,17 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
     //openGLContext.attachTo(*getTopLevelComponent());
     openGLContext.attachTo(*this);
 
+    // --------------------------------
+
     addAndMakeVisible(statusLabel);
     statusLabel.setJustificationType(juce::Justification::topLeft);
     statusLabel.setFont(juce::FontOptions (14.0f));
 
     auto presets = getPresets();
 
-    for (int i = 0; i < presets.size(); ++i)
+    for (int i = 0; i < presets.size(); ++i) {
         presetBox.addItem(presets[i].name, i + 1);
+    }
 
     addAndMakeVisible(presetLabel);
     presetLabel.attachToComponent(&presetBox, true);
@@ -25,11 +28,15 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
     addAndMakeVisible(presetBox);
     presetBox.onChange = [this] {selectPreset(presetBox.getSelectedItemIndex());};
 
+    // --------------------------------
+
     fragmentEditorComp.setOpaque(false);
     fragmentDocument.addListener(this);
     addAndMakeVisible(fragmentEditorComp);
 
     presetBox.setSelectedItemIndex(0);
+
+    // --------------------------------
 
     setSize(500, 500);
 

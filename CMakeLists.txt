@@ -135,6 +135,8 @@ target_sources(VJi
         src/vj/ShaderEditor.cpp
         src/dsp/DspProcessor.cpp
         #src/sq/MidiProcessor.cpp
+        src/gui/OpenGLEditor.cpp
+        src/gui/components/OpenGLComponent.cpp
 )
 
 # ----------------------------------------------------------------------------

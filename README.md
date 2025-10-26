@@ -43,6 +43,8 @@ https://www.jetbrains.com/clion/learn/
 
 - https://www.jetbrains.com/help/clion/clion-quick-start-guide.html
 - https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html (CMake Tutorial)
+- https://www.jetbrains.com/help/clion/junie.html
+- https://www.jetbrains.com/help/junie/get-started-with-junie.html (Junie Coding Agent)
 
 ### CMake Tutorials
 
@@ -200,11 +202,17 @@ https://github.com/mrRay/vvisf-gl (C++ / OpenGL Library)  <=============
 
 https://github.com/msfeldstein/interactive-shader-format-js (JS / WebGL Library)
 
+https://github.com/headstash/synesthesia-scripts (ISF to Synesthesia Script Converter)
+
 ---
 
 ### GLSL Sandbox
 
 https://glslsandbox.com/
+
+### The Book of Shaders
+
+https://thebookofshaders.com/
 
 ---
 
@@ -389,6 +397,12 @@ http://www.pd-tutorial.com/
 ### Synesthesia
 
 https://www.synesthesia.live/
+
+https://app.synesthesia.live/docs/ssf/ssf.html?referrer=synesthesia
+
+https://app.synesthesia.live/docs/resources/glsl_resources.html
+
+https://github.com/headstash/synesthesia-scripts
 
 ---
 

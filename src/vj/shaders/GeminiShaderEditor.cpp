@@ -13,8 +13,7 @@ public:
     ShaderRenderer()
     {
         // Must enable the OpenGL context for this component
-        openGLContext.set
-(this);
+        openGLContext.set(this);
         openGLContext.setContinuousRepainting(false); // We use timer for repaint
         // Start the timer to trigger continuous repainting for animation
         startTimerHz(60);
@@ -24,8 +23,7 @@ public:
     ~ShaderRenderer() override
     {
         stopTimer();
-        openGLContext.set
-(nullptr);
+        openGLContext.set(nullptr);
     }
 
     // Pass new GLSL code from the TextEditor

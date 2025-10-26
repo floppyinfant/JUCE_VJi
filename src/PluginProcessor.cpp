@@ -1,7 +1,10 @@
 #include "PluginProcessor.h"
+
 #include "PluginEditor.h"
 #include "vj/ShaderEditor.h"
 #include "gui/WebViewEditor.h"
+#include "gui/OpenGLEditor.h"
+
 
 //==============================================================================
 PluginAudioProcessor::PluginAudioProcessor()
@@ -172,7 +175,8 @@ juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 {
     //return new PluginAudioProcessorEditor (*this);
     //return new PluginWebViewEditor (*this);
-    return new ShaderEditor (*this);
+    //return new ShaderEditor (*this);  // <-- VJi
+    return new OpenGLEditor (*this);
 }
 
 //==============================================================================
