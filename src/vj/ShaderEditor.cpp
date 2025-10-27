@@ -207,10 +207,7 @@ juce::Array<ShaderEditor::ShaderPreset> ShaderEditor::getPresets()
             R"(
             void main()
             {
-                vec4 colour1 = vec4 (0.0, 1.0, 1.0, 1.0);
-                vec4 colour2 = vec4 (1.0, 0.0, 1.0, 1.0);
-                float alpha = pixelPos.x / 1000.0;
-                gl_FragColor = pixelAlpha * mix (colour1, colour2, alpha);
+                gl_FragColor = pixelAlpha * vec4(pixelPos / 500, 1., 1.);
             }
             )"
         },
@@ -339,6 +336,12 @@ juce::String ShaderEditor::convertShadertoy(const juce::String& shaderToyCode)
 
 // ===========================================================================
 
+// AnimatedAppComponent
+// juce_gui_extra/misc/juce_AnimatedAppComponent.h
+
+// Timer | MultiTimer
+// https://docs.juce.com/master/classjuce_1_1Timer.html
+
 void ShaderEditor::setFramesPerSecond (int framesPerSecondIn)
 {
     jassert (0 < framesPerSecond && framesPerSecond < 1000);
@@ -400,7 +403,7 @@ void ShaderEditor::update() {
 
 // juce::MouseListener
 // https://docs.juce.com/master/classjuce_1_1MouseListener.html
-
+// https://docs.juce.com/master/classjuce_1_1MouseEvent.html
 
 void ShaderEditor::mouseEnter(const MouseEvent &event) {
     AudioProcessorEditor::mouseEnter(event);
@@ -437,6 +440,11 @@ void ShaderEditor::mouseWheelMove(const MouseEvent &event, const MouseWheelDetai
 void ShaderEditor::mouseMagnify(const MouseEvent &event, float scaleFactor) {
     AudioProcessorEditor::mouseMagnify(event, scaleFactor);
 }
+
+// juce::KeyListener
+// https://docs.juce.com/master/classjuce_1_1KeyListener.html
+// https://docs.juce.com/master/classjuce_1_1KeyPress.html
+// https://docs.juce.com/master/classjuce_1_1ModifierKeys.html
 
 bool ShaderEditor::keyPressed(const KeyPress &key) {
     return AudioProcessorEditor::keyPressed(key);

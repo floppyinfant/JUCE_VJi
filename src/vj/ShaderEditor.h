@@ -21,6 +21,7 @@ public:
     // -----------------------------------------------------------------------
 
     // AnimatedAppComponent - as a Plugin (AudioProcessorEditor) it is not possible to inherit from this class
+    // https://docs.juce.com/master/classjuce_1_1AnimatedAppComponent.html
 
     /**
      * start a timer running which will call update() and repaint the component at the given frequency.

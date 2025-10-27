@@ -145,20 +145,27 @@ https://www.youtube.com/playlist?list=PLLgJJsrdwhPwR6a2nG8XRvBkXbnKcexlO (TheAud
 
 ---
 
-## APIs: Frameworks, Libraries, Software and Tools
+## Frameworks, Libraries, Software and Tools
 
-### Rendering APIs / Backends
+### Backends (Rendering APIs)
 
-- OpenGL
-- Vulkan
-- DirectX  12, Direct3D (Microsoft)
-- CUDA (Nvidia), ROCm (AMD)
-- Metal (Apple)
-- Wayland (Linux), Xorg / X11 (Linux)
+#### OpenGL
 
-OpenPBR (Physically Based Rendering)
-- https://github.com/AcademySoftwareFoundation/OpenPBR
-- https://academysoftwarefoundation.github.io/OpenPBR/
+https://www.khronos.org/opengl/
+
+https://wikis.khronos.org/opengl/
+
+https://www.opengl.org/
+
+https://learnopengl.com/ <==========
+
+https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2 (The Cherno)
+- https://hazelengine.com/
+- https://github.com/StudioCherno
+- https://github.com/TheCherno/Hazel
+- https://github.com/TheChernoCommunity
+
+https://www.youtube.com/playlist?list=PLPaoO-vpZnumdcb4tZc4x5Q-v7CkrQ6M- (Victor Gordan)
 
 GLFW (OpenGL Framework)
 - https://www.glfw.org/
@@ -166,11 +173,72 @@ GLFW (OpenGL Framework)
 Glew (OpenGL Extension Wrangler Library)
 - https://github.com/nigels-com/glew
 
-Dear ImGui (GUI Framework)
-- https://github.com/ocornut/imgui
+Glad
 
-SDL (Simple DirectMedia Layer)
+#### Vulkan
+
+https://www.khronos.org/vulkan/
+
+#### other Backends
+
+- DirectX  12, Direct3D (Microsoft)
+- CUDA (Nvidia), ROCm (AMD)
+- Metal (Apple)
+- Wayland (Linux), Xorg / X11 (Linux)
+
+### Frontends (Windowing APIs)
+
+GLFW (OpenGL Framework)
+- https://www.glfw.org/
+
+SDL2 (Simple DirectMedia Layer)
 - https://www.libsdl.org/
+
+SFML
+- https://www.sfml-dev.org/
+
+GLUT
+- https://en.wikipedia.org/wiki/OpenGL_Utility_Toolkit
+- https://www.opengl.org/resources/libraries/glut/glut_downloads.php
+- https://en.wikipedia.org/wiki/Freeglut
+- https://github.com/freeglut/freeglut
+
+#### Dear ImGui
+
+https://github.com/ocornut/imgui
+
+Dear ImGui Extensions
+
+https://github.com/ocornut/imgui/wiki/Useful-Extensions
+
+... Node Graph Editors
+
+https://github.com/ocornut/imgui/wiki/Useful-Extensions#node-editors
+
+- https://github.com/thedmd/imgui-node-editor
+- https://github.com/epezent/implot
+- https://gboisse.github.io/posts/node-graph/
+
+Tutorials
+- https://www.youtube.com/watch?v=-vXSmDAmXS8 (ADC24 Talk) <========
+  - github.com/free-audio/clap-imgui-support
+  - github.com/schwaaa/clap-imgui
+  - github.com/Krasjet/imgui_juce
+  - github.com/noizebox/vstimgui
+- The Cherno Walnut
+
+@see JavaScript cables.gl
+
+### more
+
+OpenPBR (Physically Based Rendering)
+- https://github.com/AcademySoftwareFoundation/OpenPBR
+- https://academysoftwarefoundation.github.io/OpenPBR/
+
+Ray Tracing in One Weekend
+- https://raytracing.github.io/books/RayTracingInOneWeekend.html
+- https://github.com/RayTracing/raytracing.github.io/
+- https://github.com/RayTracing/raytracing.github.io/wiki/Further-Readings
 
 ---
 
@@ -178,13 +246,9 @@ SDL (Simple DirectMedia Layer)
 
 https://github.com/KhronosGroup/GLSL
 
-https://www.khronos.org/
-
 https://www.khronos.org/opengl/
 
-https://wikis.khronos.org/opengl/
-
-https://wikis.khronos.org/opengl/OpenGL_Shading_Language
+https://wikis.khronos.org/opengl/OpenGL_Shading_Language <==========
 
 https://www.khronos.org/developers/reference-cards
 
@@ -194,11 +258,51 @@ https://github.com/g-truc/ogl-samples (Shaders in Data/)
 
 File Extensions: vert.glsl, frag.glsl, *.vert, *.frag, *.fs, *.vs, ... , *.geom, *.tesc, *.tese, *.comp, *.spv
 
-Attribute
+gl_FragCoord
+- is in pixels from 0 .. screen_width, 0 .. screen_height
+- https://registry.khronos.org/OpenGL-Refpages/gl4/html/gl_FragCoord.xhtml
 
-Uniform
+```c++
+// vertex shader
+attribute vec3 a_Position;
+varying float pos;
 
-Varying
+void main() {
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(a_Position, 1.0);
+}
+
+// fragment shader
+varying float pos;
+
+uniform vec2 RENDERSIZE;
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / RENDERSIZE.xy;
+    uv -= vec2(pos);
+    uv.x *= RENDERSIZE.x / RENDERSIZE.y;
+    
+    gl_FragColor = pixelAlpha * vec4(1.0, 0.0, 0.0, 1.0);
+}
+```
+
+#### Shader Tutorials
+
+https://www.youtube.com/watch?v=3mfvZ-mdtZQ
+
+Links in the Description:
+- https://iquilezles.org/articles/distfunctions2d/ (SDF)
+
+@see ShaderToy
+
+#### SHADERed
+
+https://shadered.org/
+
+https://github.com/dfranx/SHADERed
+
+Shader IDE with Debugger !
+
+@see Kodelife, ISF-editor, Synesthesia
 
 ---
 
@@ -218,6 +322,87 @@ https://www.youtube.com/watch?v=H8nHxRO7eX0 (CGMatter Fractals)
 
 ---
 
+### The Book of Shaders
+
+https://thebookofshaders.com/
+
+---
+
+### ShaderToy
+
+https://www.shadertoy.com/
+
+https://www.shadertoy.com/howto
+
+https://www.shadertoy.com/view/mtyGWy (Example from Tutorial)
+
+https://www.youtube.com/watch?v=f4s1h2YETNY (YouTube Tutorial)
+
+https://www.youtube.com/watch?v=0ifChJ0nJfM (Tutorial linked by ShaderToy)
+
+https://shadertoyunofficial.wordpress.com/ (Tutorial linked by ShaderToy)
+
+Apps:
+- https://steamcommunity.com/sharedfiles/filedetails/?id=1726697188 (Wallpaper)
+- https://chromewebstore.google.com/detail/shadertoy-unofficial-plug/ohicbclhdmkhoabobgppffepcopomhgl (Chrome Extension)
+- https://github.com/patuwwy/ShaderToy-Chrome-Plugin/
+- https://addons.mozilla.org/firefox/addon/shadertoy-unofficial-plugin/ (Firefox Extension)
+
+Tools (mentioned in the Tutorial):
+- https://iquilezles.org/articles/
+- https://iquilezles.org/articles/palettes/
+- http://dev.thi.ng/gradients
+- https://graphtoy.com/
+
+#### Uniforms
+
+Shader Inputs | global variables
+
+```c++
+uniform vec3      iResolution;           // viewport resolution (in pixels)
+uniform float     iTime;                 // shader playback time (in seconds)
+uniform float     iTimeDelta;            // render time (in seconds)
+uniform float     iFrameRate;            // shader frame rate
+uniform int       iFrame;                // shader playback frame
+uniform float     iChannelTime[4];       // channel playback time (in seconds)
+uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
+uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
+uniform vec4      iDate;                 // (year, month, day, time in seconds)
+```
+
+@see p5.js
+
+https://oneshader.net/
+
+---
+
+### Synesthesia
+
+https://www.synesthesia.live/
+
+https://app.synesthesia.live/docs/ssf/ssf.html?referrer=synesthesia
+
+https://app.synesthesia.live/docs/resources/glsl_resources.html
+
+https://github.com/headstash/synesthesia-scripts
+
+---
+
+TouchDesigner
+
+https://derivative.ca/
+
+vvvv
+
+https://vvvv.org/
+
+Kodelife
+
+https://hexler.net/kodelife
+
+---
+
 ### Interactive Shader Format (ISF)
 
 https://isf.video/
@@ -234,7 +419,7 @@ https://editor.isf.video/ (Online Editor with Examples)
 
 https://docs.vidvox.net/isf-editor/ (Desktop Editor)
 
-https://isf.vidvox.net/desktop-editor/ 
+https://isf.vidvox.net/desktop-editor/
 
 https://github.com/vidvox/isf
 
@@ -252,54 +437,29 @@ https://github.com/headstash/synesthesia-scripts (ISF to Synesthesia Script Conv
 
 https://glslsandbox.com/
 
-### The Book of Shaders
-
-https://thebookofshaders.com/
+---
 
 ---
 
-### ShaderToy
+### openFrameworks
 
-https://www.shadertoy.com/
+https://openframeworks.cc/learning/
 
-https://www.shadertoy.com/howto
+https://openframeworks.cc/examples/
+- https://github.com/openframeworks/openFrameworks/tree/master/examples
 
-https://www.youtube.com/watch?v=f4s1h2YETNY (YouTube Tutorial)
-
-https://www.youtube.com/watch?v=0ifChJ0nJfM (Tutorial linked by ShaderToy)
-
-https://shadertoyunofficial.wordpress.com/ (Tutorial linked by ShaderToy)
-
-
-
-Apps:
-
-https://steamcommunity.com/sharedfiles/filedetails/?id=1726697188 (Wallpaper)
-
-https://chromewebstore.google.com/detail/shadertoy-unofficial-plug/ohicbclhdmkhoabobgppffepcopomhgl (Chrome Extension)
-
-https://github.com/patuwwy/ShaderToy-Chrome-Plugin/
-
-https://addons.mozilla.org/firefox/addon/shadertoy-unofficial-plugin/ (Firefox Extension)
+https://openframeworks.cc/documentation/
+- https://openframeworks.cc///documentation/gl/ofShader/
 
 ---
 
-#### Code
+### Processing
 
-Shader Inputs
+https://processing.org/
 
-```
-uniform vec3      iResolution;           // viewport resolution (in pixels)
-uniform float     iTime;                 // shader playback time (in seconds)
-uniform float     iTimeDelta;            // render time (in seconds)
-uniform float     iFrameRate;            // shader frame rate
-uniform int       iFrame;                // shader playback frame
-uniform float     iChannelTime[4];       // channel playback time (in seconds)
-uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
-uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
-uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
-uniform vec4      iDate;                 // (year, month, day, time in seconds)
-```
+Java Mode
+
+Python Mode
 
 ---
 
@@ -326,6 +486,23 @@ https://openprocessing.org/browse?time=anytime&type=tags&q=particle&offset=0#
 ### P5.js
 
 https://p5js.org/
+
+https://github.com/processing/p5.js/blob/main/contributor_docs/webgl_mode_architecture.md
+
+```javascript
+// For all objects in all contexts, the following global uniforms are available:
+
+uniform mat4 uModelViewMatrix  // A matrix to convert object-space positions into camera-space 
+uniform mat4 uProjectionMatrix // A matrix to convert camera-space positions into screen space 
+uniform mat3 uNormalMatrix     // A matrix to convert object-space normals into camera-space
+
+// Additionally, these per-vertex properties are available as attributes:
+
+attribute vec3 aPosition       // The position of the vertex in object space 
+attribute vec3 aNormal         // For fills, a direction pointing outward from the surface 
+attribute vec2 aTexCoord       // For fills, a coordinate between 0 and 1 in x and y referring to a location on a texture image 
+attribute vec3 aVertexColor    // For fills, an optional per-vertex color
+```
 
 #### Example p5.js sketch
 
@@ -355,42 +532,36 @@ https://threejs.org/
 
 https://github.com/mrdoob/three.js
 
-WebGL
-WebGPU
-WebAsm / WA
-SVG
-CSS3D
-
-https://developer.chrome.com/docs/web-platform/webgpu/overview?hl=de
-https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
-https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
-
-https://gpuweb.github.io/gpuweb/wgsl/ (WGSL - WebGPU Shading Language)
-
-https://webassembly.org/ (WA)
-
-
 #### Three.js Example: NASA Solar System
 
 https://eyes.nasa.gov/apps/solar-system/#/home
 
 ---
 
-### Processing
+### Web APIs
 
-https://processing.org/
+#### WebGL
+
+https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
+
+#### WebGPU
+
+https://developer.chrome.com/docs/web-platform/webgpu/overview?hl=de
+https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
+
+##### WGSL
+
+WebGPU Shading Language (WGSL)
+
+https://gpuweb.github.io/gpuweb/wgsl/
+
+#### WebAsm / WA
+
+https://webassembly.org/ (WA)
+
+#### CSS3D
 
 ---
-
-### openFrameworks
-
-https://openframeworks.cc/learning/
-
-https://openframeworks.cc/examples/
-^- https://github.com/openframeworks/openFrameworks/tree/master/examples
-
-https://openframeworks.cc/documentation/
-- https://openframeworks.cc///documentation/gl/ofShader/
 
 ---
 
@@ -399,7 +570,6 @@ https://openframeworks.cc/documentation/
 https://cycling74.com/products/jitter
 
 https://cycling74.com/articles/jitter-resources-an-overview
-
 
 ---
 
@@ -434,17 +604,11 @@ http://www.pd-tutorial.com/
 
 ---
 
----
+### Cables.gl
 
-### Synesthesia
+https://cables.gl/
 
-https://www.synesthesia.live/
-
-https://app.synesthesia.live/docs/ssf/ssf.html?referrer=synesthesia
-
-https://app.synesthesia.live/docs/resources/glsl_resources.html
-
-https://github.com/headstash/synesthesia-scripts
+https://cables.gl/docs/faq/shadertoy/shadertoy
 
 ---
 
