@@ -136,8 +136,6 @@ void ShaderEditor::paint(juce::Graphics& g)
         } // end of ShaderToy Compatibility Code
 
         shader->fillRect(g.getInternalContext(), getLocalBounds());
-        // start timer again
-        updateSync();
     }
 }
 
@@ -162,7 +160,7 @@ void ShaderEditor::selectPreset(int preset) {
     //fragmentDocument.replaceAllContent (getPresets()[preset].fragmentShader);
     // fi: ShaderToy Compatibility
     fragmentDocument.replaceAllContent(convert(getPresets()[preset].fragmentShader));
-    startTimer(1);
+    startTimer(TIMER_DOCUMENT_CHANGED, 1);
 }
 
 juce::Array<ShaderEditor::ShaderPreset> ShaderEditor::getPresets()
@@ -209,8 +207,8 @@ juce::Array<ShaderEditor::ShaderPreset> ShaderEditor::getPresets()
             R"(
             void main()
             {
-                vec4 colour1 = vec4 (1.0, 0.4, 0.6, 1.0);
-                vec4 colour2 = vec4 (0.0, 0.8, 0.6, 1.0);
+                vec4 colour1 = vec4 (0.0, 1.0, 1.0, 1.0);
+                vec4 colour2 = vec4 (1.0, 0.0, 1.0, 1.0);
                 float alpha = pixelPos.x / 1000.0;
                 gl_FragColor = pixelAlpha * mix (colour1, colour2, alpha);
             }
@@ -352,10 +350,10 @@ void ShaderEditor::updateSync()
 {
     if (useVBlank)
     {
-        stopTimer();
+        stopTimer(TIMER_ANIMATION);
 
         if (vBlankAttachment.isEmpty())
-            vBlankAttachment = { this, [this] { timerCallback(); } };
+            vBlankAttachment = { this, [this] { timerCallback(TIMER_ANIMATION); } };
     }
     else
     {
@@ -363,8 +361,8 @@ void ShaderEditor::updateSync()
 
         const auto timerInterval = 1000 / framesPerSecond;
 
-        if (getTimerInterval() != timerInterval)
-            startTimer (timerInterval);
+        if (getTimerInterval(TIMER_ANIMATION) != timerInterval)
+            startTimer(TIMER_ANIMATION, timerInterval);
     }
 }
 
@@ -379,18 +377,20 @@ int ShaderEditor::getMillisecondsSinceLastUpdate() const noexcept
     return (int) (Time::getCurrentTime() - lastUpdateTime).inMilliseconds();
 }
 
-void ShaderEditor::timerCallback()
+void ShaderEditor::timerCallback(int id)
 {
-    // OpenGL 2D Demo App
-    stopTimer();
-    fragmentCode = fragmentDocument.getAllContent();
-    //repaint();
-
-    // AnimatedAppComponent
-    ++totalUpdates;
-    update();
-    repaint();
-    lastUpdateTime = Time::getCurrentTime();
+    if (id == TIMER_DOCUMENT_CHANGED) {
+        // OpenGL 2D Demo App
+        stopTimer(TIMER_DOCUMENT_CHANGED);
+        fragmentCode = fragmentDocument.getAllContent();
+        repaint();
+    } else if (id == TIMER_ANIMATION) {
+        // AnimatedAppComponent
+        ++totalUpdates;
+        update();
+        repaint();
+        lastUpdateTime = Time::getCurrentTime();
+    }
 }
 
 void ShaderEditor::update() {

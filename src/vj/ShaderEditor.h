@@ -7,7 +7,7 @@
 
 class ShaderEditor final : public juce::AudioProcessorEditor,
                            private juce::CodeDocument::Listener,
-                           private juce::Timer
+                           private juce::MultiTimer
 {
 public:
     explicit ShaderEditor(PluginAudioProcessor& processor);
@@ -113,19 +113,22 @@ private:
 
     // -----------------------------------------------------------------------
 
+    const int TIMER_DOCUMENT_CHANGED = 1;
+    const int TIMER_ANIMATION = 2;
+
     enum {shaderLinkDelay = 500};
 
     void codeDocumentTextInserted(const juce::String& /*newText*/, int /*insertIndex*/) override
     {
-        startTimer (shaderLinkDelay);
+        startTimer (TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
     }
 
     void codeDocumentTextDeleted(int /*startIndex*/, int /*endIndex*/) override
     {
-        startTimer(shaderLinkDelay);
+        startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
     }
 
-    void timerCallback() override;
+    void timerCallback(int) override;
 
     struct ShaderPreset
     {
