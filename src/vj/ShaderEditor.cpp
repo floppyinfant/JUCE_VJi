@@ -6,6 +6,7 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
     : juce::AudioProcessorEditor(&p), processor(p)
 {
     setOpaque(true);
+
     if (auto* peer = getPeer())
         peer->setCurrentRenderingEngine(1);
 
@@ -440,6 +441,8 @@ void ShaderEditor::mouseWheelMove(const MouseEvent &event, const MouseWheelDetai
 void ShaderEditor::mouseMagnify(const MouseEvent &event, float scaleFactor) {
     AudioProcessorEditor::mouseMagnify(event, scaleFactor);
 }
+
+// -----------------------------------------------------------------------
 
 // juce::KeyListener
 // https://docs.juce.com/master/classjuce_1_1KeyListener.html

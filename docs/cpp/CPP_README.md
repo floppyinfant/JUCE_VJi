@@ -41,6 +41,8 @@ C++ 20, 23, (26)
 
 https://en.wikipedia.org/wiki/C%2B%2B11
 
+### Standards
+
 C++11 standard
 - smart pointers (std::shared_ptr, std::unique_ptr = ... std::make_unique)
 - initializer lists
@@ -89,25 +91,50 @@ C++26 standard
 
 ## Notes
 
-### smart pointers
+### Objects, Instantiation, Memory
+
+String str;
+
+String str = String();
+
+String* strPtr = new String();
+
+delete str;
+
+strPtr = nullptr;
+
+### Smart Pointers
+
+std::unique_ptr<String> strPtr = std::make_unique<String>();
+
+std::shared_ptr<String> strPtr = std::make_shared<String>();
+
+std::weak_ptr<String> strPtr = std::weak_ptr<String>();
 
 ### RAII
 
-### initializer lists
+### Initializer Lists
 
 ### function parameters
 
-pass by value, pass by reference
+pass by value
+
+pass by reference
 
 pass by const reference
+
 pass by value & std::move
 
-### strings
+### Strings
 
 const char* c-string // null-terminated
+
 std::string stdString
+
 juce::String juceString
+
 R"()" // Raw-String (multiline)
+
 Unicode Strings
 
 
@@ -128,6 +155,9 @@ int main() {
     std::println("Hello, world!");
 }
 ```
+
+
+---
 
 ```c++
 
