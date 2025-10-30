@@ -4,7 +4,7 @@
 
 #include "ViewController.h"
 
-ViewController::ViewController(PluginAudioProcessor p)
+ViewController::ViewController(PluginAudioProcessor& p)
     : processor(p), editor(*p.getActiveEditor())
 {
 

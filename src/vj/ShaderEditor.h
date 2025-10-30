@@ -5,6 +5,7 @@
 #include <juce_opengl/juce_opengl.h>
 #include <juce_gui_extra/juce_gui_extra.h>
 
+#include "../gui/UI.h"
 #include "shaders/shaders.h"
 
 class ShaderEditor final : public juce::AudioProcessorEditor,
@@ -99,6 +100,8 @@ public:
 
     ShaderCodeExamples examples;
 
+    std::unique_ptr<UI> overlayUI;
+
 private:
     PluginAudioProcessor& processor;
 
@@ -156,12 +159,12 @@ private:
 
     // -----------------------------------------------------------------------
 
+    // -----------------------------------------------------------------------
+
     // palette;
     // rainbow;
     // lookAndFeel;
-
-
-    // -----------------------------------------------------------------------
+    // apvts; parameters;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShaderEditor)
 };

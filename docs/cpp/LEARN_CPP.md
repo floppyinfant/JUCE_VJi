@@ -101,7 +101,9 @@ String* strPtr = new String();
 
 delete str;
 
-strPtr = nullptr;
+char** strPtr = nullptr;
+
+void* ptr = malloc(1024);
 
 ### Smart Pointers
 

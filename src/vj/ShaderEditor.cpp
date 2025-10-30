@@ -14,6 +14,7 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
 
     // --------------------------------
 
+    // Presets Selector
     addAndMakeVisible(statusLabel);
     statusLabel.setJustificationType(juce::Justification::topLeft);
     statusLabel.setFont(juce::FontOptions(14.0f));
@@ -32,6 +33,7 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
 
     // --------------------------------
 
+    // Code Editor
     codeEditorComponent.setOpaque(false);
     codeDocument.addListener(this);
     addAndMakeVisible(codeEditorComponent);
@@ -41,15 +43,24 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
 
     // --------------------------------
 
+    // init
     setFramesPerSecond(fps);
+    isConverted = false;
+    u_startTime = juce::Time::getMillisecondCounterHiRes() * 0.001f;
 
-    // fi: ShaderToy Compatibility Code
-    u_startTime = juce::Time::getMillisecondCounterHiRes() * 0.001;
+    // GUI
+    overlayUI = std::make_unique<UI>();
+    addAndMakeVisible(*overlayUI);
+    //overlayUI->setBounds(getLocalBounds());
+    // catches all Mouse clicks !?
 
     // --------------------------------
 
+    // Component (AudioProcessorEditor)
     setSize(500, 500);
     setResizable(true, true);
+
+
 }
 
 ShaderEditor::~ShaderEditor() {
@@ -108,8 +119,8 @@ void ShaderEditor::paint(juce::Graphics &g) {
             //}
 
             // uniform float     iTime;                 // shader playback time (in seconds)
-            shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001 - u_startTime));
-            DBG("iTime = " + std::to_string(juce::Time::getMillisecondCounterHiRes() * 0.001 - u_startTime));
+            shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001f - u_startTime));
+            DBG("iTime = " + std::to_string(juce::Time::getMillisecondCounterHiRes() * 0.001f - u_startTime));
 
             // TODO uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
             shaderProgram->setUniform("iMouse", (float)u_mouseX, (float)u_mouseY, (float)u_mouseZ, (float)u_mouseW);
@@ -148,6 +159,9 @@ void ShaderEditor::resized() {
 
     area.removeFromTop(4);
     codeEditorComponent.setBounds(area);
+
+    // to be done: smaller bounds: only header or footer
+    overlayUI->setBounds(getLocalBounds());
 }
 
 // ===========================================================================
@@ -328,9 +342,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         // ---------------------------------------------------------------------------
 
         {
-            "", //"Print Text in Shaders",
+            "Print Text in Shaders",
 
-            "" //examples.getExample(1)
+            "// to be done!" //examples.getExample(1)
         }
 
         // ---------------------------------------------------------------------------
@@ -413,11 +427,11 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
 
 // ===========================================================================
 
-void ShaderEditor::codeDocumentTextInserted(const juce::String &newText, int insertIndex) {
+void ShaderEditor::codeDocumentTextInserted(const juce::String & /* newText */, int /* insertIndex */) {
     startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
 }
 
-void ShaderEditor::codeDocumentTextDeleted(int startIndex, int endIndex) {
+void ShaderEditor::codeDocumentTextDeleted(int /* startIndex */, int /* endIndex */) {
     startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
 }
 

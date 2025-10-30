@@ -27,7 +27,7 @@
 class ViewController : public juce::Component
 {
 public:
-    ViewController(PluginAudioProcessor);
+    ViewController(PluginAudioProcessor&);
     ~ViewController() override;
 
     // --------------------------------

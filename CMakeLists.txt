@@ -156,6 +156,7 @@ target_sources(VJi
         src/gui/components/OpenGLComponent.cpp
         src/gui/ViewController.cpp
         #src/vj/shaders/shaders.h
+        src/gui/UI.cpp
 )
 
 # ----------------------------------------------------------------------------
