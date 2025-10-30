@@ -5,6 +5,8 @@
 #include <juce_opengl/juce_opengl.h>
 #include <juce_gui_extra/juce_gui_extra.h>
 
+#include "shaders/shaders.h"
+
 class ShaderEditor final : public juce::AudioProcessorEditor,
                            private juce::CodeDocument::Listener,
                            private juce::MultiTimer
@@ -92,8 +94,10 @@ public:
     // --------------------------------
 
     // GL
-    juce::String fragmentCode;
+    juce::String shaderCode;
     std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
+
+    ShaderCodeExamples examples;
 
 private:
     PluginAudioProcessor& processor;
@@ -103,13 +107,16 @@ private:
     //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iResolutionUniform;
     //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iTimeUniform;
 
-    // fi:
-    bool isShaderToyCode = false;
-    int frameCounter = 0;              // use to set up Uniforms
-    double startTime = 0.0;            // use to set up Uniforms
+    // used for Uniforms
+    int u_frameCounter = 0;
+    double u_startTime = 0.0;
+    int u_mouseX = 0;
+    int u_mouseY = 0;
+    int u_mouseZ = 0;       // LMB clicked
+    int u_mouseW = 0;       // RMB clicked
 
+    bool isConverted;
     juce::String convert(const juce::String& shaderCode);
-    juce::String convertShadertoy(const juce::String& shaderToyCode);
 
     // -----------------------------------------------------------------------
 
