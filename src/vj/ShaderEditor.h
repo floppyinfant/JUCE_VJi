@@ -52,6 +52,8 @@ public:
 
     // -----------------------------------------------------------------------
 
+    // Listener Callbacks
+
     void mouseEnter(const MouseEvent &event) override;
 
     void mouseExit(const MouseEvent &event) override;
@@ -84,8 +86,8 @@ public:
 
     juce::Label statusLabel, presetLabel  {{}, "Shader Preset:"};
     juce::ComboBox presetBox;
-    juce::CodeDocument fragmentDocument;
-    juce::CodeEditorComponent fragmentEditorComp  {fragmentDocument, nullptr};
+    juce::CodeDocument codeDocument;
+    juce::CodeEditorComponent codeEditorComponent  {codeDocument, nullptr};
 
     // --------------------------------
 
@@ -96,9 +98,6 @@ public:
 private:
     PluginAudioProcessor& processor;
 
-    // -----------------------------------------------------------------------
-
-    // GL
     juce::OpenGLContext openGLContext;
 
     //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iResolutionUniform;
@@ -114,20 +113,15 @@ private:
 
     // -----------------------------------------------------------------------
 
+    // OpenGLDemo2D
+
     const int TIMER_DOCUMENT_CHANGED = 1;
     const int TIMER_ANIMATION = 2;
 
     enum {shaderLinkDelay = 500};
 
-    void codeDocumentTextInserted(const juce::String& /*newText*/, int /*insertIndex*/) override
-    {
-        startTimer (TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
-    }
-
-    void codeDocumentTextDeleted(int /*startIndex*/, int /*endIndex*/) override
-    {
-        startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
-    }
+    void codeDocumentTextInserted(const juce::String& /*newText*/, int /*insertIndex*/) override;
+    void codeDocumentTextDeleted(int /*startIndex*/, int /*endIndex*/) override;
 
     void timerCallback(int) override;
 
@@ -143,6 +137,8 @@ private:
 
     // AnimatedAppComponent
 
+    int fps = 60;
+
     void updateSync();
 
     Time lastUpdateTime = Time::getCurrentTime();
@@ -150,6 +146,13 @@ private:
     int framesPerSecond = 60;
     bool useVBlank = false;
     VBlankAttachment vBlankAttachment;
+
+    // -----------------------------------------------------------------------
+
+    // palette;
+    // rainbow;
+    // lookAndFeel;
+
 
     // -----------------------------------------------------------------------
 

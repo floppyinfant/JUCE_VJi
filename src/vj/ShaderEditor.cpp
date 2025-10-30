@@ -33,23 +33,24 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor& p)
 
     // --------------------------------
 
-    fragmentEditorComp.setOpaque(false);
-    fragmentDocument.addListener(this);
-    addAndMakeVisible(fragmentEditorComp);
+    codeEditorComponent.setOpaque(false);
+    codeDocument.addListener(this);
+    addAndMakeVisible(codeEditorComponent);
+    //codeEditorComponent.
 
     presetBox.setSelectedItemIndex(0);
 
     // --------------------------------
 
-    setSize(500, 500);
-    setResizable(true, true);
-
-    setFramesPerSecond(60);
-
-    // --------------------------------
+    setFramesPerSecond(fps);
 
     // fi: ShaderToy Compatibility Code
     startTime = juce::Time::getMillisecondCounterHiRes() * 0.001;
+
+    // --------------------------------
+
+    setSize(500, 500);
+    setResizable(true, true);
 }
 
 ShaderEditor::~ShaderEditor()
@@ -152,7 +153,7 @@ void ShaderEditor::resized() {
     presetBox.setBounds(presets.removeFromLeft(150));
 
     area.removeFromTop(4);
-    fragmentEditorComp.setBounds(area);
+    codeEditorComponent.setBounds(area);
 }
 
 // ===========================================================================
@@ -160,7 +161,7 @@ void ShaderEditor::resized() {
 void ShaderEditor::selectPreset(int preset) {
     //fragmentDocument.replaceAllContent (getPresets()[preset].fragmentShader);
     // fi: ShaderToy Compatibility
-    fragmentDocument.replaceAllContent(convert(getPresets()[preset].fragmentShader));
+    codeDocument.replaceAllContent(convert(getPresets()[preset].fragmentShader));
     startTimer(TIMER_DOCUMENT_CHANGED, 1);
 }
 
@@ -337,6 +338,35 @@ juce::String ShaderEditor::convertShadertoy(const juce::String& shaderToyCode)
 
 // ===========================================================================
 
+void ShaderEditor::codeDocumentTextInserted(const juce::String& newText, int insertIndex)
+{
+    startTimer (TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
+}
+
+void ShaderEditor::codeDocumentTextDeleted(int startIndex, int endIndex)
+{
+    startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
+}
+
+void ShaderEditor::timerCallback(int id)
+{
+    if (id == TIMER_DOCUMENT_CHANGED) {
+        // OpenGL 2D Demo App
+        stopTimer(TIMER_DOCUMENT_CHANGED);
+        fragmentCode = codeDocument.getAllContent();
+
+        repaint();
+    } else if (id == TIMER_ANIMATION) {
+        // AnimatedAppComponent
+        ++totalUpdates;
+        update();
+        repaint();
+        lastUpdateTime = Time::getCurrentTime();
+    }
+}
+
+// ---------------------------------------------------------------------------
+
 // AnimatedAppComponent
 // juce_gui_extra/misc/juce_AnimatedAppComponent.h
 
@@ -379,22 +409,6 @@ void ShaderEditor::setSynchroniseToVBlank (bool syncToVBlank)
 int ShaderEditor::getMillisecondsSinceLastUpdate() const noexcept
 {
     return (int) (Time::getCurrentTime() - lastUpdateTime).inMilliseconds();
-}
-
-void ShaderEditor::timerCallback(int id)
-{
-    if (id == TIMER_DOCUMENT_CHANGED) {
-        // OpenGL 2D Demo App
-        stopTimer(TIMER_DOCUMENT_CHANGED);
-        fragmentCode = fragmentDocument.getAllContent();
-        repaint();
-    } else if (id == TIMER_ANIMATION) {
-        // AnimatedAppComponent
-        ++totalUpdates;
-        update();
-        repaint();
-        lastUpdateTime = Time::getCurrentTime();
-    }
 }
 
 void ShaderEditor::update() {

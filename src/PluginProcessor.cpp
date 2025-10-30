@@ -195,6 +195,16 @@ void PluginAudioProcessor::setStateInformation (const void* data, int sizeInByte
     juce::ignoreUnused (data, sizeInBytes);
 }
 
+// -----------------------------------------------------------------------
+
+/*
+juce::AudioProcessorValueTreeState::ParameterLayout PluginAudioProcessor::createParameterLayout() {
+}
+
+juce::AudioProcessorValueTreeState & PluginAudioProcessor::getState() {
+}
+*/
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

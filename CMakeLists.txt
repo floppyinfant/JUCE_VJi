@@ -17,7 +17,24 @@ cmake_minimum_required(VERSION 3.22)
 project(VJi VERSION 0.1.0)
 
 # fi:
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
+
+if(MSVC)
+    #add_compile_options(/Wall /WX)
+    #_SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING
+else ()
+    #add_compile_options(-Wall -Wextra -Wpedantic)
+endif ()
+
+set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+
+# CPM - CMake Package Manager
+# Alternative: .gitmodules (submodules)
+# https://youtu.be/Uq7Hwt18s3s?t=303 (WolfSound)
+# https://github.com/cpm-cmake/CPM.cmake
+# https://github.com/cpm-cmake/CPM.cmake/blob/master/cmake/get_cpm.cmake (downloads to build/cmake/)
+#include(cmake/get_cpm.cmake)
+#CPMAddPackage(...)
 
 # ----------------------------------------------------------------------------
 
@@ -137,6 +154,7 @@ target_sources(VJi
         #src/sq/MidiProcessor.cpp
         src/gui/OpenGLEditor.cpp
         src/gui/components/OpenGLComponent.cpp
+        src/gui/ViewController.cpp
 )
 
 # ----------------------------------------------------------------------------

@@ -51,6 +51,15 @@ private:
     DspProcessor dspProcessor;
     MidiProcessor midiProcessor;
 
+    /*
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState& getState();
+    juce::AudioProcessorValueTreeState apvts;
+
+    // Parameter Pointers
+    juce::AudioParameterFloat* testSlider;
+    */
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessor)
 };

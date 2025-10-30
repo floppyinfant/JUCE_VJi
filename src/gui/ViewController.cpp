@@ -4,7 +4,11 @@
 
 #include "ViewController.h"
 
-ViewController::ViewController() {
+ViewController::ViewController(PluginAudioProcessor p)
+    : processor(p), editor(*p.getActiveEditor())
+{
+
+    //setSize(100, 100);
 }
 
 ViewController::~ViewController() {
