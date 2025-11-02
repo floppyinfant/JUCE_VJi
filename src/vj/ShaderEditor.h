@@ -2,11 +2,12 @@
 
 #include <JuceHeader.h>
 #include "../PluginProcessor.h"
+#include "shaders/Presets.h"
 #include <juce_opengl/juce_opengl.h>
 #include <juce_gui_extra/juce_gui_extra.h>
 
 #include "../gui/UI.h"
-#include "shaders/shaders.h"
+#include "shaders/Presets.h"
 
 class ShaderEditor final : public juce::AudioProcessorEditor,
                            private juce::CodeDocument::Listener,
@@ -98,9 +99,10 @@ public:
     juce::String shaderCode;
     std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
 
-    ShaderCodeExamples examples;
-
+    // GUI
     std::unique_ptr<UI> overlayUI;
+
+    void setFullscreen();
 
 private:
     PluginAudioProcessor& processor;
@@ -135,13 +137,8 @@ private:
 
     void timerCallback(int) override;
 
-    struct ShaderPreset
-    {
-        const char* name;
-        const char* fragmentShader;
-    };
-
-    static juce::Array<ShaderPreset> getPresets();
+    // moved to shaders/Presets.h
+    //static juce::Array<ShaderPreset> getPresets();
 
     // -----------------------------------------------------------------------
 

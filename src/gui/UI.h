@@ -17,6 +17,8 @@ private:
     //Component parent;
     //PluginAudioProcessor& processor;
     //AudioProcessorEditor& editor;
+
+    //LookAndFeel& laf;
     //LookAndFeel_V4& laf;
     //AudioProcessorValueTreeState& vts;
 
