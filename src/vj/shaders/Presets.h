@@ -26,6 +26,25 @@ public:
         ShaderPreset presets[] =
         {
             {
+                "ShaderToy - Plasma",
+
+                "void mainImage(out vec4 fragColor, in vec2 fragCoord)\n"
+                "{\n"
+#if JUCER_OPENGL_ES
+                "    " JUCE_MEDIUMP " vec2 uv = fragCoord / iResolution.xy;\n"
+                "    " JUCE_MEDIUMP " vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
+#else
+                "    vec2 uv = fragCoord / iResolution.xy;\n"
+                "    vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
+#endif
+                "    fragColor = vec4(col, 1.0);\n"
+                "}\n"
+                "\n"
+            },
+
+            // ---------------------------------------------------------------------------
+
+            {
                 "Simple Gradient",
 
                 SHADER_2DDEMO_HEADER
@@ -49,25 +68,6 @@ public:
                 "    " JUCE_MEDIUMP " float alpha = distance (pixelPos, vec2 (600.0, 500.0)) / 400.0;\n"
                 "    gl_FragColor = pixelAlpha * mix (colour1, colour2, alpha);\n"
                 "}\n"
-            },
-
-            // ---------------------------------------------------------------------------
-
-            {
-                "ShaderToy - Plasma",
-
-                "void mainImage(out vec4 fragColor, in vec2 fragCoord)\n"
-                "{\n"
-#if JUCER_OPENGL_ES
-                "    " JUCE_MEDIUMP " vec2 uv = fragCoord / iResolution.xy;\n"
-                "    " JUCE_MEDIUMP " vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
-#else
-                "    vec2 uv = fragCoord / iResolution.xy;\n"
-                "    vec3 col = 0.5 + 0.5 * cos(iTime + uv.xyx + vec3(0,2,4));\n"
-#endif
-                "    fragColor = vec4(col, 1.0);\n"
-                "}\n"
-                "\n"
             },
 
             // ---------------------------------------------------------------------------
@@ -185,352 +185,298 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
             // ---------------------------------------------------------------------------
 
             {
-                "Print Text in Shaders",
+                "Boing Ball (320x200)",
 
                 R"(
-/*   ### How to use this shader ? ###
+#define PI 3.1415926536
 
-   = Setup =
-   0. Copy the content of the Common Tab inside your shader
-   1. Make sure the FONT_TEXTURE #define is set to the iChannel
-      containing the alphabet texture
+const vec2 res = vec2(320.0,200.0);
+const mat3 mRot = mat3(0.9553, -0.2955, 0.0, 0.2955, 0.9553, 0.0, 0.0, 0.0, 1.0);
+const vec3 ro = vec3(0.0,0.0,-4.0);
 
-   = Declare String =
-   2. Use makeStr to declare a new string (needs to be done outside any function)
-   3. Write your text using _ before each char, and __ for spaces
-   4. Finish your string with the _end keyword
+const vec3 cRed = vec3(1.0,0.0,0.0);
+const vec3 cWhite = vec3(1.0);
+const vec3 cGrey = vec3(0.66);
+const vec3 cPurple = vec3(0.51,0.29,0.51);
 
-       makeStr(printAnother) _A _n _o _t _h _e _r __ _E _x _a _m _p _l _e    _end
+const float maxx = 0.378;
 
-   = Print String =
-   5. Call the new function by passing it your uvs. It returns a grayscale value.
+//                       _                                       _ _ _ _ _ _ _
+//       /\             (_)                                     | | | | | | | |
+//      /  \   _ __ ___  _  __ _  __ _  __ _  __ _  __ _  __ _  | | | | | | | |
+//     / /\ \ | '_ ` _ \| |/ _` |/ _` |/ _` |/ _` |/ _` |/ _` | | | | | | | | |
+//    / ____ \| | | | | | | (_| | (_| | (_| | (_| | (_| | (_| | |_|_|_|_|_|_|_|
+//   /_/    \_\_| |_| |_|_|\__, |\__,_|\__,_|\__,_|\__,_|\__,_| (_|_|_|_|_|_|_)
+//                          __/ |
+//                         |___/
 
-       finalCol += printAnother(uv);
+//By @unitzeroone
+//Check out http://www.youtube.com/watch?feature=player_detailpage&v=ZmIf-5MuQ7c#t=26s for context.
+//Decyphering the code&magic numbers and optimizing is left as excercise to the reader ;-)
 
-   Note that by default a character has a height of 1 (which is full height if
-   the coordinates are normalized). You are responsible for scaling/offsetting
-   the uvs to control the text placement before calling the function.
+//-1/5/2013 FIX : Windows was rendering "inverted z checkerboard" on entire screen.
+//-1/5/2013 CHANGE : Did a modification for the starting position, so ball doesn't start at bottom right.
+//-1/5/2013 CHANGE : Tweaked edge bounce.
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+	float asp = iResolution.y/iResolution.x;
+	vec2 uv = (fragCoord.xy / iResolution.xy);
+	vec2 uvR = floor(uv*res);
+	vec2 g = step(2.0,mod(uvR,16.0));
+	vec3 bgcol = mix(cPurple,mix(cPurple,cGrey,g.x),g.y);
+	uv = uvR/res;
+	float xt = mod(iTime+1.0,6.0);
+	float dir = (step(xt,3.0)-.5)*-2.0;
+	uv.x -= (maxx*2.0*dir)*mod(xt,3.0)/3.0+(-maxx*dir);
+	uv.y -= abs(sin(4.5+iTime*1.3))*0.5-0.3;
+	bgcol = mix(bgcol,bgcol-vec3(0.2),1.0-step(0.12,length(vec2(uv.x,uv.y*asp)-vec2(0.57,0.29))));
+	vec3 rd = normalize(vec3((uv*2.0-1.0)*vec2(1.0,asp),1.5));
+	float b = dot(rd,ro);
+	float t1 = b*b-15.6;
+    float t = -b-sqrt(t1);
+	vec3 nor = normalize(ro+rd*t)*mRot;
+	vec2 tuv = floor(vec2(atan(nor.x,nor.z)/PI+((floor((iTime*-dir)*60.0)/60.0)*0.5),acos(nor.y)/PI)*8.0);
+	fragColor = vec4(mix(bgcol,mix(cRed,cWhite,clamp(mod(tuv.x+tuv.y,2.0),0.0,1.0)),1.0-step(t1,0.0)),1.0);
+}
+)"
+            },
 
+            // ---------------------------------------------------------------------------
 
-   ### Characters available ###
+            {
+                "Amiga Boing Ball Demo",
 
-   uppercase: _A _B _C ...
-   lowercase: _a _b _c ...
-   digits   : _0 _1 _2 ...
-   special  : _EXC _QUOT ... (see Common)
+                R"(
+const float BALL_RADIUS = 0.7;
+const float RED = 0.0;
+const float WHITE = 1.0;
+const float SHADOW = 0.2;
+const float SHADOW_RADIUS = BALL_RADIUS/2.0;
+const float PI = 3.1415926535;
 
-
-   ### Javascript string generator helper ###
-
-   To make things even easier, I've made a tiny javascript helper function that you
-   can use to convert strings to the right _F _o _r _m _a _t !
-   (I've written it in the comments of this shader)
-
-
-   ### Special functions ###
-
-   _dig(i)       : write a specific digit [i ranges between 0-9]
-   _dec(i, prec) : write a floating point number [prec: number of decimals to print]
-   _ch(i)        : Write an uppercase character [i ranges between 0-25]
-
-   To use these special functions, you need to pass additional parameters into makeStr:
-
-   "makeStr1i" allows you to pass 1 int parameter named "i" :
-
-   makeStr1i(test) _dig(i) _end
-   test(uv, 5);
-
-   "makeStr1f" allows you to pass 1 float parameter named "i":
-
-   makeStr1f(test) _dec(i, 3) _end
-   test(uv, 5.);
-
-   You can also create your own makeStr with any parameter type! (see below)
-
-
-   ### Help me optimize it! ###
-
-   The _dec() function is only for debug purposes, I've never used it in a published shader.
-   It's *very* intensive and can have rounding issues (ie 21.999 when the float is 22.),
-   however it's done with a pretty naive approach so if you can come up with a better one
-   I'd be glad! The function is defined at the very end of this tab.
-*/
-
-/// SETTINGS ///
-
-// Set to the iChannel containing the alphabet texture
-#define FONT_TEXTURE iChannel0
-
-// Horizontal character spacing (default: 0.5)
-#define CHAR_SPACING 0.44
-
-
-/// STRING CREATION ///
-
-// Create a basic string
-#define makeStr(func_name) float func_name(vec2 u) { _print
-
-// Create a string with an int parameter
-#define makeStr1i(func_name) float func_name(vec2 u, int i) { _print
-
-// Create a string with a float parameter
-#define makeStr1f(func_name) float func_name(vec2 u, float i) { _print
-
-// Create a string with two floats parameter
-#define makeStr2f(func_name) float func_name(vec2 u, float i, float j) { _print
-
-// ... Or create your own strings with any parameters
-#define makeStrXX(func_name) float func_name(vec2 u, ...) { _print
-
-// Terminate a string
-#define _end    ); return d; }
-
-
-/// SPECIAL FUNCTIONS ///
-
-// Dynamic uppercase character
-// i: [0-25]
-#define _ch(i)  _ 65+int(i)
-
-// Dynamic digit
-// i: [0-9]
-#define _dig(i) _ 48+int(i)
-
-// Floating point debug
-// x:   value to print
-// dec: number of decimal places to print
-#define _dec(x, dec) ); d += _decimal(FONT_TEXTURE, u, x, dec); (0
-
-
-/// SPECIAL CHARACTERS ///
-
-// Space
-#define __    ); u.x -= CHAR_SPACING; (0
-
-#define _EXC  _ 33 // " ! "
-#define _DBQ  _ 34 // " " "
-#define _NUM  _ 35 // " # "
-#define _DOL  _ 36 // " $ "
-#define _PER  _ 37 // " % "
-#define _AMP  _ 38 // " & "
-#define _QUOT _ 39 // " ' "
-#define _LPR  _ 40 // " ( "
-#define _RPR  _ 41 // " ) "
-#define _MUL  _ 42 // " * "
-#define _ADD  _ 43 // " + "
-#define _COM  _ 44 // " , "
-#define _SUB  _ 45 // " - "
-#define _DOT  _ 46 // " . "
-#define _DIV  _ 47 // " / "
-#define _COL  _ 58 // " : "
-#define _SEM  _ 59 // " ; "
-#define _LES  _ 60 // " < "
-#define _EQU  _ 61 // " = "
-#define _GRE  _ 62 // " > "
-#define _QUE  _ 63 // " ? "
-#define _AT   _ 64 // " @ "
-#define _LBR  _ 91 // " [ "
-#define _ANTI _ 92 // " \ "
-#define _RBR  _ 93 // " ] "
-#define _UND  _ 95 // " _ "
-
-
-/// CHARACTER DEFINITIONS ///
-
-// Uppercase letters (65-90)
-#define _A _ 65
-#define _B _ 66
-#define _C _ 67
-#define _D _ 68
-#define _E _ 69
-#define _F _ 70
-#define _G _ 71
-#define _H _ 72
-#define _I _ 73
-#define _J _ 74
-#define _K _ 75
-#define _L _ 76
-#define _M _ 77
-#define _N _ 78
-#define _O _ 79
-#define _P _ 80
-#define _Q _ 81
-#define _R _ 82
-#define _S _ 83
-#define _T _ 84
-#define _U _ 85
-#define _V _ 86
-#define _W _ 87
-#define _X _ 88
-#define _Y _ 89
-#define _Z _ 90
-
-// Lowercase letters (97-122)
-#define _a _ 97
-#define _b _ 98
-#define _c _ 99
-#define _d _ 100
-#define _e _ 101
-#define _f _ 102
-#define _g _ 103
-#define _h _ 104
-#define _i _ 105
-#define _j _ 106
-#define _k _ 107
-#define _l _ 108
-#define _m _ 109
-#define _n _ 110
-#define _o _ 111
-#define _p _ 112
-#define _q _ 113
-#define _r _ 114
-#define _s _ 115
-#define _t _ 116
-#define _u _ 117
-#define _v _ 118
-#define _w _ 119
-#define _x _ 120
-#define _y _ 121
-#define _z _ 122
-
-// Digits (48-57)
-#define _0 _ 48
-#define _1 _ 49
-#define _2 _ 50
-#define _3 _ 51
-#define _4 _ 52
-#define _5 _ 53
-#define _6 _ 54
-#define _7 _ 55
-#define _8 _ 56
-#define _9 _ 57
-
-
-/// Internal functions ///
-
-// Start
-#define _print  float d = 0.; (u.x += CHAR_SPACING
-
-// Update
-#define _       ); u.x -= CHAR_SPACING; d += _char(FONT_TEXTURE, u,
-
-// Print character
-float _char(sampler2D s, vec2 u, int id) {
-    vec2 p = vec2(id%16, 15. - floor(float(id)/16.));
-         p = (u + p) / 16.;
-         u = step(abs(u-.5), vec2(.5));
-    return texture(s, p).r * u.x * u.y;
+float boingBall(vec3 ro, float r) {
+ 	return length(ro)-r;
 }
 
-// Floating point debug
-float _decimal(sampler2D FONT_TEXTURE, inout vec2 u, float n, int decimals) {
-    float d = 0., N = 1.; // d is the final color, N the number of digits before the decimal
-
-    if (n < 0.) {  // If the number is negative
-        n *= -1.;  // Make it positive
-        (0 _SUB ); // Print a minus sign
-    }
-
-    // Calculate the number of digits before the decimal point
-    for (float x = n; x >= 10.; x /= 10.) N++;
-
-    // Print the digits before the decimal point
-    for (float i = 0.; i < N; i++) {
-        float magnitude = pow(10., N-i-1.);
-        float leftDigit = floor(n / magnitude);
-        n -= leftDigit * magnitude;
-
-        (0 _dig(leftDigit) );
-    }
-
-    (0 _DOT ); // Print a dot
-
-    // Print the digits after the decimal point
-    for (int i = 0; i < decimals; i++) {
-        float firstDecimal = floor((n - floor(n)) * 10.);
-        n *= 10.;
-
-        (0 _dig(firstDecimal) );
-    }
-
-    return d;
+vec2 map(vec3 ro, vec3 p) {
+    float r = sqrt(pow(BALL_RADIUS,2.0)-pow(p.y-ro.y,2.0));
+    float vCoord = smoothstep(0.0,BALL_RADIUS/2.0,abs(ro.y-p.y));
+    float horizontal = step(0.5,0.5+0.5*sin(15.0*(ro.y-p.y)));
+    float vertical = step(0.5,0.5+0.5*sin(15.0*(ro.x-p.x+iTime)));
+    float color = horizontal*vertical;
+    horizontal = 1.0-step(0.5,0.5+0.5*sin(15.0*(ro.y-p.y)));
+    vertical = 1.0-step(0.5,0.5+0.5*sin(15.0*(ro.x-p.x+iTime)));
+    color += horizontal*vertical;
+    vec2 dist = vec2(boingBall(ro-p,BALL_RADIUS), color);
+    return dist;
 }
 
-/*
-   [ A new version is available that greatly improves performance! ]
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+	vec2 uv = fragCoord.xy / iResolution.xy;
+    uv -= 0.5;
+    uv *= 2.0;
+    uv.x *= iResolution.x/iResolution.y;
 
-         ==>   https://www.shadertoy.com/view/43t3WX   <==
+    const float DIVISION = 0.105;
+    const float GRID_THICKNESS = 0.01;
+    vec3 color = vec3(0.5);
+
+    for (float i = -1.0+DIVISION; i < 1.0-DIVISION; i += DIVISION) {
+        if (abs(uv.x) > 0.8 || abs(uv.y) > 0.8) break;
+    	if (uv.x >= i && uv.x < i+GRID_THICKNESS)
+            color = vec3(0.7,0.0,0.5);
+        for (float j = -1.0+DIVISION; j < 1.0-DIVISION; j += DIVISION) {
+        if (uv.y < -0.8 || uv.y > 0.8) break;
+    	if (uv.y >= j && uv.y < j+GRID_THICKNESS)
+            color = vec3(0.7,0.0,0.5);
+        }
+    }
+
+    const int MAX_STEPS = 50;
+    const float MIN_DIST = 0.01;
+
+    vec3 ro = vec3(0.0,0.0,-3.0);
+    vec3 screen = vec3(uv.x,uv.y,0.0);
+    vec3 rd = normalize(screen-ro);
+    vec3 ballPos = vec3(abs(mod(iTime,6.0)-3.0)-1.5,abs(sin(iTime)*2.)-0.8,3.0);
+    vec2 shadowPos = vec2(ballPos.xy)/2.;
+    shadowPos.x += 0.2;
+
+    if (distance(uv,shadowPos) < SHADOW_RADIUS) color = mix(color,vec3(SHADOW),0.9);
+
+    for (int i = 0; i < MAX_STEPS; i++) {
+    	vec2 d = map(ro, ballPos);
+        if (d.x < MIN_DIST) {
+        	color = vec3(1.0,d.y,d.y);
+            color /= .01*pow(length(ro*2.),3.0);
+            break;
+        }
+        ro += rd*d.x;
+    }
+
+	fragColor = vec4(color,1.0);
+}
+)"
+            },
+
+            // ---------------------------------------------------------------------------
+
+            {
+                "State of the art",
+
+                R"(
+// Created by David Gallardo - xjorma/2020
+// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0
+
+float dot2( in vec2 v ) { return dot(v,v); }
+float cross2d( in vec2 v0, in vec2 v1) { return v0.x*v1.y - v0.y*v1.x; }
 
 
-   It can be hard manipulate the definition and drawing of strings in shaders, it often
-   relies on arrays of numbers that are tidious to update manually and are pretty
-   obfuscated compared to the original text.
+vec4 Load(in int vtxIdx, in int frame, in sampler2D s)
+{
+	return texelFetch(s, ivec2(vtxIdx, frame), 0);
+}
 
-   This shader tries to provide an easier framework for string manipulation where you
-   can simply declare a string like this:
+// By IQ https://www.shadertoy.com/view/wdBXRW
+float sdPoly( in vec2[maxVert] v, in vec2 p, in int num )
+{
+    float d = dot(p-v[0],p-v[0]);
+    float s = 1.0;
+    for( int i=0, j=num-1; i<num; j=i, i++ )
+    {
+        // distance
+        vec2 e = v[j] - v[i];
+        vec2 w =    p - v[i];
+        vec2 b = w - e*clamp( dot(w,e)/dot(e,e), 0.0, 1.0 );
+        d = min( d, dot(b,b) );
 
-       makeStr(printHello) _H _e _l _l _o  __  _w _o _r _l _d    _end
+        // winding number from http://geomalgorithms.com/a03-_inclusion.html
+        bvec3 cond = bvec3( p.y>=v[i].y, p.y<v[j].y, e.x*w.y>e.y*w.x );
+        if( all(cond) || all(not(cond)) ) s*=-1.0;
+    }
 
-   And directly use it in any function (More info in the "Common" tab):
+    return s*sqrt(d);
+}
 
-       finalCol += printHello(uv);
-*/
+vec4 sdPoly(in vec2 p, in int frame, in sampler2D s, in int nbPt, in int stride)
+{
+    vec4 o;
+    for(int j = 0; j < 4; j++)
+    {
+	    vec2[maxVert] v;
+        for(int i = 0; i < stride; i++)
+        {
+            vec4 lv = Load(i, (3 - j) * 3, s);
+            v[i*2 + 0] = (lv.xy - 127.) / 95. + vec2(0,0.1);
+            v[i*2 + 1] = (lv.zw - 127.) / 95. + vec2(0,0.1);
+        }
+        o[j] = sdPoly(v, p, nbPt);
+    }
+    return o;
+}
 
-// String declarations
-makeStr(printStr1)      _E _a _s _y __ _w _a _y __ _t _o __ _p _r _i _n _t __ _t _e _x _t __  _i _n __ _S _h _a _d _e _r _s _EXC _end
-makeStr(printNum)       _P _r _i _n _t __ _S _t _a _t _i _c __ _D _i _g _i _t _s __ _2 _0 _2 _3                                  _end
-makeStr1i(printDynNum)  _A _n _d __ _D _y _n _a _m _i _c __ _D _i _g _i _t _s __ _dig(i)                                         _end
-makeStr1f(printDecNum)  _D _e _c _i _m _a _l __ _N _u _m _b _e _r _s __ _T _o _o __ _dec(i, 3)                                   _end
-makeStr2f(printDynChar) _S _u _p _p _o _r _t _s __ _D _y _n _a _m _i _c __ _C _h _a _r _a _c _t _e _r _s __ _ch(i) __ _ch(j)     _end
-makeStr(printSpecial)   _A _n _d __ _e _v _e _n __ _S _p _e _c _i _a _l __ _C _h _a _r _s __ _EXC _NUM _MUL _DIV _AT _UND        _end
+float distFilter(float v)
+{
+    return smoothstep(3. / iResolution.y, 0., v);
+}
 
-makeStr(printLong)      _W _o _r _k _s __ _f _o _r __ _a _l _l __ _t _e _x _t __ _s _i _z _e _s
-                        _COM __ _e _v _e _n __ _t _h _e __ _l _o _n _g _e _r __ _o _n _e _s __
-                        _i _f __ _y _o _u __ _s _c _a _l _e __ _t _h _e __ _u _v _s _EXC                                         _end
+float triangleSignal(float x, float f)
+{
+    f = 1. / f;
+    return (abs((f * x - 4. * floor(0.25 * f * x)) - 2.) - 1.) / f;
+}
 
-// Color declarations
-#define RED     vec3( 1,.3,.4)
-#define GREEN   vec3(.2, 1,.4)
-#define BLUE    vec3(.2,.8, 1)
-#define RAINBOW abs(cos(uv.x + vec3(5,6,1)))
+vec3 circle(in vec2 p, in float tp, in float tc)
+{
+    float v0 = distFilter(triangleSignal(length(p - vec2(sin(tp * 0.5 + 1.2), sin(tp * 0.7 + 3.2))), 0.01));
+    float v1 = distFilter(triangleSignal(length(p - vec2(sin(tp * 0.6 + 0.3), sin(tp * 0.83 + 2.7))), 0.01));
+    vec3 cb = vec3(sin(tc * 0.41 + 1.3),sin(tc * 0.52 + 2.4), sin(tc * 0.57 + 1.25)) / 2. + 0.5;
+    vec3 c0 = vec3(sin(tc * 0.37 + 2.7),sin(tc * 0.39 + 3.9), sin(tc * 0.29 + 5.36)) / 2. + 0.5;;
+    vec3 c1 = vec3(sin(tc * 0.39 + 1.6),sin(tc * 0.43 + 4.5), sin(tc * 0.47 + 6.23)) / 2. + 0.5;;
+    return mix(mix(cb, c0, v0), c1, v1);
+}
 
-void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
-    // Normalized uv coordinates
-    vec2 uv = fragCoord / iResolution.y;
+vec3 noisyCircle(in vec2 p, in float t)
+{
+    float h = hash13(vec3(floor(p * 100.),floor(t * 10.)));
+    vec3 cb = vec3(sin(t * 0.28 + 5.3),sin(t * 0.48 + 2.4), sin(t * 0.43 + 2.25)) / 2. + 0.5;
+    vec3 c0 = vec3(sin(t * 0.31 + 2.7),sin(t * 0.58 + 3.9), sin(t * 0.47 + 4.36)) / 2. + 0.5;
+    float v = distFilter(triangleSignal(length(p) - iTime, 0.1) - 0.05);
+    return vec3(h * v > 0.5?  cb : c0);
+}
 
-    // Final color
-    vec3 col = vec3(0);
+float seqLength = 2.f;
 
-    // Font Size (higher values = smaller font)
-    const float font_size = 9.;
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+	vec2	p = (2. * fragCoord - iResolution.xy) / iResolution.y;
+    float	seqId = floor(iTime / seqLength);
+    int		select;
 
-    uv *= font_size;        // Scale font with font_size
-    uv.y -= font_size - 1.; // Start drawing from the top
+    // Select Shape
+    select = int(hash12(vec2(seqId, 0.)) * 3.);
+    vec4 shapeDist;
+    switch (select)
+    {
+        case 0:
+            shapeDist = sdPoly(p, iFrame % 13, iChannel1, AnbVertices, Astride);
+            break;
+        case 1:
+            shapeDist = sdPoly(p, iFrame % 13, iChannel2, BnbVertices, Bstride);
+            break;
+        case 2:
+            shapeDist = sdPoly(p, iFrame % 13, iChannel3, CnbVertices, Cstride);
+            break;
+    }
+    // select Shape Effect
+    float shapeMask;
+    select = int(hash12(vec2(seqId, 1.)) * 3.);
+    switch (select)
+    {
+        case 0:
+            shapeMask = distFilter(shapeDist.x);
+            break;
+        case 1:
+            shapeMask = distFilter(abs(shapeDist.x) - 0.01);
+            break;
+        case 2:
+            shapeMask = max(distFilter(shapeDist.x), max(distFilter(shapeDist.y) * 0.75, max(distFilter(shapeDist.z) * 0.50, distFilter(shapeDist.w) * 0.25)));
+            break;
+    }
+    // Select backgroud
+    vec3 backCol;
+    select = int(hash12(vec2(seqId, 2.)) * 3.);
+    switch (select)
+    {
+        case 0:
+            backCol = circle(p, iTime, iTime);
+            break;
+        case 1:
+            backCol = 0.5 + 0.5*cos(iTime + p.xyx + vec3(0,2,4));
+            break;
+        case 2:
+            backCol = noisyCircle(p, iTime);
+            break;
+    }
+    // Select foreground
+    vec3 foreCol;
+    select = int(hash12(vec2(seqId, 3.)) * 3.);
+    switch (select)
+    {
+        case 0:
+            foreCol = vec3(0);
+            break;
+        case 1:
+            foreCol = vec3(1);
+            break;
+        case 2:
+            foreCol = circle(p, iTime, iTime + 22.3);
+            break;
+    }
 
-
-    col += RED * printStr1(uv);                       // "Easy way to print text in shaders"
-    uv.y += 2.; // Move the cursor down
-
-    col += GREEN * printNum(uv);                      // "Static Digits"
-    uv.y++;
-
-    col += GREEN/.6 * printDynNum(uv, int(iTime)%10); // "Dynamic Digits"
-    uv.y++;
-
-    col += GREEN/.4 * printDecNum(uv, iTime);         // "Decimal Numbers"
-    uv.y+=2.;
-
-    col += BLUE * printDynChar(uv, mod(iTime, 26.), mod(iTime*2., 26.)); // "Dynamic Characters"
-    uv.y++;
-
-    col += RAINBOW  * printSpecial(uv);                // "Special Characters"
-    uv.y+=.7;
-
-    uv *= 2.; // Multiply uv by 2 to make it smaller
-
-    col += printLong(uv);                              // "Works for all text sizes..."
-
-    fragColor = vec4(col, 1.);
+    vec3 col = mix(backCol, foreCol, shapeMask);
+	fragColor = vec4(col,1.0);
 }
 )"
             },

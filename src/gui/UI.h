@@ -5,7 +5,7 @@
 
 #include <JuceHeader.h>
 
-class UI final : public juce::Component {
+class UI final : public juce::Component, private FilenameComponentListener {
 public:
     explicit UI();
     ~UI() override;
@@ -14,9 +14,15 @@ public:
     void resized() override;
 
 private:
-    //Component parent;
+
     //PluginAudioProcessor& processor;
     //AudioProcessorEditor& editor;
+
+    //LookAndFeel& laf;
+    //LookAndFeel_V4& laf;
+    //AudioProcessorValueTreeState& vts;
+
+    // ------------------------------------------------
 
     // Toolbar
     // from WidgetsDemo/ToolbarDemoComp
@@ -31,10 +37,44 @@ private:
     // Menu
     // from WidgetsDemo/MenuPage
     TextButton menuButton { "Menu" };
-    void makeMenu();
+    void makeMenu(Button&);
 
-    //LookAndFeel& laf;
-    //LookAndFeel_V4& laf;
-    //AudioProcessorValueTreeState& vts;
+    // ------------------------------------------------
+
+    // MenuBar
+    // from MenusDemo
+    std::unique_ptr<MenuBarComponent> menuBar;
+    ApplicationCommandManager commandManager;
+
+    BurgerMenuComponent burgerMenu;
+    //BurgerMenuHeader menuHeader { sidePanel };
+
+    ShapeButton burgerButton { "burgerButton", Colours::lightgrey, Colours::lightgrey, Colours::white };
+    void makeBurgerButton();
+
+    SidePanel sidePanel { "Menu", 300, false };
+
+    // ------------------------------------------------
+
+    // FileChooser
+    // from CodeEditorDemo
+    FilenameComponent fileChooser { "File", {}, true, false, false, "*.cpp;*.h;*.hpp;*.c;*.mm;*.m", {}, "Choose a C++ file to open it in the editor" };
+
+    void filenameComponentChanged (FilenameComponent*) override;
+
+    // ------------------------------------------------
+
+    static void toggleView(Component& c) {
+        if (c.isVisible()) {
+            c.setVisible(false);
+        } else {
+            c.setVisible(true);
+        }
+        //sidePanel.showOrHide (! sidePanel.isPanelShowing());
+    }
+
+    // ------------------------------------------------
+
+    // ------------------------------------------------
 
 };

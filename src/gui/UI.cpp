@@ -22,7 +22,7 @@ void UI::paint(juce::Graphics &g) {
     // Draw custom text or shapes on top
     g.setColour(juce::Colours::white);
     g.setFont(20.0f);
-    g.drawText("Overlay Layer", getLocalBounds(), juce::Justification::centred);
+    //g.drawText("Overlay Layer", getLocalBounds(), juce::Justification::centred);
 
     // TODO: GUI
     // Layout Manager --> resized()
@@ -31,8 +31,16 @@ void UI::paint(juce::Graphics &g) {
     // Menu Bar
 
     // Popup Menu
+    /*
     addAndMakeVisible(menuButton);
-    makeMenu();
+    menuButton.setAlpha(0.5f);
+    menuButton.changeWidthToFitText();
+    makeMenu(menuButton);
+    */
+
+    makeBurgerButton();
+    addAndMakeVisible (burgerButton);
+    makeMenu(burgerButton);
 
     // View Settings
     // - set Visibility
@@ -60,7 +68,8 @@ void UI::resized() {
         // Toolbar with Icons, PresetsBox, Settings
         // Main ----------------
         // Widgets (with Transparency)
-        FlexItem { menuButton }.withWidth (200).withHeight (24).withMargin ({ 4 })
+        //FlexItem { menuButton }.withWidth (100).withHeight (24).withMargin ({ 4 }),
+        FlexItem { burgerButton }.withWidth (100).withHeight (24).withMargin ({ 4 })
         // GLSL (in the background)
         // Popup-Menu
         // Sidebar
@@ -71,9 +80,29 @@ void UI::resized() {
     box.performLayout (getLocalBounds());
 }
 
-void UI::makeMenu() {
+void UI::makeBurgerButton() {
+    static const unsigned char burgerMenuPathData[]
+            = { 110,109,0,0,128,64,0,0,32,65,108,0,0,224,65,0,0,32,65,98,254,212,232,65,0,0,32,65,0,0,240,65,252,
+                169,17,65,0,0,240,65,0,0,0,65,98,0,0,240,65,8,172,220,64,254,212,232,65,0,0,192,64,0,0,224,65,0,0,
+                192,64,108,0,0,128,64,0,0,192,64,98,16,88,57,64,0,0,192,64,0,0,0,64,8,172,220,64,0,0,0,64,0,0,0,65,
+                98,0,0,0,64,252,169,17,65,16,88,57,64,0,0,32,65,0,0,128,64,0,0,32,65,99,109,0,0,224,65,0,0,96,65,108,
+                0,0,128,64,0,0,96,65,98,16,88,57,64,0,0,96,65,0,0,0,64,4,86,110,65,0,0,0,64,0,0,128,65,98,0,0,0,64,
+                254,212,136,65,16,88,57,64,0,0,144,65,0,0,128,64,0,0,144,65,108,0,0,224,65,0,0,144,65,98,254,212,232,
+                65,0,0,144,65,0,0,240,65,254,212,136,65,0,0,240,65,0,0,128,65,98,0,0,240,65,4,86,110,65,254,212,232,
+                65,0,0,96,65,0,0,224,65,0,0,96,65,99,109,0,0,224,65,0,0,176,65,108,0,0,128,64,0,0,176,65,98,16,88,57,
+                64,0,0,176,65,0,0,0,64,2,43,183,65,0,0,0,64,0,0,192,65,98,0,0,0,64,254,212,200,65,16,88,57,64,0,0,208,
+                65,0,0,128,64,0,0,208,65,108,0,0,224,65,0,0,208,65,98,254,212,232,65,0,0,208,65,0,0,240,65,254,212,
+                200,65,0,0,240,65,0,0,192,65,98,0,0,240,65,2,43,183,65,254,212,232,65,0,0,176,65,0,0,224,65,0,0,176,
+                65,99,101,0,0 };
+
+    Path p;
+    p.loadPathFromData (burgerMenuPathData, sizeof (burgerMenuPathData));
+    burgerButton.setShape (p, true, true, false);
+}
+
+void UI::makeMenu(Button& b) {
     // lambda Button Listener
-    menuButton.onClick = [&]
+    b.onClick = [&]
     {
         // create menu
         PopupMenu menu;
@@ -116,8 +145,8 @@ void UI::makeMenu() {
         subMenuView.addItem ("Zoom out", nullptr);  // [Ctrl+-]
         subMenuView.addSeparator();
         // toggle
-        subMenuView.addItem ("Shader", nullptr);
-        subMenuView.addItem ("Parameter", nullptr);
+        subMenuView.addItem ("Code Editor", nullptr);
+        subMenuView.addItem ("Parameters", nullptr);
         subMenuView.addItem ("Playlist", nullptr);
         subMenuView.addItem ("Settings", nullptr);
         subMenuView.addSeparator();
@@ -155,6 +184,11 @@ void UI::makeMenu() {
         // [Shift+F...]
 
         // finally show menu
-        menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (menuButton));
+        menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (b));
     };
+}
+
+void UI::filenameComponentChanged (FilenameComponent*)
+{
+    //editor->loadContent (fileChooser.getCurrentFile().loadFileAsString());
 }
