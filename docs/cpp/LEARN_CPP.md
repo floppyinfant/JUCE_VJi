@@ -209,11 +209,33 @@ ptr = &add;
 
 https://www.w3schools.com/cpp/cpp_functions_lambda.asp
 
+```c++
 auto l = []() { return 0; };
 
-type: std::function<void()>
+[]() { alert(); }                    // Basic lambda (no capture, no parameters, no explicit return type)
+[this]() { alert(); }                // Lambda with capture (capturing this)
+[]() -> void { alert(); }            // Lambda with explicit return type
 
-capture by reference: [&x](int a, int b){ cout << x(a, b) << endl; }
+// capture 'all by reference' can be risky if the lambda outlives the scope, as it might reference destroyed objects
+[&](const juce::String& message) -> void { alert("Title", message); }
+
+// [this] captures the this-pointer (needed to call the member function alert)
+[this](const juce::String& title, const juce::String& message) { alert(title, message); }
+// this lambda is essentially just forwarding the call to alert without doing anything else.
+// In such cases, you might want to consider if you really need the lambda at all, or if you could pass a function pointer or use std::bind
+
+// 1.
+std::bind(&UI::alert, this, "Hello", "world!")
+// 2.
+std::mem_fn(&UI::alert)               // Using Member Function Pointer (If API Supports It)
+// 3.
+auto lam = [this](const juce::String& title){alert(title, "World!")};
+subMenuHelp.addItem("about", lam("Hello "));
+```
+
+type: `std::function<void()>`
+
+capture by reference: `[&x](int a, int b){ cout << x(a, b) << endl; }`
 
 ```c++
 #include <iostream>
@@ -222,17 +244,16 @@ using namespace std;
 
 // A function that takes another function as parameter
 void myFunction(function<void()> func) {
-func();
-func();
+    func();
 }
 
 int main() {
-auto message = []() {
-cout << "Hello World!\n";
-};
+    auto message = []() {
+        cout << "Hello World!\n";
+    };
 
-myFunction(message);
-return 0;
+    myFunction(message);
+    return 0;
 }
 ```
 
