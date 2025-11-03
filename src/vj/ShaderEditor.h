@@ -144,7 +144,7 @@ private:
 
     // AnimatedAppComponent
 
-    int fps = 20;
+    int fps = 60;
 
     void updateSync();
 

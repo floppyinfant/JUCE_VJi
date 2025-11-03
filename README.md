@@ -45,3 +45,52 @@ git push -u origin master
 
 ---
 
+## Development Environment
+
+Microsoft Windows
+
+Jetbrains CLion
+
+https://www.jetbrains.com/clion/
+
+Visual Studio 2022 (compiler / toolchain: MSVC, cl.exe)
+
+https://visualstudio.microsoft.com/vs/features/cplusplus/
+
+CMake
+
+https://cmake.org/
+
+git
+
+https://git-scm.com/
+
+JUCE (Tutorials, Documentation, DemoRunner, Projucer for Android Export)
+
+https://juce.com/
+
+Android Studio, SDK Manager, SDK Platforms (Android 8 / API 26, Android 12 / API 31), SDK Tools (NDK, CMake, Emulator), AVD, ADB
+
+https://developer.android.com/
+
+https://developer.android.com/build/jdks
+
+Docker, WSL2 (Ubuntu), Jetbrains PyCharm, Python, uv, Anaconda
+
+https://www.docker.com/
+
+https://docs.docker.com/desktop/windows/wsl/
+
+https://www.jetbrains.com/pycharm/
+
+https://www.python.org/
+
+https://docs.astral.sh/uv/
+
+https://www.anaconda.com/
+
+Kodelife
+
+https://hexler.net/kodelife/manual/introduction
+
+

@@ -192,7 +192,6 @@ void UI::alert(const juce::String& title, const juce::String& message) {
     MessageBoxIconType icon = MessageBoxIconType::InfoIcon;
     auto options = MessageBoxOptions::makeOptionsOk (icon, title, message);
     messageBox = AlertWindow::showScopedAsync (options, nullptr);
-    //juce::AlertWindow::showMessageBoxAsync (s);
 }
 
 void UI::filenameComponentChanged (FilenameComponent*)
