@@ -164,7 +164,7 @@ void UI::makeMenu(Button& b) {
         subMenuHelp.addItem ("Documentation (Web)", nullptr);
         subMenuHelp.addItem ("Documentation (PDF)", nullptr);
         subMenuHelp.addSeparator();
-        subMenuHelp.addItem ("about", nullptr);
+        subMenuHelp.addItem ("about", [this]{ alert("VJi", "A Music Visualizer Plugin for DAWs using GLSL Shaders\n\nhttp://www.floppyinfant.com/vji"); });
 
         // ------------------------------------------------
 
@@ -186,6 +186,13 @@ void UI::makeMenu(Button& b) {
         // finally show menu
         menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (b));
     };
+}
+
+void UI::alert(const juce::String& title, const juce::String& message) {
+    MessageBoxIconType icon = MessageBoxIconType::InfoIcon;
+    auto options = MessageBoxOptions::makeOptionsOk (icon, title, message);
+    messageBox = AlertWindow::showScopedAsync (options, nullptr);
+    //juce::AlertWindow::showMessageBoxAsync (s);
 }
 
 void UI::filenameComponentChanged (FilenameComponent*)

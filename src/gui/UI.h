@@ -58,6 +58,9 @@ private:
         sidePanel.showOrHide (! sidePanel.isPanelShowing());
     }
 
+    ScopedMessageBox messageBox;
+    void alert(const juce::String&, const juce::String&);
+
     // ------------------------------------------------
 
     // FileChooser
