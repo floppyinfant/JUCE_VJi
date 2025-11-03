@@ -158,6 +158,54 @@ int main() {
 }
 ```
 
+---
+
+### functions, function pointers, lambdas
+
+functions are defined outside of classes or functions
+
+methods are defined inside classes
+
+#### function pointers
+
+https://www.w3schools.com/c/c_functions_pointers.php
+
+int (*ptr)(int, int);
+
+ptr = &add;
+
+(*ptr)(5, 3);
+
+#### Lambdas
+
+https://www.w3schools.com/cpp/cpp_functions_lambda.asp
+
+auto l = []() { return 0; };
+
+type: std::function<void()>
+
+capture by reference: [&x](int a, int b){ cout << x(a, b) << endl; }
+
+```c++
+#include <iostream>
+#include <functional> // Needed for std::function
+using namespace std;
+
+// A function that takes another function as parameter
+void myFunction(function<void()> func) {
+func();
+func();
+}
+
+int main() {
+auto message = []() {
+cout << "Hello World!\n";
+};
+
+myFunction(message);
+return 0;
+}
+```
 
 ---
 

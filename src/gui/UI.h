@@ -53,6 +53,10 @@ private:
     void makeBurgerButton();
 
     SidePanel sidePanel { "Menu", 300, false };
+    void showOrHide()
+    {
+        sidePanel.showOrHide (! sidePanel.isPanelShowing());
+    }
 
     // ------------------------------------------------
 
