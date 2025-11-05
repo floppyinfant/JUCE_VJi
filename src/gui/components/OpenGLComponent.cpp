@@ -24,6 +24,7 @@ OpenGLComponent::~OpenGLComponent() {
 }
 
 void OpenGLComponent::paint(juce::Graphics &graphics) {
+    juce::ignoreUnused(graphics);
     //Component::paint(graphics);
 }
 

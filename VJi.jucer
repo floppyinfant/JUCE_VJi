@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="chSv5O" name="VJi" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+  <MAINGROUP id="b5Ga0J" name="VJi">
+    <GROUP id="{431C750F-E25A-A6D0-AB17-AC043CD8B33A}" name="src">
+      <FILE id="ackrqx" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="src/PluginProcessor.cpp"/>
+      <FILE id="A0cesf" name="PluginProcessor.h" compile="0" resource="0"
+            file="src/PluginProcessor.h"/>
+      <FILE id="FIBgDa" name="PluginEditor.cpp" compile="1" resource="0"
+            file="src/PluginEditor.cpp"/>
+      <FILE id="LGwB6I" name="PluginEditor.h" compile="0" resource="0" file="src/PluginEditor.h"/>
+    </GROUP>
+    <GROUP id="{DEB79BD4-A430-60B5-767F-D36E083634CA}" name="dsp">
+      <FILE id="ZgjEW3" name="DspProcessor.cpp" compile="1" resource="0"
+            file="src/dsp/DspProcessor.cpp"/>
+      <FILE id="g6SdKV" name="DspProcessor.h" compile="0" resource="0" file="src/dsp/DspProcessor.h"/>
+    </GROUP>
+    <GROUP id="{74A3B392-EBF4-E94C-491F-026C6A0D3CCE}" name="gui">
+      <GROUP id="{7C45DB63-380D-A454-FFD9-84A165D6ED65}" name="components">
+        <FILE id="c12XIC" name="KeyboardComponent.cpp" compile="0" resource="0"
+              file="src/gui/components/KeyboardComponent.cpp"/>
+        <FILE id="Bwq58k" name="KeyboardComponent.h" compile="0" resource="0"
+              file="src/gui/components/KeyboardComponent.h"/>
+        <FILE id="BHjghA" name="OpenGLComponent.cpp" compile="1" resource="0"
+              file="src/gui/components/OpenGLComponent.cpp"/>
+        <FILE id="ScoA5T" name="OpenGLComponent.h" compile="0" resource="0"
+              file="src/gui/components/OpenGLComponent.h"/>
+        <FILE id="Bzjyd7" name="SynthComponent.cpp" compile="0" resource="0"
+              file="src/gui/components/SynthComponent.cpp"/>
+        <FILE id="FdBfD7" name="SynthComponent.h" compile="0" resource="0"
+              file="src/gui/components/SynthComponent.h"/>
+      </GROUP>
+      <FILE id="vsDqEt" name="OpenGLEditor.cpp" compile="1" resource="0"
+            file="src/gui/OpenGLEditor.cpp"/>
+      <FILE id="klf7iU" name="OpenGLEditor.h" compile="0" resource="0" file="src/gui/OpenGLEditor.h"/>
+      <FILE id="nUtGey" name="UI.cpp" compile="1" resource="0" file="src/gui/UI.cpp"/>
+      <FILE id="MNdRuC" name="UI.h" compile="0" resource="0" file="src/gui/UI.h"/>
+      <FILE id="oEth4Q" name="ViewController.cpp" compile="0" resource="0"
+            file="src/gui/ViewController.cpp"/>
+      <FILE id="P9XMNh" name="ViewController.h" compile="0" resource="0"
+            file="src/gui/ViewController.h"/>
+      <FILE id="HbUuMJ" name="WebViewEditor.cpp" compile="0" resource="0"
+            file="src/gui/WebViewEditor.cpp"/>
+      <FILE id="x0vGTa" name="WebViewEditor.h" compile="0" resource="0" file="src/gui/WebViewEditor.h"/>
+    </GROUP>
+    <GROUP id="{79855348-07CB-0163-D1E1-AB0CD2F922A6}" name="sq">
+      <FILE id="s4EDVt" name="MidiProcessor.h" compile="0" resource="0" file="src/sq/MidiProcessor.h"/>
+    </GROUP>
+    <GROUP id="{C52B648E-3161-C261-14DF-A7022A0C3967}" name="synth"/>
+    <GROUP id="{F112AAEC-934E-4BF3-3A2C-7093F8F9C75B}" name="vj">
+      <GROUP id="{FC068950-4C73-DFDD-CEF2-D06A96DEA081}" name="shaders">
+        <GROUP id="{35BF5F3E-65CA-6F36-8573-C98088758F03}" name="book_of_shaders">
+          <FILE id="EBOT21" name="template.fs" compile="0" resource="1" file="src/vj/shaders/book_of_shaders/template.fs"/>
+        </GROUP>
+        <GROUP id="{4E920E44-89D1-061D-5BB9-43F7D9262B76}" name="isf">
+          <GROUP id="{FE135A33-00A0-E7EA-BD58-F573FCCC5527}" name="sketches">
+            <GROUP id="{3EA36F1E-B63E-53CD-3928-886553ECBE8D}" name="z33d+">
+              <FILE id="H9ZdBm" name="_ISF.video.url" compile="0" resource="0" file="src/vj/shaders/isf/sketches/z33d+/_ISF.video.url"/>
+              <FILE id="xNCJsh" name="z33d+.fs" compile="0" resource="1" file="src/vj/shaders/isf/sketches/z33d+/z33d+.fs"/>
+              <FILE id="HfvZRd" name="z33d+.vs" compile="0" resource="1" file="src/vj/shaders/isf/sketches/z33d+/z33d+.vs"/>
+            </GROUP>
+          </GROUP>
+          <FILE id="cu8LMb" name="README.md" compile="0" resource="1" file="src/vj/shaders/isf/README.md"/>
+        </GROUP>
+        <GROUP id="{1FC60FE9-1084-B7BD-61BF-98DEB139F794}" name="kodelife">
+          <FILE id="PbhQxX" name="template_audio.fs" compile="0" resource="1"
+                file="src/vj/shaders/kodelife/template_audio.fs"/>
+        </GROUP>
+        <GROUP id="{7AA08DE2-5264-D8DA-8395-F50335FD57F2}" name="openprocessing">
+          <GROUP id="{3ACC0457-B2F3-783B-F40D-B6C2EC2103A1}" name="sketches">
+            <GROUP id="{92B0CB5D-58D0-C341-4EF2-1266CF2069F2}" name="ph-kaleidoscope">
+              <FILE id="RuQDEG" name="_fork of PH-Kaleidoscope - OpenProcessing.url"
+                    compile="0" resource="0" file="src/vj/shaders/openprocessing/sketches/ph-kaleidoscope/_fork of PH-Kaleidoscope - OpenProcessing.url"/>
+              <FILE id="FLjpld" name="sketch.js" compile="0" resource="1" file="src/vj/shaders/openprocessing/sketches/ph-kaleidoscope/sketch.js"/>
+            </GROUP>
+            <GROUP id="{C057A098-82D9-5AF8-43A6-DC78606C3950}" name="sketch_2725823">
+              <FILE id="WTn9eR" name="_Spiral - OpenProcessing.url" compile="0" resource="0"
+                    file="src/vj/shaders/openprocessing/sketches/sketch_2725823/_Spiral - OpenProcessing.url"/>
+              <FILE id="UrtQtY" name="frag.glsl" compile="0" resource="1" file="src/vj/shaders/openprocessing/sketches/sketch_2725823/frag.glsl"/>
+              <FILE id="jR491V" name="index.html" compile="0" resource="1" file="src/vj/shaders/openprocessing/sketches/sketch_2725823/index.html"/>
+              <FILE id="KaQGbJ" name="mySketch.js" compile="0" resource="1" file="src/vj/shaders/openprocessing/sketches/sketch_2725823/mySketch.js"/>
+              <FILE id="Nv7T33" name="openprocessing_sketch.js" compile="0" resource="1"
+                    file="src/vj/shaders/openprocessing/sketches/sketch_2725823/openprocessing_sketch.js"/>
+              <FILE id="et58eE" name="p5.js" compile="0" resource="1" file="src/vj/shaders/openprocessing/sketches/sketch_2725823/p5.js"/>
+              <FILE id="xFD3kt" name="style.css" compile="0" resource="1" file="src/vj/shaders/openprocessing/sketches/sketch_2725823/style.css"/>
+              <FILE id="j2Cd8K" name="vert.glsl" compile="0" resource="1" file="src/vj/shaders/openprocessing/sketches/sketch_2725823/vert.glsl"/>
+            </GROUP>
+          </GROUP>
+          <FILE id="XBe6zm" name="README.md" compile="0" resource="1" file="src/vj/shaders/openprocessing/README.md"/>
+        </GROUP>
+        <GROUP id="{5E35E85F-1287-19CE-2713-AE253EF2D803}" name="shadertoy">
+          <GROUP id="{C489D4C1-4790-AAD8-20CE-BC4E76156347}" name="sketches">
+            <GROUP id="{BD413F04-54C9-584F-B4FF-04F13BF18E0A}" name="Creation_by_Silexars">
+              <GROUP id="{C1C562DD-D578-36E3-291D-439E8CAB4D84}" name="exported">
+                <FILE id="Y0FJ8w" name="XsXXDn.json" compile="0" resource="1" file="src/vj/shaders/shadertoy/sketches/Creation_by_Silexars/exported/XsXXDn.json"/>
+              </GROUP>
+              <FILE id="ZvTjaW" name="_Creation by Silexars.url" compile="0" resource="0"
+                    file="src/vj/shaders/shadertoy/sketches/Creation_by_Silexars/_Creation by Silexars.url"/>
+              <FILE id="bsKLbj" name="Creation_by_Silexars.fs" compile="0" resource="1"
+                    file="src/vj/shaders/shadertoy/sketches/Creation_by_Silexars/Creation_by_Silexars.fs"/>
+            </GROUP>
+            <GROUP id="{EA555BA2-BB54-80FF-1D25-8C0A22AB29B8}" name="Shader_Art_Coding_Introduction">
+              <GROUP id="{3AFB3775-B9D3-4CB8-EE45-83DBE677EE7F}" name="exported">
+                <FILE id="JgbEOe" name="mtyGWy.json" compile="0" resource="1" file="src/vj/shaders/shadertoy/sketches/Shader_Art_Coding_Introduction/exported/mtyGWy.json"/>
+                <FILE id="NkdM5L" name="readme.txt" compile="0" resource="1" file="src/vj/shaders/shadertoy/sketches/Shader_Art_Coding_Introduction/exported/readme.txt"/>
+              </GROUP>
+              <GROUP id="{82A0A81C-D5BA-7DCD-9A9E-ED5DB21A4D73}" name="Webside">
+                <FILE id="txVBaf" name="mtyGWy.html" compile="0" resource="1" file="src/vj/shaders/shadertoy/sketches/Shader_Art_Coding_Introduction/Webside/mtyGWy.html"/>
+              </GROUP>
+              <FILE id="iyRgoj" name="_Shader Art Coding Introduction.url" compile="0"
+                    resource="0" file="src/vj/shaders/shadertoy/sketches/Shader_Art_Coding_Introduction/_Shader Art Coding Introduction.url"/>
+              <FILE id="uplRHN" name="Shader_Art_Coding_Introduction.fs" compile="0"
+                    resource="1" file="src/vj/shaders/shadertoy/sketches/Shader_Art_Coding_Introduction/Shader_Art_Coding_Introduction.fs"/>
+            </GROUP>
+            <FILE id="cRgCiB" name="_ShaderToy_Inputs.h" compile="0" resource="0"
+                  file="src/vj/shaders/shadertoy/sketches/_ShaderToy_Inputs.h"/>
+          </GROUP>
+          <FILE id="ltb7t1" name="README.md" compile="0" resource="1" file="src/vj/shaders/shadertoy/README.md"/>
+          <FILE id="HCdWM4" name="template.fs" compile="0" resource="1" file="src/vj/shaders/shadertoy/template.fs"/>
+        </GROUP>
+        <FILE id="GTTKMX" name="Presets.h" compile="0" resource="0" file="src/vj/shaders/Presets.h"/>
+      </GROUP>
+      <FILE id="sKAX8t" name="ShaderEditor.cpp" compile="1" resource="0"
+            file="src/vj/ShaderEditor.cpp"/>
+      <FILE id="IjjsXm" name="ShaderEditor.h" compile="0" resource="0" file="src/vj/ShaderEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <ANDROIDSTUDIO targetFolder="Builds/Android">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VJi"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="VJi"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_core" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_events" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="libs/juce/modules"/>
+      </MODULEPATHS>
+    </ANDROIDSTUDIO>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VJi"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="VJi"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_core" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_events" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="libs/juce/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VJi"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="VJi"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_core" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_events" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="libs/juce/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+    <XCODE_IPHONE targetFolder="Builds/iOS">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VJi"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="VJi"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_core" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_events" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="libs/juce/modules"/>
+      </MODULEPATHS>
+    </XCODE_IPHONE>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="VJi"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="VJi"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_core" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_events" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="libs/juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="libs/juce/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+</JUCERPROJECT>

@@ -207,6 +207,9 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
         isConverted = true;
 
         // Add JUCE-compatible uniforms header
+        //juceShader += "#version 150\n";
+        juceShader += "#ifdef GL_ES\nprecision mediump float;\n#endif\n\n";  // from Kodelife > Help > Examples > Templates > The Book of Shaders
+        //juceShader += "out vec4 fragColor;\n\n";  // from Kodelife > Help > Examples > Templates > Shadertoy
         juceShader += "// JUCE Uniforms\n";
         juceShader += "uniform " JUCE_MEDIUMP " vec3  iResolution;\n";
         juceShader += "uniform " JUCE_MEDIUMP " float iTime;\n";
@@ -214,7 +217,7 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
         juceShader += "uniform " JUCE_MEDIUMP " float iTimeDelta;\n";
         juceShader += "uniform " JUCE_MEDIUMP " int   iFrame;\n\n";
 
-        // ShaderToy Uniforms
+        // // ShaderToy Uniforms:
         // uniform vec3      iResolution;           // viewport resolution (in pixels)
         // uniform float     iTime;                 // shader playback time (in seconds)
         // uniform float     iTimeDelta;            // render time (in seconds)
@@ -229,10 +232,16 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
 
         // --------------------------------
 
-        // ISF Uniforms
+        // // ISF Uniforms
         // to be done
 
         // --------------------------------
+
+        // // The Book of Shaders Uniforms:
+        // uniform vec2 u_resolution;
+        // uniform vec2 u_mouse;
+        // uniform float u_time;
+
     }
 
     // after the uniforms are declared, add the original code
