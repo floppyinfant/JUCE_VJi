@@ -30,7 +30,7 @@ https://google.github.io/styleguide/cppguide.html (Google C++ Style Guide)
 
 ## C++ Tutorials
 
-https://www.youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb (The Cherno)
+https://www.youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb (The Cherno - C++)
 
 https://www.youtube.com/watch?v=MNeX4EGtR5Y (C++ in 100 Seconds)
 
@@ -45,6 +45,8 @@ https://www.w3schools.com/cpp/
 https://www.cpp-tutor.de/ (deutsch)
 
 https://www.programiz.com/cpp-programming/online-compiler/ (Programiz Online-Compiler)
+
+---
 
 ## Modern C++
 
