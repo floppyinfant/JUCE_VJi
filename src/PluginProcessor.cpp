@@ -16,7 +16,24 @@ PluginAudioProcessor::PluginAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        )
+    //, apvts(*this, nullptr, "Parameters", createParameterLayout())
 {
+    // -----------------------------------------------------------------------
+
+    // set parameters
+    addParameter (gain = new juce::AudioParameterFloat ("gain", // parameterID
+                      "Gain", // parameter name
+                      0.0f, // minimum value
+                      1.0f, // maximum value
+                      0.5f)); // default value
+
+    addParameter (par2 = new juce::AudioParameterFloat ("gain", // parameter ID
+                  "Gain", // parameter name
+                  juce::NormalisableRange<float> (0.0f, 1.0f), // parameter range
+                  0.5f)); // default value
+
+    // -----------------------------------------------------------------------
+
 }
 
 PluginAudioProcessor::~PluginAudioProcessor()
@@ -180,12 +197,20 @@ juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 }
 
 //==============================================================================
+// Store and restore parameters in the memory block.
+// https://juce.com/tutorials/tutorial_audio_parameter/
+//==============================================================================
+
 void PluginAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
     juce::ignoreUnused (destData);
+
+    juce::MemoryOutputStream (destData, true).writeFloat (*gain);
+    // store next parameter ??
+    //juce::MemoryOutputStream (destData, true).writeFloat (*par2);
 }
 
 void PluginAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
@@ -193,6 +218,28 @@ void PluginAudioProcessor::setStateInformation (const void* data, int sizeInByte
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
     juce::ignoreUnused (data, sizeInBytes);
+
+    *gain = juce::MemoryInputStream (data, static_cast<size_t> (sizeInBytes), false).readFloat();
+    // restore next parameter ??
+    //*par2 = juce::MemoryInputStream (data, static_cast<size_t> (sizeInBytes), false).readFloat();
+}
+
+// -----------------------------------------------------------------------
+// getter and setter
+// -----------------------------------------------------------------------
+
+const AudioParameterFloat & PluginAudioProcessor::getParameterGainRef() const {
+    return *gain;
+}
+
+const AudioParameterFloat* PluginAudioProcessor::getParameterGain() {
+    return gain;
+}
+
+void PluginAudioProcessor::setParameterGain(float newValue) {
+    // assert range ?
+
+    *gain = newValue;
 }
 
 // -----------------------------------------------------------------------

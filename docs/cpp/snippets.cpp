@@ -27,7 +27,8 @@ public:
 
     Entity(int x, int y) : m_name("Entity") {
         this->x = x;
-        this->y = y;
+        this->y = y;    // -> operator for pointers
+        (*this).y = y;  // dot operator for objects (dereferenced pointer)
     };
 
     int x;
@@ -74,24 +75,37 @@ void printEntityRValue(Entity&& e) {
 
 // entry point in main.cpp
 int main() {
+
     // object creation (instantiation)
     // ... on the Stack
     Entity e;
     Entity e1(void);
     Entity e2(1, 1);
     Entity e3 = Entity(2, 2);
-    // ... on the Heap
+    // ... on the Heap (raw pointers)
     Entity* e4 = new Entity;
-    Entity* e5 = new Entity();
-    Entity* e6 = (Entity*)malloc(sizeof(Entity));
+    Entity* e5 = new Entity();  // Java style
+    Entity* e6 = (Entity*)malloc(sizeof(Entity));  // raw pointer C-style
     const Entity* e7 = new Entity();
+    // smart pointers
+    std::unique_ptr<Entity> e8 = std::make_unique<Entity>();
+    // lvalue-References
+    Entity& e11 = Entity(3, 3);
+    // const References
+    const Entity& e12 = Entity(3, 3);
+    // rvalue-References
+    Entity&& e13 = Entity(3, 3);
 
+
+    // call methods on objects / pointers
     e4->getName();
     e5->getName();
     e6->getName();
     cout << e7->getNameConst() << endl;
 
-    // avoid memory leaks: free space, delete objects
+
+    // free memory, delete objects, call destructor
+    // avoid memory leaks
     free(e4);  // does not call the destructor; always use delete
     //delete e4;
     delete e5;

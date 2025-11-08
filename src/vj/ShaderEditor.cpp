@@ -77,7 +77,7 @@ void ShaderEditor::paint(juce::Graphics &g) {
     // TODO hide uniforms ?: add them to the shader, but dont display them in the codeEditor / shaderCode (String)
 
     // no shader set OR new shader code in editor
-    if (shader == nullptr || shader->getFragmentShaderCode() != shaderCode) {
+    if (shader.get() == nullptr || shader->getFragmentShaderCode() != shaderCode) {
         shader.reset();
 
         if (shaderCode.isNotEmpty()) {
@@ -97,7 +97,7 @@ void ShaderEditor::paint(juce::Graphics &g) {
 
     // -----------------------------------------------------------------------
 
-    if (shader != nullptr) {
+    if (shader.get() != nullptr) {
         statusLabel.setText({}, juce::NotificationType::dontSendNotification);
 
         // -------------------------------------------------------------------

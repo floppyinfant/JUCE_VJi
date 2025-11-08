@@ -15,6 +15,7 @@ Terminal Commands:
 git clone --recursive https://github.com/floppyinfant/JUCE_VJi.git
 # alternative: --recurse-submodules
 cd JUCE_VJi
+# if you downloaded the repository without --recursive or the zip-file:
 # git submodule update --init --recursive
 
 # ---
@@ -49,37 +50,117 @@ git push -u origin master
 
 Microsoft Windows
 
-Jetbrains CLion
+---
+
+### Jetbrains CLion
 
 https://www.jetbrains.com/clion/
 
-Visual Studio 2022 (compiler / toolchain: MSVC, cl.exe)
+Settings:
+- Settings | Build, Execution, Deployment | Toolchains: add "Visual Studio 2022"
+- Settings | Build, Execution, Deployment | CMake: add CMake Profile "Debug-Visual Studio" (Generator Ninja)
+- Settings | Editor | General | Appearance: uncheck the option "Show intention bulb" (Alt + Enter shows the same dialog)
+
+Profiler:
+- WSL2 toolchain for Profiling:
+- https://www.jetbrains.com/help/clion/how-to-use-wsl-development-environment-in-product.html
+
+```shell
+# ubuntu@PC (WSL2)
+sudo apt-get update
+sudo apt-get install cmake gcc clang gdb build-essential
+sudo apt-get install pkg-config
+```
+
+- Settings | Build, Execution, Deployment | Toolchains: add WSL2
+- https://github.com/juce-framework/JUCE/blob/master/docs/Linux%20Dependencies.md
+
+```shell
+# packages needed by JUCE
+sudo apt install libasound2-dev libjack-jackd2-dev \
+ladspa-sdk \
+libcurl4-openssl-dev  \
+libfreetype-dev libfontconfig1-dev \
+libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev libxrender-dev \
+libwebkit2gtk-4.1-dev \
+libglu1-mesa-dev mesa-common-dev
+```
+
+```shell
+cd /mnt/l/WORKSPACES/AUDIO_WS/Projects/VJi/cmake-build-profiling-wsl
+make
+```
+
+- Settings | Build, Execution, Deployment | Dynamic Analysis Tools | Perf
+- https://www.jetbrains.com/help/clion/cpu-profiler.html#Prerequisites
+- https://perfwiki.github.io/main/
+
+```shell
+# install perf
+# sudo apt-get install linux-tools-common linux-tools-generic linux-tools-`uname -r`
+$ uname -r
+4.15.0-36-generic
+$ sudo apt-get install linux-tools-4.15.0-36-generic
+```
+
+---
+
+### Visual Studio 2022 (compiler / toolchain: MSVC, cl.exe)
 
 https://visualstudio.microsoft.com/vs/features/cplusplus/
 
-CMake
+---
+
+### CMake
 
 https://cmake.org/
 
-git
+### git
 
 https://git-scm.com/
 
-JUCE (Tutorials, Documentation, DemoRunner, Projucer for Android Export)
+Git Bash (for Windows)
+
+(Github Desktop)
+
+### JUCE
 
 https://juce.com/
 
-Android Studio, SDK Manager, SDK Platforms (Android 8 / API 26, Android 12 / API 31), SDK Tools (NDK, CMake, Emulator), AVD, ADB
+Projucer (for Android Export), DemoRunner, AudioPluginHost
+
+### Android Studio
 
 https://developer.android.com/
 
 https://developer.android.com/build/jdks
 
-Docker, WSL2 (Ubuntu), Jetbrains PyCharm, Python, uv, Anaconda
+SDK Manager
+- SDK Platforms (Android 8 / API 26, Android 12 / API 31)
+- SDK Tools (NDK, CMake, Emulator)
+- AVD, ADB
+
+### Docker
 
 https://www.docker.com/
 
 https://docs.docker.com/desktop/windows/wsl/
+
+### Terminal
+
+cmd.exe
+
+(Powershell)
+
+### WSL2 (Ubuntu)
+
+Bash / Shell
+
+cmake gcc clang gdb build-essential
+
+### Python
+
+Jetbrains PyCharm, Jupyter, Anaconda, Python, uv
 
 https://www.jetbrains.com/pycharm/
 
@@ -89,8 +170,7 @@ https://docs.astral.sh/uv/
 
 https://www.anaconda.com/
 
-Kodelife
+### Kodelife
 
 https://hexler.net/kodelife/manual/introduction
-
 

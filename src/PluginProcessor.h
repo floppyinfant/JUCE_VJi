@@ -1,8 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
-//#include <juce_audio_processors/juce_audio_processors.h>
+#include "Parameters.h"
 #include "dsp/DspProcessor.h"
 #include "sq/MidiProcessor.h"
 
@@ -46,6 +45,14 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    // -----------------------------------------------------------------------
+
+    // getter and setter
+    const AudioParameterFloat& getParameterGainRef() const;
+    const AudioParameterFloat* getParameterGain();
+    void setParameterGain(float newValue);
+
+
 private:
     // fi:
     DspProcessor dspProcessor;
@@ -54,11 +61,16 @@ private:
     /*
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState& getState();
-    juce::AudioProcessorValueTreeState apvts;
-
-    // Parameter Pointers
-    juce::AudioParameterFloat* testSlider;
     */
+    //juce::AudioProcessorValueTreeState apvts;
+
+    /*
+     * https://juce.com/tutorials/tutorial_audio_parameter/
+     */
+    // Parameter Pointers
+    juce::AudioParameterFloat* gain;
+    juce::AudioParameterFloat* par2;
+
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessor)
