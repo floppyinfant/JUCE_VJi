@@ -217,7 +217,7 @@ nvcc.exe
 
 ---
 
-## Tools
+## Generators and Build Systems
 
 ### CMake
 
@@ -249,6 +249,8 @@ cmake --build build
 
 ---
 
+## Version Control Systems
+
 ### git
 
 https://git-scm.com
@@ -259,28 +261,34 @@ git cheat sheets PDF
 
 @see Google Docs: Development 2025
 
-Repositories
-- Local
-- Remote
-- Fork
-- Clone
-- Pull
-- Push
-- Merge
-- Rebase
-- Branch
+---
 
-- Pull requests
-- https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
-- Issues
+#### Git Workflows
 
-Workflows
-- Feature branch
+- Feature Branch Workflow
+- Gitflow Workflow
+- Forking Workflow
+- ...
 - Release branch
 - Hotfix branch
-- ...
+
+https://www.atlassian.com/git/tutorials/comparing-workflows
+
+https://docs.github.com/en/get-started/using-github/github-flow
+
+https://uidaholib.github.io/get-git/3workflow.html (Beginner)
+
+https://www.w3schools.com/git/git_workflow.asp (fix mistakes)
+
+https://git-scm.com/book/de/v2/Git-Branching-Branching-Workflows
+
+Pull requests (PR)
+
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
 
 ---
+
+#### Git Hosting Services
 
 Github
 - https://github.com/
@@ -321,6 +329,22 @@ svn
 TortoiseSVN
 
 Atlassian SourceTree
+
+---
+
+### Mercuial
+
+hg
+
+---
+
+## CI/CD
+
+Github Actions
+
+Jenkins
+
+?
 
 ---
 
