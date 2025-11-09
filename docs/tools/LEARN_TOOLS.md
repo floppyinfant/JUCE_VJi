@@ -257,9 +257,12 @@ https://git-scm.com
 
 https://git-scm.com/book/en/v2
 
-git cheat sheets PDF
-
 @see Google Docs: Development 2025
+
+#### Git Cheat Sheets
+- https://education.github.com/git-cheat-sheet-education.pdfhttps://education.github.com/git-cheat-sheet-education.pdf
+- https://git-scm.com/cheat-sheet
+- https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
 
 ---
 

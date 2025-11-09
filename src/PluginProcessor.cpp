@@ -27,7 +27,7 @@ PluginAudioProcessor::PluginAudioProcessor()
                       1.0f, // maximum value
                       0.5f)); // default value
 
-    addParameter (par2 = new juce::AudioParameterFloat ("gain", // parameter ID
+    addParameter (par2 = new juce::AudioParameterFloat ("par2", // parameter ID
                   "Gain", // parameter name
                   juce::NormalisableRange<float> (0.0f, 1.0f), // parameter range
                   0.5f)); // default value

@@ -5,5 +5,16 @@
 
 #ifndef VJI_MAIN_H
 #define VJI_MAIN_H
+// or #pragma once
+
+// includes
+#include <iostream>
+
+// declarations
+// prototypes
+
+
+// typedefs
+// ...
 
 #endif //VJI_MAIN_H

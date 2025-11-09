@@ -1,11 +1,10 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../PluginProcessor.h"
-#include "shaders/Presets.h"
 #include <juce_opengl/juce_opengl.h>
 #include <juce_gui_extra/juce_gui_extra.h>
 
+#include "../PluginProcessor.h"
 #include "../gui/UI.h"
 #include "shaders/Presets.h"
 
@@ -90,29 +89,26 @@ public:
 
     juce::Label statusLabel, presetLabel  {{}, "Shader Preset:"};
     juce::ComboBox presetBox;
+
     juce::CodeDocument codeDocument;
     juce::CodeEditorComponent codeEditorComponent  {codeDocument, nullptr};
-
-    // --------------------------------
-
-    // GL
     juce::String shaderCode;
     std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
 
     // GUI
     std::unique_ptr<UI> overlayUI;
-
     void setFullscreen();
 
 private:
     PluginAudioProcessor& processor;
-
     juce::OpenGLContext openGLContext;
+    //std::unique_ptr<juce::OpenGLShaderProgram> shaderProgram;
+    juce::OpenGLShaderProgram* shaderProgram;
 
     //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iResolutionUniform;
     //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iTimeUniform;
 
-    // used for Uniforms
+    // Uniform variables
     int u_frameCounter = 0;
     double u_startTime = 0.0;
     int u_mouseX = 0;
@@ -128,7 +124,6 @@ private:
     // OpenGLDemo2D
 
     const int TIMER_DOCUMENT_CHANGED = 1;
-    const int TIMER_ANIMATION = 2;
 
     enum {shaderLinkDelay = 500};
 
@@ -143,6 +138,8 @@ private:
     // -----------------------------------------------------------------------
 
     // AnimatedAppComponent
+
+    const int TIMER_ANIMATION = 2;
 
     int fps = 60;
 

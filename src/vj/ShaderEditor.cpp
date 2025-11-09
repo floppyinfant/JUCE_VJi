@@ -59,8 +59,6 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     // Component (AudioProcessorEditor)
     setSize(500, 500);
     setResizable(true, true);
-
-
 }
 
 ShaderEditor::~ShaderEditor() {
@@ -71,12 +69,11 @@ ShaderEditor::~ShaderEditor() {
 // ===========================================================================
 
 void ShaderEditor::paint(juce::Graphics &g) {
-    //g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::lightgrey, juce::Colours::white);
-    g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::black);
 
-    // TODO hide uniforms ?: add them to the shader, but dont display them in the codeEditor / shaderCode (String)
+    // -----------------------------------------------------------------------
+    // shader not set OR new shader code in editor
+    // -----------------------------------------------------------------------
 
-    // no shader set OR new shader code in editor
     if (shader.get() == nullptr || shader->getFragmentShaderCode() != shaderCode) {
         shader.reset();
 
@@ -92,55 +89,59 @@ void ShaderEditor::paint(juce::Graphics &g) {
                 DBG("Shader compilation error: " + result.getErrorMessage());
                 shader.reset();
             }
+
+            // -----------------------------
+
+            // do once (not @60 fps)
+            g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::darkgrey);
+            statusLabel.setText({}, juce::NotificationType::dontSendNotification);
+
+            shaderProgram = shader->getProgram(g.getInternalContext());
+            shaderProgram->use();
         }
     }
 
     // -----------------------------------------------------------------------
+    //
+    // -----------------------------------------------------------------------
 
     if (shader.get() != nullptr) {
-        statusLabel.setText({}, juce::NotificationType::dontSendNotification);
+
+        // --------------------------------
+        // Set Uniforms:
+        // --------------------------------
+
+        //DBG("GLSL version: " + juce::OpenGLHelpers::getGLSLVersionString());  // GLSL version: #version 150
+        //DBG("Uniforms set in paint():");
+
+        // uniform vec3      iResolution;           // viewport resolution (in pixels)
+        //if (shaderProgram->getUniformIDFromName("iResolution") >= 0) {
+        shaderProgram->setUniform("iResolution", (float) getWidth(), (float) getHeight(), 1.0f);
+        //DBG("iResolution = " + std::to_string(getWidth()) + ", " + std::to_string(getHeight()) + ", 1.0f");
+        //}
+
+        // uniform float     iTime;                 // shader playback time (in seconds)
+        shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001f - u_startTime));
+        //DBG("iTime = " + std::to_string(juce::Time::getMillisecondCounterHiRes() * 0.001f - u_startTime));
+
+        // uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
+        shaderProgram->setUniform("iMouse", (float)u_mouseX, (float)u_mouseY, (float)u_mouseZ, (float)u_mouseW);
+        //DBG("iMouse: X: " + std::to_string(u_mouseX) + ", Y: " + std::to_string(u_mouseY) + ", Z: " + std::to_string(u_mouseZ) + ", W: " + std::to_string(u_mouseW) );
+
+        // uniform int       iFrame;                // shader playback frame
+        shaderProgram->setUniform("iFrame", u_frameCounter++);
+        //DBG("iFrame = " + std::to_string(u_frameCounter));
+
+        // TODO uniforms
+        // uniform float     iTimeDelta;            // render time (in seconds)
+        // uniform float     iFrameRate;            // shader frame rate
+        // uniform float     iChannelTime[4];       // channel playback time (in seconds)
+        // uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+        // uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
+        // uniform vec4      iDate;                 // (year, month, day, time in seconds)
+        // uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
 
         // -------------------------------------------------------------------
-
-        if (auto *shaderProgram = shader->getProgram(g.getInternalContext())) {
-            shaderProgram->use();
-
-            // -------------------------------------------------------------------
-
-            // Set Uniforms:
-
-            DBG("GLSL version: " + juce::OpenGLHelpers::getGLSLVersionString());
-            DBG("Uniforms set in paint():");
-
-            // uniform vec3      iResolution;           // viewport resolution (in pixels)
-            //if (shaderProgram->getUniformIDFromName("iResolution") >= 0) {
-            shaderProgram->setUniform("iResolution", (float) getWidth(), (float) getHeight(), 1.0f);
-            DBG("iResolution = " + std::to_string(getWidth()) + ", " + std::to_string(getHeight()) + ", 1.0f");
-            //}
-
-            // uniform float     iTime;                 // shader playback time (in seconds)
-            shaderProgram->setUniform("iTime", (float) (juce::Time::getMillisecondCounterHiRes() * 0.001f - u_startTime));
-            DBG("iTime = " + std::to_string(juce::Time::getMillisecondCounterHiRes() * 0.001f - u_startTime));
-
-            // TODO uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
-            shaderProgram->setUniform("iMouse", (float)u_mouseX, (float)u_mouseY, (float)u_mouseZ, (float)u_mouseW);
-            DBG("iMouse: ");
-
-            // uniform int       iFrame;                // shader playback frame
-            shaderProgram->setUniform("iFrame", u_frameCounter++);
-            DBG("iFrame = " + std::to_string(u_frameCounter));
-
-            // TODO uniforms
-            // uniform float     iTimeDelta;            // render time (in seconds)
-            // uniform float     iFrameRate;            // shader frame rate
-            // uniform float     iChannelTime[4];       // channel playback time (in seconds)
-            // uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
-            // uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
-            // uniform vec4      iDate;                 // (year, month, day, time in seconds)
-            // uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
-
-            // -------------------------------------------------------------------
-        }
 
         shader->fillRect(g.getInternalContext(), getLocalBounds());
     }
@@ -165,6 +166,8 @@ void ShaderEditor::resized() {
 }
 
 void ShaderEditor::setFullscreen() {
+
+    // code snippets:
     // ResizableWindow::setFullScreen()
     // Desktop::setKioskModeComponent
     // MainWnd->setFullScreen(true);
@@ -259,9 +262,9 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
         juceShader += "void main()\n";
         juceShader += "{\n";
         juceShader += "    vec2 pos = vec2(pixelPos.x, iResolution.y - pixelPos.y);  // flip y\n";
-        //juceShader += "    " JUCE_MEDIUMP " vec4 fragColor;\n";  // this caused error (black screen)
-        juceShader += "    mainImage(fragColor, pos);\n";
-        juceShader += "    gl_FragColor = pixelAlpha * fragColor;\n";
+        juceShader += "    " JUCE_MEDIUMP " vec4 _fragColor;\n";  // this caused error (black screen)
+        juceShader += "    mainImage(_fragColor, pos);\n";
+        juceShader += "    gl_FragColor = pixelAlpha * _fragColor;\n";
         juceShader += "}\n";
     }
     // else if ()
