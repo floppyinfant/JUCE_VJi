@@ -64,6 +64,7 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
 ShaderEditor::~ShaderEditor() {
     openGLContext.detach();
     shader.reset();
+    delete shaderProgram;
 }
 
 // ===========================================================================
@@ -71,14 +72,16 @@ ShaderEditor::~ShaderEditor() {
 void ShaderEditor::paint(juce::Graphics &g) {
 
     // -----------------------------------------------------------------------
-    // shader not set OR new shader code in editor
+    // shader is not set OR new shader code in editor
     // -----------------------------------------------------------------------
 
     if (shader.get() == nullptr || shader->getFragmentShaderCode() != shaderCode) {
         shader.reset();
 
         if (shaderCode.isNotEmpty()) {
+            // -----------------------------
             // create shader
+            // -----------------------------
             shader.reset(new juce::OpenGLGraphicsContextCustomShader(shaderCode));
 
             auto result = shader->checkCompilation(g.getInternalContext());
@@ -91,8 +94,8 @@ void ShaderEditor::paint(juce::Graphics &g) {
             }
 
             // -----------------------------
-
             // do once (not @60 fps)
+            // -----------------------------
             g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::darkgrey);
             statusLabel.setText({}, juce::NotificationType::dontSendNotification);
 
@@ -102,7 +105,7 @@ void ShaderEditor::paint(juce::Graphics &g) {
     }
 
     // -----------------------------------------------------------------------
-    //
+    // paint the shader
     // -----------------------------------------------------------------------
 
     if (shader.get() != nullptr) {
