@@ -195,6 +195,7 @@ target_link_libraries(VJi
         PluginData           # If we'd created a binary data target, we'd link to it here; fi
         juce::juce_audio_utils
         juce::juce_opengl
+        #sqlite3             # see README.md on how to add sqlite3 to CMakeLists.txt
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags

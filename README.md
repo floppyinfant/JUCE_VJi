@@ -8,22 +8,19 @@ made with JUCE Framework
 
 ---
 
-Terminal Commands:
+## Terminal Commands
+
+### User
 
 ```shell
+# ----------------------------------------------------------------------------
 # usage of this repository
+# ----------------------------------------------------------------------------
 git clone --recursive https://github.com/floppyinfant/JUCE_VJi.git
 # alternative: --recurse-submodules
 cd JUCE_VJi
 # if you downloaded the repository without "--recursive" or got the zip-file:
 # git submodule update --init --recursive
-
-# ----------------------------------------------------------------------------
-# Configure, Build, execute
-# ----------------------------------------------------------------------------
-cmake -S . -B build
-cmake --build build
-.\build\VJi_artefacts\Debug\Standalone\VJi.exe
 
 # ----------------------------------------------------------------------------
 # Install WebView2 on Windows (only) in PowerShell:
@@ -32,12 +29,33 @@ Register-PackageSource -provider NuGet -name nugetRepository -location https://w
 Install-Package Microsoft.Web.WebView2 -Scope CurrentUser -RequiredVersion 1.0.1901.177 -Source nugetRepository
 
 # ----------------------------------------------------------------------------
+# Configure, Build, execute
+# ----------------------------------------------------------------------------
+cmake -S . -B build
+cmake --build build
+.\build\VJi_artefacts\Debug\Standalone\VJi.exe
+```
+
+#### Build for Android
+
+To build the Android APK:
+
+Open the Projucer project file (VJi.juce) and export to Android Studio.
+
+---
+
+### Developer
+
+```shell
+# ----------------------------------------------------------------------------
 # Development of this repository
 # ----------------------------------------------------------------------------
 # create local repo 
 git init .
 git submodule add https://github.com/juce-framework/JUCE.git libs/juce
 #git submodule add https://github.com/assimp/assimp.git libs/assimp
+#git rm --cached -r libs/assimp
+#git commit -m "Remove assimp from version control"
 git submodule --init --recursive
 
 # stage and commit
@@ -49,10 +67,61 @@ git remote add origin https://github.com/floppyinfant/JUCE_VJi.git
 git push -u origin master
 ```
 
-To build the Android APK: 
+#### Build SQLite
 
-Open the Projucer project file (VJi.juce) and export to Android Studio.
+To build SQlite:
 
+https://www.sqlite.org/howtocompile.html
+
+```shell
+# open Developer Command Prompt for VS2022
+# https://learn.microsoft.com/de-de/cpp/build/reference/running-nmake?view=msvc-170
+cd libs
+git clone https://github.com/sqlite/sqlite.git
+cd sqlite
+# remove git repo
+rmdir /s /q .git
+#mkdir build
+#set OUTDIR=./build
+nmake /f Makefile.msc
+```
+
+or download the amalgamation library from https://www.sqlite.org/download.html and extract it into the "libs/sqlite3" folder.
+
+```cmake
+# Define the directory where you put the source files
+set(SQLITE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/sqlite3)
+
+# Add SQLite as a static library target
+add_library(sqlite3 STATIC
+${SQLITE_SOURCE_DIR}/sqlite3.c
+)
+
+# Set include directories
+target_include_directories(sqlite3 PUBLIC
+${SQLITE_SOURCE_DIR}
+)
+
+# Recommended: Set specific compiler flags if needed (e.g., thread safety)
+# target_compile_definitions(sqlite3 PRIVATE SQLITE_THREADSAFE=1)
+
+# Set properties for the library (optional but good practice)
+set_target_properties(sqlite3 PROPERTIES
+POSITION_INDEPENDENT_CODE ON
+)
+
+# ----------------------------------------------------------------------------
+
+# Link the sqlite3 library to your main application target
+target_link_libraries(VJi PRIVATE sqlite3)
+```
+
+Include SQlite in Code:
+
+```c++
+#include "sqlite3.h"
+// ... use sqlite functions
+```
 
 ---
 
@@ -66,13 +135,32 @@ Microsoft Windows
 
 https://www.jetbrains.com/clion/
 
-#### Settings:
+#### Keyboard Shortcuts
+
+Menu | Help | Keyboard Shortcuts PDF
+
+```
+Ctrl + Shift + A            Find Action (Keyboard Shortcut)
+Double Shift                Search Everywhere
+Alt + Enter                 Show Intention Actions and Quick Fixes
+Ctrl + Space                Code Completion
+
+Shift + Alt + Mouse Click   Select Multiple Lines
+
+Ctrl + Shift + Backspace    Last edit location
+F10                         Toggle Header / Source
+Ctrl + F12                  Structure View
+Ctrl + Q                    Quick Documentation Lookup
+...
+```
+
+#### Settings
 
 - Settings | Build, Execution, Deployment | Toolchains: add "Visual Studio 2022"
 - Settings | Build, Execution, Deployment | CMake: add CMake Profile "Debug-Visual Studio" (Generator Ninja)
 - Settings | Editor | General | Appearance: uncheck the option "Show intention bulb" (Alt + Enter shows the same dialog)
 
-#### Profiler:
+#### Profiler
 
 Profiler Support is not available for Windows. But Linux (WSL2).
 

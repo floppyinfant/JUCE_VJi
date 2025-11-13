@@ -2,6 +2,25 @@
 
 by example
 
+1. Visual Programming:
+   - Pure Data
+   - Max/MSP
+   - NI Reaktor
+   - (Axoloti)
+   - (Blue Cat Plug'n Script)
+2. Embedded Programming:
+   - Teensy
+   - Daisy
+   - Bela
+   - Axoloti
+   - Korg NTS-1
+   - MBHP/MIOS32
+3. Plugin-Programming:
+   - Juce
+   - Will Pirkle
+   - VCV-Rack
+   - MODEP
+
 ---
 
 ## Platforms
@@ -77,6 +96,8 @@ https://docs.cycling74.com/legacy/max8/vignettes/gen_topic
 
 #### RNBO
 
+#### Mira
+
 ---
 
 ### Pure Data (Pd)
@@ -85,15 +106,9 @@ https://puredata.info/
 
 https://github.com/pure-data/pure-data
 
-https://github.com/libpd/libpd (libPd)
-
 https://en.wikipedia.org/wiki/Pure_Data
 
 http://pd-tutorial.com/german/ch01.html
-
-Automatonism
-
-https://www.automatonism.com/
 
 Designing Sound, Andy Farnell
 
@@ -102,6 +117,16 @@ https://mitpress.mit.edu/9780262014410/designing-sound/
 https://cycling74.com/articles/book-review-designing-sound
 
 https://github.com/unriginal/Designing-Sound-Max-Patches
+
+#### Automatonism
+
+https://www.automatonism.com/
+
+#### libPd
+
+https://github.com/libpd/libpd
+
+#### RjDj
 
 ---
 
@@ -241,9 +266,11 @@ https://www.pjrc.com/teensy/td_libs_Audio.html
 
 https://github.com/PaulStoffregen/Audio
 
-Arduino
+#### Arduino
 
 https://www.arduino.cc/
+
+Arduino for Musicians (Book)
 
 #### Ornament And Crime (o_C)
 
@@ -311,7 +338,7 @@ https://github.com/pichenettes/eurorack
 
 https://pichenettes.github.io/mutable-instruments-documentation/
 
-### Audible Instruments (VCV-Rack)
+#### Audible Instruments (VCV-Rack)
 
 https://vcvrack.com/AudibleInstruments
 
@@ -323,9 +350,7 @@ https://github.com/VCVRack/AudibleInstruments
 
 https://supercollider.github.io/
 
----
-
-### Sonic Pi
+#### Sonic Pi
 
 https://sonic-pi.net/
 
@@ -375,7 +400,7 @@ https://rackafx.wordpress.com/
 
 ## Docs
 
-### books
+### Books
 
 @see Max/MSP
 
@@ -383,11 +408,29 @@ https://rackafx.wordpress.com/
 
 Modular Worlds
 
-Synth Gems, Bjooks
+Synth Gems 1
 
-Patch & Tweak, Bjooks
+https://bjooks.com/collections/our-books/products/synth-gems-1-exploring-vintage-synthesizers
 
-Designing Synthesizers with C++, Will Pirkle
+Patch & Tweak
+
+https://bjooks.com/collections/our-books/products/patch-tweak-exploring-modular-synthesis
+
+Arduino for Musicians
+
+https://global.oup.com/us/companion.websites/9780199309320/
+
+Designing Software Synthesizer Plugins in C++, Will Pirkle
+
+https://www.willpirkle.com/
 
 ### ebooks
+
+Electronic Music and Sound Design - Theory and Practice with Max and Msp
+
+Designing Audio Effect Plugins in C++, Will Pirkle
+
+https://www.willpirkle.com/
+
+...
 

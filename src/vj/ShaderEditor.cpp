@@ -98,8 +98,13 @@ auto result = shader->checkCompilation(g.getInternalContext());
 shaderProgram = shader->getProgram(g.getInternalContext());
 shaderProgram->use();
 
+// set Uniforms:
 shaderProgram->setUniform("iResolution", (float) getWidth(), (float) getHeight(), 1.0f);
 shader->fillRect(g.getInternalContext(), getLocalBounds());
+
+// other way to set Uniforms: OpenGLAppDemo.h > Uniforms (class):
+std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix;
+projectionMatrix.reset(new OpenGLShaderProgram::Uniform(shaderProgram, "projectionMatrix"));
  */
 
 void ShaderEditor::paint(juce::Graphics &g) {
@@ -201,7 +206,9 @@ void ShaderEditor::resized() {
     overlayUI->setBounds(getLocalBounds());
 }
 
-void ShaderEditor::setFullscreen() {
+void ShaderEditor::toggleFullscreen() {
+
+    getPeer()->setFullScreen(!isFullscreen);
 
     // code snippets:
     // ResizableWindow::setFullScreen()
@@ -241,11 +248,13 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
 
     juce::String juceShader;
 
+    // --------------------------------
+
     // add Uniforms (do it just once)
     if (!_shaderCode.contains("// JUCE Uniforms")) {
         isConverted = true;
 
-        // Add JUCE-compatible uniforms header
+        // Add JUCE-compatible uniforms header:
         //juceShader += "#version 150\n";
         juceShader += "#ifdef GL_ES\nprecision mediump float;\n#endif\n\n";  // from Kodelife > Help > Examples > Templates > The Book of Shaders
         //juceShader += "out vec4 fragColor;\n\n";  // from Kodelife > Help > Examples > Templates > Shadertoy
@@ -273,6 +282,60 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
 
         // --------------------------------
 
+        // OpenGL Uniforms:
+        // https://learnopengl.com/Getting-started/Shaders+
+        // https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+        // https://wikis.khronos.org/opengl/Uniform_(GLSL)
+
+        // gl_Position
+        // gl_FragCoord
+        // gl_FragColor
+
+        // --------------------------------
+
+        // JUCE Uniforms:
+
+        // --- juce_OpenGLGraphicsContext.cpp ---
+        // varying vec2 pixelPos;
+        // #define pixelAlpha frontColour.a
+
+        // attribute vec2 position;
+        // attribute vec4 colour;
+        // uniform vec4 screenBounds;
+        // varying vec4 frontColour;
+
+        // varying vec2 texturePos;
+        // vec2 adjustedPos
+        // vec2 scaledPos
+        // uniform sampler2D maskTexture;
+        // uniform ivec4 maskBounds;
+        // uniform float matrix[6];
+        // uniform sampler2D gradientTexture;
+        // uniform vec4 gradientInfo;
+        // gradientPos
+        // uniform sampler2D imageTexture;
+        // uniform vec2 imageLimits;
+
+        // --- juce_OpenGLHelpers.cpp  ---
+        // if (getOpenGLVersion() >= Version (3, 2))
+        // --- OpenGLHelpers::translateVertexShaderToV3 ---
+        // #if JUCE_ANDROID
+        // #else
+        // code.replace ("attribute", "in");
+        // output.replace ("varying", "out");
+        // --- OpenGLHelpers::translateFragmentShaderToV3 ---
+        // out vec4 fragColor;
+        // code.replace ("varying", "in")
+        // code.replace ("texture2D", "texture")
+        // code.replace ("gl_FragColor", "fragColor");
+
+        // --- OpenGLHelpers::getGLSLVersionString() ---
+        // if (getOpenGLVersion() >= Version (3, 2))
+        // { #if JUCE_OPENGL_ES return "#version 300 es"; #else return "#version 150"; }
+        // else { return "#version 110"; }
+
+        // --------------------------------
+
         // The Book of Shaders Uniforms:
         // https://thebookofshaders.com/03/
         // https://github.com/patriciogonzalezvivo/ofxshader
@@ -283,6 +346,20 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
 
         // uniform float u_delta;       // delta time between frames (in seconds)
         // uniform vec4 u_date;         // year, month, day and seconds
+
+        // --------------------------------
+
+        // p5.js (Processing)
+        // https://p5js.org/tutorials/intro-to-shaders/
+
+        // attribute vec3 aPosition;
+        // attribute vec2 aTexCoord;
+        // attribute vec4 aVertexColor;
+        //
+        // uniform mat4 uModelViewMatrix;
+        // uniform mat4 uProjectionMatrix;
+        // varying vec2 vTexCoord;
+        // varying vec4 vVertexColor;
 
         // --------------------------------
 

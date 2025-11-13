@@ -1,8 +1,19 @@
 # LEARN C++ Libraries
 
 
+---
 
-## libc
+## Standard Libraries
+
+### libc
+
+---
+
+### std (C++ Standard Library)
+
+### STL (Standard Template Library)
+
+### Boost Libraries
 
 ---
 
@@ -198,7 +209,7 @@ https://juce.com/learn/documentation/
 https://docs.juce.com/master/classes.html
 
 
-Minimum System Requirements
+### Minimum System Requirements
 
 Building JUCE Projects
 
@@ -215,6 +226,250 @@ Deployment Targets
     Linux: Mainstream Linux distributions (x86_64, Arm64/aarch64, (32 bit Arm systems like armv7 should work but are not regularly tested))
     iOS: iOS 12 (Arm64, Arm64e, x86_64 (Simulator))
     Android: Android 7 - Nougat (API Level 24) (arm64-v8a, armeabi-v7a, x86_64, x86)
+
+### Code Snippets
+
+
+#### OpenGL
+
+https://wikis.khronos.org/opengl/Uniform_(GLSL)
+
+https://learnopengl.com/Getting-started/Shaders+
+
+https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+
+https://learnopengl.com/Model-Loading/Assimp
+
+https://github.com/assimp/assimp
+
+Code Examples:
+- DemoRunner/GUI/OpenGLDemo2D.h (OpenGLGraphicsContextCustomShader)
+- DemoRunner/GUI/OpenGLDemo.cpp
+- DemoRunner/GUI/OpenGLAppDemo.cpp
+
+Juce Documentation:
+- https://docs.juce.com/master/classes.html#letter_O
+- https://docs.juce.com/master/classjuce_1_1OpenGLAppComponent.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLHelpers.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLContext.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLRenderer.html
+- https://docs.juce.com/master/structjuce_1_1OpenGLGraphicsContextCustomShader.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLShaderProgram.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLFrameBuffer.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLTexture.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLImageType.html
+- https://docs.juce.com/master/classjuce_1_1OpenGLPixelFormat.html
+
+##### @see src/vj/ShderEditor.cpp
+
+```C++
+juce::OpenGLContext openGLContext;
+juce::String shaderCode;
+std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
+juce::OpenGLShaderProgram* shaderProgram;
+
+codeDocument.replaceAllContent(ShaderPresets::getPresets()[preset].fragmentShader);  // selectPreset()
+shaderCode = convert(codeDocument.getAllContent());                                  // timerCallback()
+codeDocument.replaceAllContent(shaderCode);
+
+// paint(Graphics& g)
+shader.reset(new juce::OpenGLGraphicsContextCustomShader(shaderCode));
+auto result = shader->checkCompilation(g.getInternalContext());
+shaderProgram = shader->getProgram(g.getInternalContext());
+shaderProgram->use();
+
+// set Uniforms:
+shaderProgram->setUniform("iResolution", (float) getWidth(), (float) getHeight(), 1.0f);
+shader->fillRect(g.getInternalContext(), getLocalBounds());
+
+// other way to set Uniforms: OpenGLAppDemo.h > Uniforms (class):
+std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix;
+projectionMatrix.reset(new OpenGLShaderProgram::Uniform(shaderProgram, "projectionMatrix"));
+```
+
+##### @see src/gui/components/OpenGLComponent.cpp
+
+based on https://medium.com/@Im_Jimmi/using-opengl-for-2d-graphics-in-a-juce-plug-in-24aa82f634ff
+
+```C++
+```
+
+##### Uniforms
+
+###### GLSL
+
+- https://learnopengl.com/Getting-started/Shaders+
+- https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+- https://wikis.khronos.org/opengl/Uniform_(GLSL)
+
+```C++
+gl_Position
+gl_FragCoord
+gl_FragColor
+```
+
+###### JUCE
+
+```C++
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+// --- juce_OpenGLGraphicsContext.cpp ---
+varying vec2 pixelPos;
+#define pixelAlpha frontColour.a
+
+attribute vec2 position;
+attribute vec4 colour;
+uniform vec4 screenBounds;
+varying vec4 frontColour;
+
+varying vec2 texturePos;
+vec2 adjustedPos
+vec2 scaledPos
+uniform sampler2D maskTexture;
+uniform ivec4 maskBounds;
+uniform float matrix[6];
+uniform sampler2D gradientTexture;
+uniform vec4 gradientInfo;
+gradientPos
+uniform sampler2D imageTexture;
+uniform vec2 imageLimits;
+
+// --- juce_OpenGLHelpers.cpp  ---
+if (getOpenGLVersion() >= Version (3, 2))
+// --- OpenGLHelpers::translateVertexShaderToV3 ---
+#if JUCE_ANDROID
+#else
+code.replace ("attribute", "in");
+output.replace ("varying", "out");
+// --- OpenGLHelpers::translateFragmentShaderToV3 ---
+out vec4 fragColor;
+code.replace ("varying", "in")
+code.replace ("texture2D", "texture")
+code.replace ("gl_FragColor", "fragColor");
+
+// --- OpenGLHelpers::getGLSLVersionString() ---
+if (getOpenGLVersion() >= Version (3, 2)) {
+    #if JUCE_OPENGL_ES 
+        return "#version 300 es"; 
+    #else 
+        return "#version 150"; }
+else {
+    return "#version 110";
+}
+```
+
+###### ShaderToy
+
+- https://www.shadertoy.com/howto
+
+```C++
+uniform vec3      iResolution;           // viewport resolution (in pixels)
+uniform float     iTime;                 // shader playback time (in seconds)
+uniform float     iTimeDelta;            // render time (in seconds)
+uniform float     iFrameRate;            // shader frame rate
+uniform int       iFrame;                // shader playback frame
+uniform float     iChannelTime[4];       // channel playback time (in seconds)
+uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
+uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
+uniform vec4      iDate;                 // (year, month, day, time in seconds)
+uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
+```
+
+###### The Book of Shaders
+
+- https://thebookofshaders.com/03/
+- https://github.com/patriciogonzalezvivo/ofxshader
+
+```C++
+        // uniform vec2 u_resolution;   // Canvas size (width,height) || viewport resolution (in pixels)
+        // uniform vec2 u_mouse;        // mouse position in screen pixels || mouse pixel coords
+        // uniform float u_time;        // Time in seconds since load || shader playback time (in seconds)
+
+        // uniform float u_delta;       // delta time between frames (in seconds)
+        // uniform vec4 u_date;         // year, month, day and seconds
+```
+
+###### p5.js
+
+https://p5js.org/tutorials/#webgl
+
+https://p5js.org/tutorials/intro-to-shaders/
+
+https://p5js.org/reference/p5/p5.Shader/
+
+https://p5js.org/reference/p5.Shader/setUniform/
+
+https://p5js.org/reference/#Environment (Environment)
+
+https://p5js.org/reference/#Events (Events)
+
+https://github.com/processing/p5.js/blob/main/contributor_docs/webgl_mode_architecture.md#global
+
+```C++
+// WebGL
+// For all objects in all contexts, the following global uniforms are available:
+uniform mat4 uModelViewMatrix;   // A matrix to convert object-space positions into camera-space
+uniform mat4 uProjectionMatrix;  // A matrix to convert camera-space positions into screen space
+uniform mat3 uNormalMatrix;      // A matrix to convert object-space normals into camera-space
+// Additionally, these per-vertex properties are available as attributes:
+attribute vec3 aPosition;        // The position of the vertex in object space
+attribute vec3 aNormal;          // For fills, a direction pointing outward from the surface
+attribute vec2 aTexCoord;        // For fills, a coordinate between 0 and 1 in x and y referring to a location on a texture image
+attribute vec3 aVertexColor;     // For fills, an optional per-vertex color
+// Lights
+// Materials
+// ...
+```
+
+###### WebGL
+
+https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
+
+https://developer.mozilla.org/en-US/docs/Web/API/WebGLShader
+
+https://developer.mozilla.org/en-US/docs/Web/API/WebGLProgram
+
+https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/uniform
+
+###### WebGPU
+
+https://eliemichel.github.io/LearnWebGPU/basic-3d-rendering/shader-uniforms/a-first-uniform.html
+
+###### ISF
+
+- https://docs.isf.video/quickstart.html#automatically-created-uniforms-and-variables-in-isf
+- https://docs.isf.video/ref_variables.html
+
+```C++
+isf_FragNormCoord    // which contains the normalized (0.0 to 1.0) coordinate
+TIME
+TIMEDELTA
+FRAMEINDEX           // which can be used to animate compositions over time
+RENDERSIZE           // which contains the pixel dimensions of the output being rendered
+PASSINDEX
+DATE
+gl_FragCoord
+```
+
+###### GLSL Sandbox
+
+- https://glslsandbox.com/
+- https://github.com/mrdoob/glsl-sandbox/blob/master/static/index.html
+
+```C++
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+uniform vec2 surfaceSize;
+attribute vec3 position;
+attribute vec2 surfacePosAttrib;
+varying vec2 surfacePosition;
+uniform sampler2D texture;
+backbuffer
+```
 
 ### JUCE Tutorials
 
@@ -307,4 +562,12 @@ https://www.youtube.com/playlist?list=PLLgJJsrdwhPwR6a2nG8XRvBkXbnKcexlO (TheAud
 
 
 ---
+
+## SQlite
+
+https://www.sqlite.org/index.html
+
+https://www.sqlite.org/howtocompile.html
+
+https://github.com/sqlite/sqlite
 

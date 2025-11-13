@@ -8,6 +8,17 @@
 #include "../gui/UI.h"
 #include "shaders/Presets.h"
 
+/*
+JUCE OpenGL
+libs/juce/modules/juce_opengl/opengl/juce_OpenGLFrameBuffer.cpp
+opengl/juce_OpenGLGraphicsContext.cpp
+opengl/juce_OpenGLHelpers.cpp
+opengl/juce_OpenGLImage.cpp
+opengl/juce_OpenGLPixelFormat.cpp
+opengl/juce_OpenGLShaderProgram.cpp
+opengl/juce_OpenGLTexture.cpp
+ */
+
 class ShaderEditor final : public juce::AudioProcessorEditor,
                            private juce::CodeDocument::Listener,
                            private juce::MultiTimer
@@ -97,7 +108,8 @@ public:
 
     // GUI
     std::unique_ptr<UI> overlayUI;
-    void setFullscreen();
+    void toggleFullscreen();
+    bool isFullscreen = false;
 
 private:
     PluginAudioProcessor& processor;
