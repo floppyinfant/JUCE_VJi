@@ -86,6 +86,15 @@ rmdir /s /q .git
 nmake /f Makefile.msc
 ```
 
+make targets:
+- libsqlite3.lib (static library)
+- sqlite3.lib (static library)
+- sqlite3.dll (dynamic library)
+- sqlite3.pdb (debug symbols)
+- sqlite3.h (C-language interface header file)
+- sqlite3.c (amalgamation source file)
+- sqlite3.exe (command line tool)
+
 or download the amalgamation library from https://www.sqlite.org/download.html and extract it into the "libs/sqlite3" folder.
 
 ```cmake
@@ -122,6 +131,12 @@ Include SQlite in Code:
 #include "sqlite3.h"
 // ... use sqlite functions
 ```
+
+https://sqlite.org/docs.html
+
+https://sqlite.org/quickstart.html
+
+https://sqlite.org/cintro.html
 
 ---
 

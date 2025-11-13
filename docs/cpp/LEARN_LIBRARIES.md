@@ -384,12 +384,12 @@ uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
 - https://github.com/patriciogonzalezvivo/ofxshader
 
 ```C++
-        // uniform vec2 u_resolution;   // Canvas size (width,height) || viewport resolution (in pixels)
-        // uniform vec2 u_mouse;        // mouse position in screen pixels || mouse pixel coords
-        // uniform float u_time;        // Time in seconds since load || shader playback time (in seconds)
+uniform vec2 u_resolution;   // Canvas size (width,height) || viewport resolution (in pixels)
+uniform vec2 u_mouse;        // mouse position in screen pixels || mouse pixel coords
+uniform float u_time;        // Time in seconds since load || shader playback time (in seconds)
 
-        // uniform float u_delta;       // delta time between frames (in seconds)
-        // uniform vec4 u_date;         // year, month, day and seconds
+uniform float u_delta;       // delta time between frames (in seconds)
+uniform vec4 u_date;         // year, month, day and seconds
 ```
 
 ###### p5.js
