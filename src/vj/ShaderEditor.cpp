@@ -69,6 +69,39 @@ ShaderEditor::~ShaderEditor() {
 
 // ===========================================================================
 
+// OpenGL
+// https://docs.juce.com/master/classes.html#letter_O
+// https://docs.juce.com/master/classjuce_1_1OpenGLAppComponent.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLHelpers.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLContext.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLRenderer.html
+// https://docs.juce.com/master/structjuce_1_1OpenGLGraphicsContextCustomShader.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLShaderProgram.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLFrameBuffer.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLTexture.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLImageType.html
+// https://docs.juce.com/master/classjuce_1_1OpenGLPixelFormat.html
+
+/*
+juce::OpenGLContext openGLContext;
+juce::String shaderCode;
+std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
+juce::OpenGLShaderProgram* shaderProgram;
+
+codeDocument.replaceAllContent(ShaderPresets::getPresets()[preset].fragmentShader);  // selectPreset()
+shaderCode = convert(codeDocument.getAllContent());                                  // timerCallback()
+codeDocument.replaceAllContent(shaderCode);
+
+// paint(Graphics& g)
+shader.reset(new juce::OpenGLGraphicsContextCustomShader(shaderCode));
+auto result = shader->checkCompilation(g.getInternalContext());
+shaderProgram = shader->getProgram(g.getInternalContext());
+shaderProgram->use();
+
+shaderProgram->setUniform("iResolution", (float) getWidth(), (float) getHeight(), 1.0f);
+shader->fillRect(g.getInternalContext(), getLocalBounds());
+ */
+
 void ShaderEditor::paint(juce::Graphics &g) {
 
     // -----------------------------------------------------------------------
@@ -217,13 +250,15 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
         juceShader += "#ifdef GL_ES\nprecision mediump float;\n#endif\n\n";  // from Kodelife > Help > Examples > Templates > The Book of Shaders
         //juceShader += "out vec4 fragColor;\n\n";  // from Kodelife > Help > Examples > Templates > Shadertoy
         juceShader += "// JUCE Uniforms\n";
-        juceShader += "uniform " JUCE_MEDIUMP " vec3  iResolution;\n";
-        juceShader += "uniform " JUCE_MEDIUMP " float iTime;\n";
-        juceShader += "uniform " JUCE_MEDIUMP " vec4  iMouse;\n";
-        juceShader += "uniform " JUCE_MEDIUMP " float iTimeDelta;\n";
-        juceShader += "uniform " JUCE_MEDIUMP " int   iFrame;\n\n";
+        juceShader += "uniform vec3  iResolution;\n";
+        juceShader += "uniform float iTime;\n";
+        juceShader += "uniform vec4  iMouse;\n";
+        juceShader += "uniform float iTimeDelta;\n";
+        juceShader += "uniform int   iFrame;\n\n";
 
-        // // ShaderToy Uniforms:
+        // ShaderToy Uniforms:
+        // https://www.shadertoy.com/howto
+
         // uniform vec3      iResolution;           // viewport resolution (in pixels)
         // uniform float     iTime;                 // shader playback time (in seconds)
         // uniform float     iTimeDelta;            // render time (in seconds)
@@ -238,15 +273,44 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
 
         // --------------------------------
 
-        // // ISF Uniforms
-        // to be done
+        // The Book of Shaders Uniforms:
+        // https://thebookofshaders.com/03/
+        // https://github.com/patriciogonzalezvivo/ofxshader
+
+        // uniform vec2 u_resolution;   // Canvas size (width,height) || viewport resolution (in pixels)
+        // uniform vec2 u_mouse;        // mouse position in screen pixels || mouse pixel coords
+        // uniform float u_time;        // Time in seconds since load || shader playback time (in seconds)
+
+        // uniform float u_delta;       // delta time between frames (in seconds)
+        // uniform vec4 u_date;         // year, month, day and seconds
 
         // --------------------------------
 
-        // // The Book of Shaders Uniforms:
-        // uniform vec2 u_resolution;
-        // uniform vec2 u_mouse;
-        // uniform float u_time;
+        // ISF Uniforms
+        // https://docs.isf.video/quickstart.html#automatically-created-uniforms-and-variables-in-isf
+        // https://docs.isf.video/ref_variables.html
+
+        // isf_FragNormCoord    // which contains the normalized (0.0 to 1.0) coordinate
+        // TIME
+        // TIMEDELTA
+        // FRAMEINDEX           // which can be used to animate compositions over time
+        // RENDERSIZE           // which contains the pixel dimensions of the output being rendered
+        // PASSINDEX
+        // DATE
+        // gl_FragCoord
+
+        // --------------------------------
+
+        // https://glslsandbox.com/
+        // https://github.com/mrdoob/glsl-sandbox/blob/master/static/index.html
+
+        // uniform float time;
+        // uniform vec2 mouse;
+        // uniform vec2 resolution;
+        // uniform vec2 surfaceSize;
+        // varying vec2 surfacePosition;
+        // uniform sampler2D texture;
+        // backbuffer
 
     }
 
@@ -352,8 +416,10 @@ void ShaderEditor::update() {
 // ===========================================================================
 
 // juce::MouseListener
-// https://docs.juce.com/master/classjuce_1_1MouseListener.html
 // https://docs.juce.com/master/classjuce_1_1MouseEvent.html
+// https://docs.juce.com/master/classjuce_1_1ModifierKeys.html (LMB, RMB)
+// https://docs.juce.com/master/structjuce_1_1MouseWheelDetails.html
+// https://docs.juce.com/master/classjuce_1_1MouseInputSource.html  (Muti-Touch)
 
 void ShaderEditor::mouseEnter(const MouseEvent &event) {
     AudioProcessorEditor::mouseEnter(event);
@@ -371,6 +437,12 @@ void ShaderEditor::mouseDown(const MouseEvent &event) {
     u_mouseX = event.getMouseDownX();
     u_mouseY = event.getMouseDownY();
     u_mouseZ = 1;  // LMB clicked
+
+    // RMB
+    //const auto& modifiers = ModifierKeys::getCurrentModifiers();
+    if (ModifierKeys::getCurrentModifiers().isRightButtonDown()) {
+        // show menu
+    }
 
     AudioProcessorEditor::mouseDown(event);
 }
@@ -409,6 +481,11 @@ void ShaderEditor::mouseMagnify(const MouseEvent &event, float scaleFactor) {
 // https://docs.juce.com/master/classjuce_1_1KeyListener.html
 // https://docs.juce.com/master/classjuce_1_1KeyPress.html
 // https://docs.juce.com/master/classjuce_1_1ModifierKeys.html
+
+// keyPressed is called from the ComponentPeer (the actual OS window)
+// keyPressed requires that you setWantsKeyboardFocus(true) on the component
+// or manually grab focus with grabKeyboardFocus
+// https://melatonin.dev/blog/juce-component-mouse-and-keyboard/
 
 bool ShaderEditor::keyPressed(const KeyPress &key) {
     return AudioProcessorEditor::keyPressed(key);

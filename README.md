@@ -37,6 +37,7 @@ Install-Package Microsoft.Web.WebView2 -Scope CurrentUser -RequiredVersion 1.0.1
 # create local repo 
 git init .
 git submodule add https://github.com/juce-framework/JUCE.git libs/juce
+#git submodule add https://github.com/assimp/assimp.git libs/assimp
 git submodule --init --recursive
 
 # stage and commit
@@ -47,6 +48,11 @@ git commit -m "initial commit"
 git remote add origin https://github.com/floppyinfant/JUCE_VJi.git
 git push -u origin master
 ```
+
+To build the Android APK: 
+
+Open the Projucer project file (VJi.juce) and export to Android Studio.
+
 
 ---
 
