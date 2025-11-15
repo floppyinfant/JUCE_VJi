@@ -177,6 +177,22 @@ https://youtu.be/kfM-yu0iQBk (Freya Holmer - Unity)
 
 https://thebookofshaders.com/
 
+https://github.com/patriciogonzalezvivo/thebookofshaders
+
+https://meesrutten.github.io/book-of-shaders/
+
+https://thebookofshaders.com/04/ (Running Shader)
+
+```html
+<canvas class="glslCanvas" data-fragment-url=“yourShader.frag" data-textures=“yourInputImage.png” width="500" height="500"></canvas>
+```
+
+```bash
+glslViewer yourShader.frag yourInputImage.png —w 500 -h 500 -E screenshot,yourOutputImage.png
+```
+
+https://editor.thebookofshaders.com/
+
 ---
 
 ### ShaderToy
@@ -227,34 +243,6 @@ uniform vec4      iDate;                 // (year, month, day, time in seconds)
 https://oneshader.net/
 
 ---
-
----
-
-### Synesthesia
-
-https://www.synesthesia.live/
-
-https://app.synesthesia.live/docs/ssf/ssf.html?referrer=synesthesia (Synesthesia Shader Format (SSF))
-
-https://app.synesthesia.live/docs/resources/glsl_resources.html <========
-
-https://github.com/headstash/synesthesia-scripts
-
----
-
-### Kodelife
-
-https://hexler.net/kodelife
-
----
-
-### SHADERed
-
-https://shadered.org/
-
-https://github.com/dfranx/SHADERed
-
-Shader IDE with Debugger
 
 ---
 
@@ -427,6 +415,40 @@ https://webassembly.org/ (WA)
 
 ---
 
+## Shader Editors
+
+### SHADERed
+
+https://shadered.org/
+
+https://github.com/dfranx/SHADERed
+
+Shader IDE with Debugger
+
+### KodeLife
+
+https://hexler.net/kodelife
+
+https://hexler.net/kodelife/manual/introduction
+
+---
+
+### others
+
+https://www.shadertoy.com/
+
+p5.js Editor
+
+The Book of Shaders Editor
+
+IDF
+
+Synesthesia (s.u.)
+
+Kodelife (s.o.)
+
+---
+
 ## VJing - Creative Coding - Live Coding
 https://github.com/terkelg/awesome-creative-coding
 https://github.com/LimeLimeW/awesome-vjing
@@ -440,6 +462,18 @@ https://github.com/toplap/awesome-livecoding
 - Op Art (Optical Art)
 - Optical Illusions
 - ...
+
+---
+
+### Synesthesia
+
+https://www.synesthesia.live/
+
+https://app.synesthesia.live/docs/ssf/ssf.html?referrer=synesthesia (Synesthesia Shader Format (SSF))
+
+https://app.synesthesia.live/docs/resources/glsl_resources.html <========
+
+https://github.com/headstash/synesthesia-scripts
 
 ---
 
@@ -501,12 +535,6 @@ https://vvvv.org/
 ### TouchVIZ (iPad)
 
 https://hexler.net/touchviz
-
-### KodeLife
-
-https://hexler.net/kodelife
-
-https://hexler.net/kodelife/manual/introduction
 
 ---
 
