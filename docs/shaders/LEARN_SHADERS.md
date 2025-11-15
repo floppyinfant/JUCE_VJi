@@ -300,11 +300,18 @@ https://glslsandbox.com/
 
 https://openframeworks.cc/learning/
 
-https://openframeworks.cc/examples/
-- https://github.com/openframeworks/openFrameworks/tree/master/examples
-
 https://openframeworks.cc/documentation/
 - https://openframeworks.cc///documentation/gl/ofShader/
+
+https://openframeworks.cc/examples/
+- https://github.com/openframeworks/openFrameworks/tree/master/examples/
+
+https://openframeworks.cc/ofBook/chapters/shaders.html
+- https://github.com/openframeworks/openFrameworks/tree/master/examples/shader
+
+```c++
+shader.load("shadersGL3/shader");  // loads shader.frag and shader.vert from bin/data/shadersGL3/
+```
 
 ---
 

@@ -250,7 +250,7 @@ https://code.visualstudio.com/docs/cpp/introvideos-cpp
 
 ---
 
-## Toolchains & Compiler
+## Toolchains
 
 C++ toolchain (build tools)
 - compiler
@@ -329,7 +329,7 @@ nvcc.exe
 
 ---
 
-## Generators and Build Systems
+## Generators, Build Systems, Package Managers
 
 ### CMake
 
@@ -353,11 +353,82 @@ cmake --build build
 .\build\VJi_artefacts\Debug\Standalone\VJi.exe
 ```
 
+```shell
+mkdir build
+cd build
+# Generate Visual Studio project files
+cmake -G "Visual Studio 17 2022"
+```
+
+https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2017%202022.html
+
+https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170
+
+---
+
 ### Premake
+
+https://premake.github.io/
+
+Lua Scripting
+
+### Ninja
+
+https://ninja-build.org/
+
+https://github.com/ninja-build/ninja
+
+### Gradle
+
+Build Automation Tool (for Android)
+
+https://gradle.org/
+
+https://github.com/gradle/gradle
+
+https://developer.android.com/build/gradle-build-overview
 
 ### GNU Make
 
-### Ninja
+https://www.gnu.org/software/make/
+
+### NMAKE
+
+https://learn.microsoft.com/de-de/cpp/build/reference/running-nmake?view=msvc-170
+
+Microsoft Makefiles
+
+Use from "Developer Command Prompt for VS 2022"
+
+---
+
+### vcpkg
+
+vc package - C/C++ package manager
+
+https://vcpkg.io/en/
+
+https://github.com/microsoft/vcpkg
+
+https://www.jetbrains.com/help/clion/package-management.html
+
+https://learn.microsoft.com/de-de/shows/pure-virtual-cpp-2024/an-overview-of-vcpkg-in-10-minutes
+
+### cpm
+
+CMake dependency management
+
+https://github.com/cpm-cmake/CPM.cmake
+
+### NuGet
+
+https://www.nuget.org/
+
+https://learn.microsoft.com/de-de/nuget/
+
+.Net package distribution system
+
+a NuGet-Package (*.nupkg) is a ZIP-file containing compiled code (dll) and other files
 
 ---
 
@@ -375,8 +446,6 @@ https://git-scm.com/book/en/v2
 - https://education.github.com/git-cheat-sheet-education.pdfhttps://education.github.com/git-cheat-sheet-education.pdf
 - https://git-scm.com/cheat-sheet
 - https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
-
----
 
 #### Git Workflows
 
@@ -400,8 +469,6 @@ https://git-scm.com/book/de/v2/Git-Branching-Branching-Workflows
 Pull requests (PR)
 
 https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
-
----
 
 #### Git Hosting Services
 
