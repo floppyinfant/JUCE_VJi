@@ -22,5 +22,7 @@ private:
     juce::WebBrowserComponent webView;
     //std::unique_ptr<juce::WebBrowserComponent> webView;
 
+    // ===========================================================================
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginWebViewEditor)
 };

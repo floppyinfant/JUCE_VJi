@@ -29,4 +29,7 @@ private:
     juce::MidiKeyboardState midiKeyboardState;
     juce::MidiKeyboardComponent midiKeyboardComponent{ midiKeyboardState, juce::MidiKeyboardComponent::horizontalKeyboard };
 
+    // ===========================================================================
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyboardComponent)
 };

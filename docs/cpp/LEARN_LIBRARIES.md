@@ -17,47 +17,32 @@
 
 ---
 
+---
+
 ## Graphics Libraries
 
-- https://en.wikipedia.org/wiki/Graphics_library
-- https://en.wikipedia.org/wiki/3D_computer_graphics
-- https://en.wikipedia.org/wiki/2.5D
+@see LEARN_SHADERS.md
 
-...
+https://en.wikipedia.org/wiki/Graphics_library
 
-Metal (Apple)
+https://en.wikipedia.org/wiki/3D_computer_graphics
 
-Wayland (Linux)
+https://en.wikipedia.org/wiki/2.5D
 
-Xorg / X11 (Linux)
+Backends (Rendering APIs / Renderers)
+- DirectX9, DirectX10, DirectX11, DirectX12, Direct3D
+- Metal (Apple)
+- OpenGL, OpenGL >3.2, OpenGL ES, OpenGL ES2, (WebGL)
+- Vulkan
+- SDL_GPU, SDL_Renderer2/3
+- WebGPU
+- Wayland (Linux)
+- Xorg / X11 (Linux)
 
-CUDA (Nvidia)
+- CUDA (Nvidia)
+- ROCm (AMD)
 
-ROCm (AMD)
-
-### Microsoft DirectX
-
-DirectX 12
-
-https://en.wikipedia.org/wiki/DirectX
-
-https://microsoft.github.io/DirectX-Specs/
-
-https://learn.microsoft.com/en-us/windows/win32/directx
-
-Direct3D
-
-### Vulkan
-
-https://www.vulkan.org/
-
-https://www.khronos.org/vulkan/
-
-https://en.wikipedia.org/wiki/Vulkan
-
-https://developer.nvidia.com/vulkan
-
-https://source.android.com/docs/core/graphics/arch-vulkan?hl=de
+---
 
 ### OpenGL
 
@@ -73,9 +58,26 @@ https://www.opengl.org/Documentation/Specs.html
 
 https://www.khronos.org/developers/books/
 
-The OpenGL SuperBible
+- The OpenGL SuperBible
+- The OpenGL Programming Guide
+- Red Book
+- Blue Book
+- Orange Book
 
-The OpenGL Programming Guide
+https://wikis.khronos.org/opengl/
+
+Tutorials:
+
+https://learnopengl.com/ <==========
+
+https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2 (The Cherno - OpenGL)
+- https://hazelengine.com/
+- https://github.com/StudioCherno
+- https://github.com/TheCherno/Hazel
+- https://github.com/TheChernoCommunity
+
+https://www.youtube.com/playlist?list=PLPaoO-vpZnumdcb4tZc4x5Q-v7CkrQ6M- (Victor Gordan)
+
 
 #### OpenGL ES
 
@@ -86,6 +88,7 @@ https://en.wikipedia.org/wiki/OpenGL_ES
 OpenGL Shading Language (GLSL)
 
 @see LEARN_SHADERS.md
+
 
 #### GLFW
 
@@ -105,6 +108,9 @@ https://github.com/nigels-com/glew
 
 https://en.wikipedia.org/wiki/OpenGL#Extension_loading_libraries
 
+#### Glad
+
+
 #### GLM
 
 Math library
@@ -123,17 +129,71 @@ https://github.com/freeglut/freeglut
 
 ---
 
+### Vulkan
+
+https://www.vulkan.org/
+
+https://www.khronos.org/vulkan/
+
+https://en.wikipedia.org/wiki/Vulkan
+
+https://developer.nvidia.com/vulkan
+
+https://source.android.com/docs/core/graphics/arch-vulkan?hl=de
+
+---
+
+### Microsoft DirectX
+
+DirectX 12
+
+https://en.wikipedia.org/wiki/DirectX
+
+https://microsoft.github.io/DirectX-Specs/
+
+https://learn.microsoft.com/en-us/windows/win32/directx
+
+Direct3D
+
+---
+
+---
+
 ## GUI Libraries
+
+Frontends (Windowing APIs)
+- Native
+- ImGui
+- GLUT
+- GLFW
+- SDL2
+- SFML
+- FLTK
+- wxWidgets
+- Qt
 
 ### Dear ImGui
 
-https://github.com/ocornut/imgui
+Immediate Mode GUI
 
 https://www.dearimgui.com/
 
+https://github.com/ocornut/imgui
+
+https://github.com/ocornut/imgui/wiki
+
 https://pthom.github.io/imgui_bundle/
 
-Dear ImGui Extensions
+Docking Branch
+
+https://github.com/ocornut/imgui/wiki/Docking
+
+Backends (Rendering APIs)
+- Renderers: DirectX9, DirectX10, DirectX11, DirectX12, Metal, OpenGL/ES/ES2, SDL_GPU, SDL_Renderer2/3, Vulkan, WebGPU
+- Platforms: GLFW, SDL2/SDL3, Win32, Glut, OSX, Android
+- Frameworks: Allegro5, Emscripten
+
+#### Extensions
 
 https://github.com/ocornut/imgui/wiki/Useful-Extensions
 
@@ -145,16 +205,18 @@ https://github.com/ocornut/imgui/wiki/Useful-Extensions#node-editors
 - https://github.com/epezent/implot
 - https://gboisse.github.io/posts/node-graph/
 
-Tutorials
-- https://www.youtube.com/watch?v=-vXSmDAmXS8 (ADC24 Talk) <========
+#### Tutorials
+
+https://www.youtube.com/watch?v=-vXSmDAmXS8 (ADC24 Talk) <========
     - https://www.github.com/free-audio/clap-imgui-support
     - https://www.github.com/schwaaa/clap-imgui
     - https://www.github.com/Krasjet/imgui_juce
     - https://www.github.com/noizebox/vstimgui
 
-Examples
-- https://github.com/ocornut/imgui/tree/master/examples
-- 
+#### Examples
+
+https://github.com/ocornut/imgui/tree/master/examples
+
 The Cherno Walnut
 - https://github.com/StudioCherno/Walnut
 - https://github.com/TheCherno/Hazel
@@ -162,7 +224,31 @@ The Cherno Walnut
 SHADERed
 - https://github.com/dfranx/SHADERed
 
-### Qt
+---
+
+### GLFW
+
+@see above
+
+### SDL2
+
+Simple DirectMedia Layer
+
+https://www.libsdl.org/
+
+https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer
+
+### SFML
+
+https://www.sfml-dev.org/
+
+https://en.wikipedia.org/wiki/Simple_and_Fast_Multimedia_Library
+
+### FLTK
+
+https://en.wikipedia.org/wiki/FLTK
+
+---
 
 ### wxWidgets
 
@@ -172,17 +258,9 @@ wxFormBuilder: GUI Designer Application
 
 https://github.com/wxFormBuilder/wxFormBuilder
 
-### SDL2
+---
 
-https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer
-
-### SFML
-
-https://en.wikipedia.org/wiki/Simple_and_Fast_Multimedia_Library
-
-### FLTK
-
-https://en.wikipedia.org/wiki/FLTK
+### Qt
 
 ---
 
@@ -208,6 +286,20 @@ https://juce.com/learn/documentation/
 
 https://docs.juce.com/master/classes.html
 
+Modules:
+- audio
+- dsp
+- events
+- graphics
+- animation
+- box2d
+- opengl
+- gui
+- javascript
+- osc
+- video
+- cryptography
+
 
 ### Minimum System Requirements
 
@@ -227,294 +319,19 @@ Deployment Targets
     iOS: iOS 12 (Arm64, Arm64e, x86_64 (Simulator))
     Android: Android 7 - Nougat (API Level 24) (arm64-v8a, armeabi-v7a, x86_64, x86)
 
-### Code Snippets
 
+### Code Snippets
 
 #### OpenGL
 
-https://wikis.khronos.org/opengl/Uniform_(GLSL)
+@see LEARN_SHADERS.md
 
-https://learnopengl.com/Getting-started/Shaders+
-
-https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
-
-https://learnopengl.com/Model-Loading/Assimp
-
-https://github.com/assimp/assimp
-
-Code Examples:
-- DemoRunner/GUI/OpenGLDemo2D.h (OpenGLGraphicsContextCustomShader)
-- DemoRunner/GUI/OpenGLDemo.cpp
-- DemoRunner/GUI/OpenGLAppDemo.cpp
-
-Juce Documentation:
-- https://docs.juce.com/master/classes.html#letter_O
-- https://docs.juce.com/master/classjuce_1_1OpenGLAppComponent.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLHelpers.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLContext.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLRenderer.html
-- https://docs.juce.com/master/structjuce_1_1OpenGLGraphicsContextCustomShader.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLShaderProgram.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLFrameBuffer.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLTexture.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLImageType.html
-- https://docs.juce.com/master/classjuce_1_1OpenGLPixelFormat.html
-
-##### @see src/vj/ShderEditor.cpp
+#### Platforms
 
 ```C++
-juce::OpenGLContext openGLContext;
-juce::String shaderCode;
-std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
-juce::OpenGLShaderProgram* shaderProgram;
-
-codeDocument.replaceAllContent(ShaderPresets::getPresets()[preset].fragmentShader);  // selectPreset()
-shaderCode = convert(codeDocument.getAllContent());                                  // timerCallback()
-codeDocument.replaceAllContent(shaderCode);
-
-// paint(Graphics& g)
-shader.reset(new juce::OpenGLGraphicsContextCustomShader(shaderCode));
-auto result = shader->checkCompilation(g.getInternalContext());
-shaderProgram = shader->getProgram(g.getInternalContext());
-shaderProgram->use();
-
-// set Uniforms:
-shaderProgram->setUniform("iResolution", (float) getWidth(), (float) getHeight(), 1.0f);
-shader->fillRect(g.getInternalContext(), getLocalBounds());
-
-// other way to set Uniforms: OpenGLAppDemo.h > Uniforms (class):
-std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix;
-projectionMatrix.reset(new OpenGLShaderProgram::Uniform(shaderProgram, "projectionMatrix"));
-```
-
-##### @see src/gui/components/OpenGLComponent.cpp
-
-based on https://medium.com/@Im_Jimmi/using-opengl-for-2d-graphics-in-a-juce-plug-in-24aa82f634ff
-
-```C++
-// Snippets
---- GL ---
-juce::OpenGLContext openGLContext;
-----------------
-juce::OpenGLAppComponent openGLAppComponent;  // is a OpenGLRenderer implements initialize(), render(), shutdown()
-juce::OpenGLRenderer openGLRenderer;          // implements newOpenGLContextCreated(), renderOpenGL(), openGLContextClosing()
-  openGLContext.setRenderer(this); openGLContext.attachTo(*this);
-----------------
---- ::newOpenGLContextCreated() ---
-std::unique_ptr<juce::OpenGLShaderProgram> shaderProgram;
-  shaderProgram.reset(new OpenGLShaderProgram(openGLContext));
-  if (shaderProgram->addVertexShader(...) && shaderProgram->addFragmentShader(...) && shaderProgram->link()) { shaderProgram->use() }
-juce::String vertexShader;
-juce::String fragmentShader;
-attribute
-juce::OpenGLShaderProgram::Uniform uniform;
-shape
-----------------
---- RAW OpenGL ---
-std::vector<Vertex> vertexBuffer; std::vector<unsigned int> indexBuffer;
-GLuint vbo; GLuint ibo;
-openGLContext.extensions.glGenBuffers(1, &vbo);
-openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, vbo);
-openGLContext.extensions.glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexBuffer.size(), vertexBuffer.data(), GL_STATIC_DRAW);
---- ::renderOpenGL() ---
-OpenGLHelpers::clear(Colours::black);
-shaderProgram->use();
-openGLContext.extensions.glBindBuffer(..., vbo);
-openGLContext.extensions.glBindBuffer(..., ibo);
-openGLContext.extensions.glVertexAttribPointer(...);
-openGLContext.extensions.glEnableVertexAttribArray(0);  // position attribute
-openGLContext.extensions.glVertexAttribPointer(...);
-openGLContext.extensions.glEnableVertexAttribArray(1);  // color attribute
-glDrawElements(...);
-openGLContext.extensions.glDisableVertexAttribArray(0);
-openGLContext.extensions.glDisableVertexAttribArray(1);
-----------------
---- GLSL: vert, vs ---
-position = pixelPos;
-gl_Position = projectionMatrix * viewMatrix * position;
-----------------
---- GLSL: frag, fs ---
-fragColor = mix(...);
-gl_FragColor = pixelAlpha * fragColor;
-----------------
-
-```
-
-##### Uniforms
-
-###### GLSL
-
-- https://learnopengl.com/Getting-started/Shaders+
-- https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
-- https://wikis.khronos.org/opengl/Uniform_(GLSL)
-
-```C++
-gl_Position
-gl_FragCoord
-gl_FragColor
-```
-
-###### JUCE
-
-```C++
-#ifdef GL_ES
-precision mediump float;
-#endif
-
-// --- juce_OpenGLGraphicsContext.cpp ---
-varying vec2 pixelPos;
-#define pixelAlpha frontColour.a
-
-attribute vec2 position;
-attribute vec4 colour;
-uniform vec4 screenBounds;
-varying vec4 frontColour;
-
-varying vec2 texturePos;
-vec2 adjustedPos
-vec2 scaledPos
-uniform sampler2D maskTexture;
-uniform ivec4 maskBounds;
-uniform float matrix[6];
-uniform sampler2D gradientTexture;
-uniform vec4 gradientInfo;
-gradientPos
-uniform sampler2D imageTexture;
-uniform vec2 imageLimits;
-
-// --- juce_OpenGLHelpers.cpp  ---
-if (getOpenGLVersion() >= Version (3, 2))
-// --- OpenGLHelpers::translateVertexShaderToV3 ---
 #if JUCE_ANDROID
 #else
-code.replace ("attribute", "in");
-output.replace ("varying", "out");
-// --- OpenGLHelpers::translateFragmentShaderToV3 ---
-out vec4 fragColor;
-code.replace ("varying", "in")
-code.replace ("texture2D", "texture")
-code.replace ("gl_FragColor", "fragColor");
 
-// --- OpenGLHelpers::getGLSLVersionString() ---
-if (getOpenGLVersion() >= Version (3, 2)) {
-    #if JUCE_OPENGL_ES 
-        return "#version 300 es"; 
-    #else 
-        return "#version 150"; }
-else {
-    return "#version 110";
-}
-```
-
-###### ShaderToy
-
-- https://www.shadertoy.com/howto
-
-```C++
-uniform vec3      iResolution;           // viewport resolution (in pixels)
-uniform float     iTime;                 // shader playback time (in seconds)
-uniform float     iTimeDelta;            // render time (in seconds)
-uniform float     iFrameRate;            // shader frame rate
-uniform int       iFrame;                // shader playback frame
-uniform float     iChannelTime[4];       // channel playback time (in seconds)
-uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
-uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
-uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
-uniform vec4      iDate;                 // (year, month, day, time in seconds)
-uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
-```
-
-###### The Book of Shaders
-
-- https://thebookofshaders.com/03/
-- https://github.com/patriciogonzalezvivo/ofxshader
-
-```C++
-uniform vec2 u_resolution;   // Canvas size (width,height) || viewport resolution (in pixels)
-uniform vec2 u_mouse;        // mouse position in screen pixels || mouse pixel coords
-uniform float u_time;        // Time in seconds since load || shader playback time (in seconds)
-
-uniform float u_delta;       // delta time between frames (in seconds)
-uniform vec4 u_date;         // year, month, day and seconds
-```
-
-###### p5.js
-
-https://p5js.org/tutorials/#webgl
-
-https://p5js.org/tutorials/intro-to-shaders/
-
-https://p5js.org/reference/p5/p5.Shader/
-
-https://p5js.org/reference/p5.Shader/setUniform/
-
-https://p5js.org/reference/#Environment (Environment)
-
-https://p5js.org/reference/#Events (Events)
-
-https://github.com/processing/p5.js/blob/main/contributor_docs/webgl_mode_architecture.md#global
-
-```C++
-// WebGL
-// For all objects in all contexts, the following global uniforms are available:
-uniform mat4 uModelViewMatrix;   // A matrix to convert object-space positions into camera-space
-uniform mat4 uProjectionMatrix;  // A matrix to convert camera-space positions into screen space
-uniform mat3 uNormalMatrix;      // A matrix to convert object-space normals into camera-space
-// Additionally, these per-vertex properties are available as attributes:
-attribute vec3 aPosition;        // The position of the vertex in object space
-attribute vec3 aNormal;          // For fills, a direction pointing outward from the surface
-attribute vec2 aTexCoord;        // For fills, a coordinate between 0 and 1 in x and y referring to a location on a texture image
-attribute vec3 aVertexColor;     // For fills, an optional per-vertex color
-// Lights
-// Materials
-// ...
-```
-
-###### WebGL
-
-https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
-
-https://developer.mozilla.org/en-US/docs/Web/API/WebGLShader
-
-https://developer.mozilla.org/en-US/docs/Web/API/WebGLProgram
-
-https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/uniform
-
-###### WebGPU
-
-https://eliemichel.github.io/LearnWebGPU/basic-3d-rendering/shader-uniforms/a-first-uniform.html
-
-###### ISF
-
-- https://docs.isf.video/quickstart.html#automatically-created-uniforms-and-variables-in-isf
-- https://docs.isf.video/ref_variables.html
-
-```C++
-isf_FragNormCoord    // which contains the normalized (0.0 to 1.0) coordinate
-TIME
-TIMEDELTA
-FRAMEINDEX           // which can be used to animate compositions over time
-RENDERSIZE           // which contains the pixel dimensions of the output being rendered
-PASSINDEX
-DATE
-gl_FragCoord
-```
-
-###### GLSL Sandbox
-
-- https://glslsandbox.com/
-- https://github.com/mrdoob/glsl-sandbox/blob/master/static/index.html
-
-```C++
-uniform float time;
-uniform vec2 mouse;
-uniform vec2 resolution;
-uniform vec2 surfaceSize;
-attribute vec3 position;
-attribute vec2 surfacePosAttrib;
-varying vec2 surfacePosition;
-uniform sampler2D texture;
-backbuffer
 ```
 
 ### JUCE Tutorials
@@ -565,18 +382,6 @@ https://juce.com/learn/tutorials/
 
 http://docs.juce.com/master/index.html (Documentation)
 
-- audio
-- dsp
-- events
-- graphics
-- animation
-- box2d
-- opengl
-- gui
-- javascript
-- osc
-- video
-- cryptography
 
 #### YouTube Tutorials
 
@@ -609,6 +414,36 @@ https://www.youtube.com/playlist?list=PLLgJJsrdwhPwR6a2nG8XRvBkXbnKcexlO (TheAud
 
 ---
 
+## openFrameworks (of)
+
+https://openframeworks.cc/learning/
+
+https://openframeworks.cc/documentation/
+
+https://openframeworks.cc/examples/
+- https://github.com/openframeworks/openFrameworks/tree/master/examples/
+
+https://openframeworks.cc/ofBook/chapters/foreword.html (Book of openFrameworks)
+
+https://openframeworks.cc/ofBook/chapters/shaders.html
+- https://github.com/openframeworks/openFrameworks/tree/master/examples/shader
+
+```c++
+
+```
+
+---
+
+## Unreal Engine
+
+https://dev.epicgames.com/community/unreal-engine/learning
+
+https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-5-7-documentation
+
+https://dev.epicgames.com/documentation/de-de/unreal-engine/API (C++ API)
+
+---
+
 ## SQlite
 
 https://www.sqlite.org/index.html
@@ -616,4 +451,18 @@ https://www.sqlite.org/index.html
 https://www.sqlite.org/howtocompile.html
 
 https://github.com/sqlite/sqlite
+
+C API
+
+---
+
+## Assimp
+
+https://github.com/assimp/assimp
+
+https://learnopengl.com/Model-Loading/Assimp
+
+Mesh Loading Library
+
+---
 

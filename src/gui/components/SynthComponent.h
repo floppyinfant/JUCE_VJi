@@ -59,4 +59,7 @@ private:
     //juce::OwnedArray<juce::AudioProcessorValueTreeState::SliderAttachment> sliderAttachments;
     //std::unique_ptr<juce::GroupComponent> sliderGroup;
 
+    // ===========================================================================
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthComponent)
 };

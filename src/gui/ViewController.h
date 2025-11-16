@@ -58,4 +58,8 @@ private:
     AudioProcessorEditor& editor;
     //LookAndFeel_V4& laf;
     //AudioProcessorValueTreeState& vts;
+
+    // ===========================================================================
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ViewController)
 };

@@ -18,5 +18,7 @@ private:
     // access the processor object that created it.
     PluginAudioProcessor& processorRef;
 
+    // ===========================================================================
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessorEditor)
 };

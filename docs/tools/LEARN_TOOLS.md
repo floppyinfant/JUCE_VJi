@@ -346,6 +346,8 @@ CMakeLists.txt example files see:
 - VST_SDK, Will Pirkle
 - Genesis LuisaRender compute (Python WS)
 
+Use CMake from the project root directory:
+
 ```shell
 # Configure, Build, execute
 cmake -S . -B build
@@ -353,11 +355,15 @@ cmake --build build
 .\build\VJi_artefacts\Debug\Standalone\VJi.exe
 ```
 
+Use CMake from within build directory:
+
 ```shell
 mkdir build
 cd build
 # Generate Visual Studio project files
-cmake -G "Visual Studio 17 2022"
+cmake -G "Visual Studio 17 2022" -A x64 ..
+# (optional) Build the project from the command line using CMake's build tool mode
+cmake --build . --config Release
 ```
 
 https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2017%202022.html
@@ -412,7 +418,53 @@ https://github.com/microsoft/vcpkg
 
 https://www.jetbrains.com/help/clion/package-management.html
 
+https://learn.microsoft.com/en-us/vcpkg/
+
 https://learn.microsoft.com/de-de/shows/pure-virtual-cpp-2024/an-overview-of-vcpkg-in-10-minutes
+
+Use a standalone vcpkg instance, not the bundled one in Visual Studio (Developer Command Prompt for VS 2022)!
+
+```bash
+The CMake Error persists because the vcpkg toolchain is still unable to find the required library files, likely because the specific vcpkg instance you are using is read-only and requires a manifest file to install packages, as detailed in the initial error message of your entire interaction.
+The output vcpkg integrate install previously showed this path for the toolchain file:
+C:/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake
+This specific vcpkg instance (the one bundled with VS) is highly restrictive. It is designed to work only when your project has a vcpkg.json manifest file that specifies versioning via a builtin-baseline.
+The Solution: Use a Standalone Vcpkg Instance
+The easiest way to get your project building without fighting the restrictions of the Visual Studio-bundled vcpkg instance is to use a separate, standalone instance that you control.
+```
+
+Usage:
+
+```bash
+vcpkg install
+# error: this vcpkg instance requires a manifest with a specified baseline in order to interact with ports. Please add 'builtin-baseline' to the manifest or add a 'vcpkg-configuration.json' that redefines the default registry.
+
+vcpkg x-update-baseline --add-initial-baseline
+# modifies vcpkg.json:
+```
+
+Example Black_Hole:
+
+```bash
+git clone https://github.com/kavan010/black_hole.git
+cd black_hole-main
+
+# use a standalone version of vcpkg (not the VS bundled version)
+git clone https://github.com/microsoft/vcpkg.git
+cd vcpkg
+.\bootstrap-vcpkg.bat
+cd ..
+
+# @see README.md: install dependencies and integrate into cmake
+.\vcpkg\vcpkg.exe x-update-baseline --add-initial-baseline
+.\vcpkg\vcpkg.exe install
+.\vcpkg\vcpkg.exe integrate install
+
+mkdir build
+# use the cmake version, that vcpkg downloaded
+vcpkg\downloads\tools\cmake-3.30.1-windows\cmake-3.30.1-windows-i386\bin\cmake.exe -B build -S . "-DCMAKE_TOOLCHAIN_FILE=L:/WORKSPACES/WINDOWS_WS/BlackHole/black_hole-main/vcpkg/scripts/buildsystems/vcpkg.cmake"
+vcpkg\downloads\tools\cmake-3.30.1-windows\cmake-3.30.1-windows-i386\bin\cmake.exe --build build
+```
 
 ### cpm
 
