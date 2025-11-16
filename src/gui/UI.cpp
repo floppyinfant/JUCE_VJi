@@ -10,7 +10,8 @@ UI::UI(ShaderEditor* e) : shaderEditor(e)
     setOpaque(false);  // Make transparent so layers below show through
     setInterceptsMouseClicks(false, true);  // Don't block clicks on the UI
 
-    //setLookAndFeel(&lf);  // CustomLookA
+    //setLookAndFeel(&lf);  // CustomLookA; makeMenu() > menu.setLookAndFeel()
+    //getLookAndFeel().setColour (juce::Slider::thumbColourId, juce::Colours::red);
 }
 
 UI::~UI() {

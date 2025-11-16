@@ -26,6 +26,8 @@ public:
     // color palette
     static juce::Array<juce::Colour> palette;
 
+    //PopupMenu menu;
+
 private:
 
     //PluginAudioProcessor& processor;

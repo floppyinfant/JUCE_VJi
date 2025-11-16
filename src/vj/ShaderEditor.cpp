@@ -17,12 +17,6 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     // Presets Selector
     // --------------------------------
 
-    //addAndMakeVisible(statusLabel);
-    //statusLabel.setJustificationType(juce::Justification::topLeft);
-    //statusLabel.setFont(juce::FontOptions(14.0f));
-
-    // --------
-
     auto presets = ShaderPresets::getPresets();
 
     for (int i = 0; i < presets.size(); ++i) {
@@ -486,6 +480,8 @@ void ShaderEditor::mouseDown(const MouseEvent &event) {
     //const auto& modifiers = ModifierKeys::getCurrentModifiers();
     if (ModifierKeys::getCurrentModifiers().isRightButtonDown()) {
         // show menu
+        //uiOverlay->showMenu();
+        //uiOverlay->menu.showMenuAsync (PopupMenu::Options{}.withMousePosition());
     }
 
     AudioProcessorEditor::mouseDown(event);
