@@ -24,6 +24,8 @@ constexpr int interval = 4;
 class MidiProcessor
 {
 public:
+	MidiProcessor() {}
+	~MidiProcessor() {}
 	void process(MidiBuffer& midiMessages)
 	{
 		// 1. delete old messages

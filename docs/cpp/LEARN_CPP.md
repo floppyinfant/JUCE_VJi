@@ -124,15 +124,21 @@ C++26 standard
 
 ### Objects, Instantiation, Memory
 
+// Stack memory allocation
+
 String str;
 
 String str = String();
+
+// Heap memory allocation
 
 String* strPtr = new String();
 
 delete str;
 
 char** strPtr = nullptr;
+
+### RAW Pointers (C-Pointers)
 
 void* ptr = malloc(1024);
 
@@ -148,6 +154,10 @@ std::weak_ptr<String> strPtr = std::weak_ptr<String>();
 
 ### Initializer Lists
 
+{}
+
+()
+
 ### function parameters
 
 pass by value
@@ -157,39 +167,6 @@ pass by reference
 pass by const reference
 
 pass by value & std::move
-
-### Strings
-
-const char* c-string // null-terminated
-
-std::string stdString
-
-juce::String juceString
-
-R"()" // Raw-String (multiline)
-
-Unicode Strings
-
-
-```c++
-#include <iostream>
-
-int main()
-{
-std::cout << "Hello, world!\n";
-}
-```
-
-```c++
-// C++23
-import std;
-
-int main() {
-    std::println("Hello, world!");
-}
-```
-
----
 
 ### functions, function pointers, lambdas
 
@@ -344,6 +321,20 @@ https://www.youtube.com/watch?v=ehMg6zvXuMY
 
 ---
 
+### copy-constructor
+
+---
+
+### value semantics
+
+https://en.wikipedia.org/wiki/Value_semantics
+
+https://isocpp.org/wiki/faq/value-vs-ref-semantics
+
+copy-by-value semantics
+
+---
+
 ### const
 
 const reference: accepts lvalues and rvalues
@@ -365,6 +356,46 @@ extern: variable is defined in another translation unit
 
 ---
 
+### Strings
+
+const char* c-string // null-terminated
+
+std::string stdString
+
+juce::String juceString
+
+R"()" // Raw-String (multiline)
+
+Unicode Strings
+
+
+```c++
+#include <iostream>
+
+int main()
+{
+std::cout << "Hello, world!\n";
+}
+```
+
+```c++
+// C++23
+import std;
+
+int main() {
+    std::println("Hello, world!");
+}
+```
+
+---
+
+---
+
 ```c++
 
 ```
+
+```c++
+
+```
+

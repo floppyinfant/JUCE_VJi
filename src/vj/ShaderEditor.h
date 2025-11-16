@@ -107,18 +107,18 @@ public:
     std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
 
     // GUI
-    std::unique_ptr<UI> overlayUI;
+    std::unique_ptr<UI> uiOverlay;
     void toggleFullscreen();
     bool isFullscreen = false;
+    bool isCodeEditorVisible = true;
+    juce::Slider alphaSlider;
+    int ALPHA = 50;
 
 private:
     PluginAudioProcessor& processor;
     juce::OpenGLContext openGLContext;
     //std::unique_ptr<juce::OpenGLShaderProgram> shaderProgram;
     juce::OpenGLShaderProgram* shaderProgram;
-
-    //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iResolutionUniform;
-    //std::unique_ptr<juce::OpenGLGraphicsContextCustomShader::Uniform> iTimeUniform;
 
     // Uniform variables
     int u_frameCounter = 0;

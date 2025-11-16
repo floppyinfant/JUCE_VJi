@@ -3,30 +3,53 @@
 //
 
 #include "UI.h"
+#include "ShaderEditor.h"  // Include the full definition here (not in the header, because of circular dependencies)
 
-UI::UI()
+UI::UI(ShaderEditor* e) : shaderEditor(e)
 {
     setOpaque(false);  // Make transparent so layers below show through
-    setInterceptsMouseClicks(false, true);
+    setInterceptsMouseClicks(false, true);  // Don't block clicks on the UI
+
 }
 
 UI::~UI() {
 
 }
 
+// color palette
+// https://juce.com/tutorials/tutorial_colours/
+// Component::setColour() or LookAndFeel::setColour()
+juce::Array<juce::Colour> UI::palette {
+    // hexadecimal: alpha, red, green, blue
+    juce::Colour (0xffff0000), // red
+    juce::Colour (0xff008000), // green
+    juce::Colour (0xff0000ff), // blue
+    juce::Colour (0xff000000)
+    // juce::Colour (0, 128, 0), // green
+    // juce::Colour (0xff008000), // hexadecimal values: alpha, red, green, and blue
+    // juce::Colour::fromFloatRGBA (0.0f, 0.5f, 0.0f, 1.0f), // green
+    // juce::Colour::fromHSV (0.0f, 0.5f, 0.5f, 1.0f), // values: hue, saturation, brightness, alpha
+};
+
+// -----------------------------------------------------------------------
+
 void UI::paint(juce::Graphics &g) {
     // Example: semi-transparent overlay
     //g.fillAll(juce::Colours::black.withAlpha(0.7f));
 
-    // remove (only debugging purposes)
     // Draw custom text or shapes on top
     g.setColour(juce::Colours::white);
     g.setFont(20.0f);
     //g.drawText("Overlay Layer", getLocalBounds(), juce::Justification::centred);
 
-    // TODO: GUI
+    // ------------------------------------------------
+    // GUI
+    // ------------------------------------------------
+
     // Layout Manager --> resized()
     // - header, footer: mouseEnter(), mouseExit()
+
+    // ------------------------------------------------
 
     // Menu Bar
 
@@ -42,6 +65,8 @@ void UI::paint(juce::Graphics &g) {
     addAndMakeVisible (burgerButton);
     makeMenu(burgerButton);
 
+    // ------------------------------------------------
+
     // View Settings
     // - set Visibility
     // - set Alpha (Transparency)
@@ -54,6 +79,10 @@ void UI::paint(juce::Graphics &g) {
 
     // View help (sidepanel transparent)
     // View about (Alert Window)
+
+    auto centralArea = getLocalBounds().toFloat().reduced (10.0f);
+    g.setColour (juce::Colours::violet.withAlpha (0.5f));
+    //g.drawRoundedRectangle (centralArea, 5.0f, 3.0f);
 }
 
 void UI::resized() {
@@ -80,6 +109,8 @@ void UI::resized() {
     box.performLayout (getLocalBounds());
 }
 
+// -----------------------------------------------------------------------
+
 void UI::makeBurgerButton() {
     static const unsigned char burgerMenuPathData[]
             = { 110,109,0,0,128,64,0,0,32,65,108,0,0,224,65,0,0,32,65,98,254,212,232,65,0,0,32,65,0,0,240,65,252,
@@ -99,6 +130,8 @@ void UI::makeBurgerButton() {
     p.loadPathFromData (burgerMenuPathData, sizeof (burgerMenuPathData));
     burgerButton.setShape (p, true, true, false);
 }
+
+// -----------------------------------------------------------------------
 
 void UI::makeMenu(Button& b) {
     // lambda Button Listener
@@ -136,23 +169,22 @@ void UI::makeMenu(Button& b) {
 
         //->Submenu
         PopupMenu subMenuView;
-        subMenuView.addItem ("Fullscreen", nullptr);  // fullscreen toggle [F11]
+        subMenuView.addItem ("Fullscreen", [this](){shaderEditor->toggleFullscreen();});  // fullscreen toggle [F11]
         subMenuView.addSeparator();
         // toggle menuBar, toolBar, sideBar [Ctrl+B,D], widgets (Main Settings)
         subMenuView.addSeparator();
         // zoom: everything (GUI) or font (codeEditor) ?
-        subMenuView.addItem ("Zoom In", nullptr);  // [Ctrl++]
-        subMenuView.addItem ("Zoom out", nullptr);  // [Ctrl+-]
-        subMenuView.addSeparator();
+        //subMenuView.addItem ("Zoom In", nullptr);  // [Ctrl++]
+        //subMenuView.addItem ("Zoom out", nullptr);  // [Ctrl+-]
+        //subMenuView.addSeparator();
         // toggle
-        subMenuView.addItem ("Code Editor", nullptr);
+        subMenuView.addItem ("Code Editor", [this]{shaderEditor->codeEditorComponent.setVisible(!shaderEditor->codeEditorComponent.isVisible());});
         subMenuView.addItem ("Parameters", nullptr);
         subMenuView.addItem ("Playlist", nullptr);
         subMenuView.addItem ("Settings", nullptr);
         subMenuView.addSeparator();
         subMenuView.addItem ("MIDI-Processor", nullptr);
         subMenuView.addItem ("DSP-Processor", nullptr);
-
 
         // ------------------------------------------------
 
@@ -183,10 +215,14 @@ void UI::makeMenu(Button& b) {
         // [Ctrl+Shift+...]
         // [Shift+F...]
 
+        //menu.setLookAndFeel();
+
         // finally show menu
         menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (b));
     };
 }
+
+// -----------------------------------------------------------------------
 
 void UI::alert(const juce::String& title, const juce::String& message) {
     MessageBoxIconType icon = MessageBoxIconType::InfoIcon;

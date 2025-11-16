@@ -326,6 +326,87 @@ Deployment Targets
 
 @see LEARN_SHADERS.md
 
+#### Outline / Snippets
+
+```C++
+#pragma once
+
+#include <JuceHeader.h>
+
+// Processor
+class PluginAudioProcessor final : public juce::AudioProcessor
+{
+public:
+    PluginAudioProcessor()
+    {
+        addParameter (gain = new juce::AudioParameterFloat ("gain", // parameterID
+                      "Gain", // parameter name
+                      0.0f, // minimum value
+                      1.0f, // maximum value
+                      0.5f)); // default value
+    }
+    
+    ~PluginAudioProcessor() override;
+    
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override
+    {
+        juce::ignoreUnused (sampleRate, samplesPerBlock);
+    }
+    
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override
+    {}
+    
+    juce::AudioProcessorEditor* createEditor() override;
+    
+private:
+    juce::AudioProcessorValueTreeState apvts;
+    // Parameters
+    juce::AudioParameterFloat* gain;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessor)
+};
+
+// Editor
+class PluginAudioProcessorEditor final : public juce::AudioProcessorEditor
+{
+public:
+    explicit PluginAudioProcessorEditor (PluginAudioProcessor&) : juce::AudioProcessorEditor(&p), processor(p)
+    {
+        // addChildComponent, setVisible
+        addAndMakeVisible(component);
+        
+        setSize(500, 500);
+        setResizable(true, true);
+    }
+    
+    ~PluginAudioProcessorEditor() override;
+    
+    void paint (juce::Graphics& g) override
+    {
+        // graphics
+        g.fillAll(juce::Colours::black.withAlpha(0.7f));
+        g.setColour(juce::Colours::white);
+        g.setFont(20.0f);
+        g.drawText("Hello Layer", getLocalBounds(), juce::Justification::centred);
+        
+        
+    }
+    
+    void resized() override
+    {
+        auto area = getLocalBounds().reduced(4).removeFromTop(25).removeFromLeft(100);
+        component.setBounds(area);
+    }
+    
+private:
+    PluginAudioProcessor& processorRef;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessorEditor)
+};
+
+```
+
+
 #### Platforms
 
 ```C++

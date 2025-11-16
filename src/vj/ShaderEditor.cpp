@@ -3,7 +3,8 @@
 // ===========================================================================
 
 ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
-    : juce::AudioProcessorEditor(&p), processor(p) {
+    : juce::AudioProcessorEditor(&p), processor(p)
+{
     setOpaque(true);
 
     if (auto *peer = getPeer())
@@ -13,11 +14,14 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     openGLContext.attachTo(*this);
 
     // --------------------------------
-
     // Presets Selector
-    addAndMakeVisible(statusLabel);
-    statusLabel.setJustificationType(juce::Justification::topLeft);
-    statusLabel.setFont(juce::FontOptions(14.0f));
+    // --------------------------------
+
+    //addAndMakeVisible(statusLabel);
+    //statusLabel.setJustificationType(juce::Justification::topLeft);
+    //statusLabel.setFont(juce::FontOptions(14.0f));
+
+    // --------
 
     auto presets = ShaderPresets::getPresets();
 
@@ -25,21 +29,34 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
         presetBox.addItem(presets[i].name, i + 1);
     }
 
-    addAndMakeVisible(presetLabel);
-    presetLabel.attachToComponent(&presetBox, true);
-
+    presetBox.setColour(juce::ComboBox::backgroundColourId, juce::Colours::transparentBlack);
+    presetBox.setColour(juce::ComboBox::outlineColourId, juce::Colours::transparentBlack);
     addAndMakeVisible(presetBox);
     presetBox.onChange = [this] { selectPreset(presetBox.getSelectedItemIndex()); };
+    presetBox.setSelectedItemIndex(0);
+
+    // --------
+
+    addAndMakeVisible(presetLabel);
+    presetLabel.attachToComponent(&presetBox, true);
 
     // --------------------------------
 
     // Code Editor
     codeEditorComponent.setOpaque(false);
     codeDocument.addListener(this);
+    codeEditorComponent.setColour(juce::CodeEditorComponent::backgroundColourId, juce::Colours::transparentBlack);
+    codeEditorComponent.setColour(juce::CodeEditorComponent::lineNumberBackgroundId, juce::Colours::transparentBlack);
+    //codeEditorComponent.setColour(, juce::Colours::transparentBlack);
+    codeEditorComponent.setScrollbarThickness(5);
     addAndMakeVisible(codeEditorComponent);
-    //codeEditorComponent.
 
-    presetBox.setSelectedItemIndex(0);
+    // --------------------------------
+
+    // GUI
+    uiOverlay = std::make_unique<UI>(this);
+    addAndMakeVisible(*uiOverlay);
+    //overlayUI->setBounds(getLocalBounds());
 
     // --------------------------------
 
@@ -48,15 +65,8 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     isConverted = false;
     u_startTime = juce::Time::getMillisecondCounterHiRes() * 0.001f;
 
-    // GUI
-    overlayUI = std::make_unique<UI>();
-    addAndMakeVisible(*overlayUI);
-    //overlayUI->setBounds(getLocalBounds());
-    // catches all Mouse clicks !?
+    // --------
 
-    // --------------------------------
-
-    // Component (AudioProcessorEditor)
     setSize(500, 500);
     setResizable(true, true);
 }
@@ -64,48 +74,9 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
 ShaderEditor::~ShaderEditor() {
     openGLContext.detach();
     shader.reset();
-    delete shaderProgram;
 }
 
 // ===========================================================================
-
-// OpenGL
-// https://docs.juce.com/master/classes.html#letter_O
-// https://docs.juce.com/master/classjuce_1_1OpenGLAppComponent.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLHelpers.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLContext.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLRenderer.html
-// https://docs.juce.com/master/structjuce_1_1OpenGLGraphicsContextCustomShader.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLShaderProgram.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLFrameBuffer.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLTexture.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLImageType.html
-// https://docs.juce.com/master/classjuce_1_1OpenGLPixelFormat.html
-
-/*
-juce::OpenGLContext openGLContext;
-juce::String shaderCode;
-std::unique_ptr<juce::OpenGLGraphicsContextCustomShader> shader;
-juce::OpenGLShaderProgram* shaderProgram;
-
-codeDocument.replaceAllContent(ShaderPresets::getPresets()[preset].fragmentShader);  // selectPreset()
-shaderCode = convert(codeDocument.getAllContent());                                  // timerCallback()
-codeDocument.replaceAllContent(shaderCode);
-
-// paint(Graphics& g)
-shader.reset(new juce::OpenGLGraphicsContextCustomShader(shaderCode));
-auto result = shader->checkCompilation(g.getInternalContext());
-shaderProgram = shader->getProgram(g.getInternalContext());
-shaderProgram->use();
-
-// set Uniforms:
-shaderProgram->setUniform("iResolution", (float) getWidth(), (float) getHeight(), 1.0f);
-shader->fillRect(g.getInternalContext(), getLocalBounds());
-
-// other way to set Uniforms: OpenGLAppDemo.h > Uniforms (class):
-std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix;
-projectionMatrix.reset(new OpenGLShaderProgram::Uniform(shaderProgram, "projectionMatrix"));
- */
 
 void ShaderEditor::paint(juce::Graphics &g) {
 
@@ -203,31 +174,25 @@ void ShaderEditor::resized() {
     codeEditorComponent.setBounds(area);
 
     // to be done: smaller bounds: only header or footer
-    overlayUI->setBounds(getLocalBounds());
+    uiOverlay->setBounds(getLocalBounds());
 }
 
 void ShaderEditor::toggleFullscreen() {
 
-    getPeer()->setFullScreen(!isFullscreen);
+    isFullscreen = !isFullscreen;
 
-    // code snippets:
-    // ResizableWindow::setFullScreen()
-    // Desktop::setKioskModeComponent
-    // MainWnd->setFullScreen(true);
-    // MainWnd->setTitleBarHeight(0);
-    /*
-    void MainComponent::onFullScreenModeItemTriggered()
-    {
-        getPeer()->setFullScreen(true);
-        Desktop::getInstance().setKioskModeComponent(getTopLevelComponent(), false);
-        // --- other source ---
-        // https://juce.com/tutorials/tutorial_android_studio/
-        setUsingNativeTitleBar (true);
-        setContentOwned (new MainContentComponent(), true);
-        setFullScreen (true); // set to fullscreen rather than call centreWithSize()
-        setVisible (true);
-    }
-     */
+    getPeer()->setFullScreen(isFullscreen);
+
+    //if (isFullscreen) {}
+
+    // --------------------------------
+
+    // ResizableWindow::
+    // getPeer()->setFullScreen(true);
+    // getPeer()->setTitleBarHeight(0);
+
+    // Desktop::
+    // Desktop::getInstance().setKioskModeComponent(getTopLevelComponent(), false);
 }
 
 // ===========================================================================
@@ -491,6 +456,8 @@ void ShaderEditor::update() {
 }
 
 // ===========================================================================
+
+// Event Listener, Action Listener, Mouse Listener, Key Listener; MVC: registerListener(), notify()
 
 // juce::MouseListener
 // https://docs.juce.com/master/classjuce_1_1MouseEvent.html

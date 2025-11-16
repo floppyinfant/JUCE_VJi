@@ -5,24 +5,30 @@
 
 #include <JuceHeader.h>
 
+// Forward declaration instead of including ShaderEditor.h
+class ShaderEditor;
+
 using namespace juce;
 
 class UI final : public juce::Component, private juce::FilenameComponentListener {
 public:
-    explicit UI();
+    explicit UI(ShaderEditor*);
     ~UI() override;
 
     void paint(juce::Graphics&) override;
     void resized() override;
 
+    // color palette
+    static juce::Array<juce::Colour> palette;
+
 private:
 
     //PluginAudioProcessor& processor;
     //AudioProcessorEditor& editor;
+    ShaderEditor* shaderEditor;
 
     //LookAndFeel& laf;
     //LookAndFeel_V4& laf;
-    //AudioProcessorValueTreeState& vts;
 
     // ------------------------------------------------
 
