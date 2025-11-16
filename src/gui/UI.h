@@ -8,7 +8,12 @@
 // Forward declaration instead of including ShaderEditor.h
 class ShaderEditor;
 
-using namespace juce;
+class CustomLookAndFeel : public juce::LookAndFeel_V4 {
+    public:
+    CustomLookAndFeel() {
+        setColour (juce::PopupMenu::backgroundColourId, juce::Colours::transparentBlack);
+    }
+};
 
 class UI final : public juce::Component, private juce::FilenameComponentListener {
 public:
@@ -27,8 +32,7 @@ private:
     //AudioProcessorEditor& editor;
     ShaderEditor* shaderEditor;
 
-    //LookAndFeel& laf;
-    //LookAndFeel_V4& laf;
+    CustomLookAndFeel lf;
 
     // ------------------------------------------------
 

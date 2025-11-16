@@ -10,6 +10,7 @@ UI::UI(ShaderEditor* e) : shaderEditor(e)
     setOpaque(false);  // Make transparent so layers below show through
     setInterceptsMouseClicks(false, true);  // Don't block clicks on the UI
 
+    //setLookAndFeel(&lf);  // CustomLookA
 }
 
 UI::~UI() {
@@ -215,7 +216,7 @@ void UI::makeMenu(Button& b) {
         // [Ctrl+Shift+...]
         // [Shift+F...]
 
-        //menu.setLookAndFeel();
+        menu.setLookAndFeel(&lf);
 
         // finally show menu
         menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (b));
