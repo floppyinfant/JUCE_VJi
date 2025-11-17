@@ -6,6 +6,8 @@ using GLSL Shaders
 
 made with JUCE Framework
 
+<img src="vji_app1.jpg" alt="App" class="center">
+
 ---
 
 ## Terminal Commands
