@@ -4,11 +4,14 @@
 
 #include "UI.h"
 #include "ShaderEditor.h"  // Include the full definition here (not in the header, because of circular dependencies)
+                           // https://en.wikipedia.org/wiki/Circular_dependency
 
 UI::UI(ShaderEditor* e) : shaderEditor(e)
 {
     setOpaque(false);  // Make transparent so layers below show through
     setInterceptsMouseClicks(false, true);  // Don't block clicks on the UI
+
+    // ------------------------------------------------
 
     //setLookAndFeel(&lf);  // CustomLookA; makeMenu() > menu.setLookAndFeel()
     //getLookAndFeel().setColour (juce::Slider::thumbColourId, juce::Colours::red);
@@ -17,6 +20,8 @@ UI::UI(ShaderEditor* e) : shaderEditor(e)
 UI::~UI() {
 
 }
+
+// -----------------------------------------------------------------------
 
 // color palette
 // https://juce.com/tutorials/tutorial_colours/
@@ -27,6 +32,7 @@ juce::Array<juce::Colour> UI::palette {
     juce::Colour (0xff008000), // green
     juce::Colour (0xff0000ff), // blue
     juce::Colour (0xff000000)
+    // Examples / Formats:
     // juce::Colour (0, 128, 0), // green
     // juce::Colour (0xff008000), // hexadecimal values: alpha, red, green, and blue
     // juce::Colour::fromFloatRGBA (0.0f, 0.5f, 0.0f, 1.0f), // green
@@ -53,16 +59,13 @@ void UI::paint(juce::Graphics &g) {
 
     // ------------------------------------------------
 
+    // Menu
+
     // Menu Bar
 
     // Popup Menu
-    /*
-    addAndMakeVisible(menuButton);
-    menuButton.setAlpha(0.5f);
-    menuButton.changeWidthToFitText();
-    makeMenu(menuButton);
-    */
 
+    // Burger Menu Button
     makeBurgerButton();
     addAndMakeVisible (burgerButton);
     makeMenu(burgerButton);
@@ -94,18 +97,19 @@ void UI::resized() {
     FlexBox box;
     box.flexDirection = FlexBox::Direction::column;
     box.items = {
+        // GUI Layout:
         // Header --------------
-        // MenuBar
-        // Toolbar with Icons, PresetsBox, Settings
+        // - MenuBar
+        // - Toolbar with Icons, PresetsBox, Settings
         // Main ----------------
-        // Widgets (with Transparency)
-        //FlexItem { menuButton }.withWidth (100).withHeight (24).withMargin ({ 4 }),
+        // - Canvas: GLSL Rect / Panel (in the background)
+        // - Widgets (with Transparency)
         FlexItem { burgerButton }.withWidth (100).withHeight (24).withMargin ({ 4 })
-        // GLSL (in the background)
-        // Popup-Menu
-        // Sidebar
+        // - Popup-Menu (RMB mouseListener)
+        // - KeyListener (Esc, Cursor, WASD, Space, Tab, ... Modifiers)
+        // - Sidebar
         // Footer --------------
-        // codeEditor
+        // - codeEditor
     };
 
     box.performLayout (getLocalBounds());

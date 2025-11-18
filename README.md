@@ -6,7 +6,7 @@ using GLSL Shaders
 
 made with JUCE Framework
 
-<img src="vji_app1.jpg" alt="App" class="center">
+![App](docs/_img/vji_app1.jpg)
 
 ---
 

@@ -14,6 +14,13 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     openGLContext.attachTo(*this);
 
     // --------------------------------
+    // statusLabel - shows shader compiler errors
+    // --------------------------------
+    addAndMakeVisible(statusLabel);
+    statusLabel.setJustificationType(juce::Justification::topLeft);
+    statusLabel.setFont(juce::FontOptions(14.0f));
+
+    // --------------------------------
     // Presets Selector
     // --------------------------------
 

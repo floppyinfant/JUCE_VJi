@@ -5,8 +5,12 @@
 
 #include <JuceHeader.h>
 
-// Forward declaration instead of including ShaderEditor.h
+// Forward declaration (instead of including ShaderEditor.h --> circular dependency error)
+// include the full header in the cpp file, to resolve the circular dependency
+// https://en.wikipedia.org/wiki/Circular_dependency
 class ShaderEditor;
+
+// ===========================================================================
 
 class CustomLookAndFeel : public juce::LookAndFeel_V4 {
     public:
@@ -15,6 +19,8 @@ class CustomLookAndFeel : public juce::LookAndFeel_V4 {
     }
 };
 
+// ===========================================================================
+
 class UI final : public juce::Component, private juce::FilenameComponentListener {
 public:
     explicit UI(ShaderEditor*);
@@ -22,6 +28,8 @@ public:
 
     void paint(juce::Graphics&) override;
     void resized() override;
+
+    // ------------------------------------------------
 
     // color palette
     static juce::Array<juce::Colour> palette;
@@ -33,6 +41,8 @@ private:
     //PluginAudioProcessor& processor;
     //AudioProcessorEditor& editor;
     ShaderEditor* shaderEditor;
+
+    // ------------------------------------------------
 
     CustomLookAndFeel lf;
 
@@ -48,10 +58,15 @@ private:
                             "them back in at runtime.\n\nThe icon images here are taken from the open-source "
                             "Tango icon project."};
 
+    // ------------------------------------------------
+
     // Menu
     // from WidgetsDemo/MenuPage
     juce::TextButton menuButton { "Menu" };
     void makeMenu(juce::Button&);
+
+    juce::ScopedMessageBox messageBox;
+    void alert(const juce::String&, const juce::String&);
 
     // ------------------------------------------------
 
@@ -66,14 +81,13 @@ private:
     juce::ShapeButton burgerButton { "burgerButton", juce::Colours::lightgrey, juce::Colours::lightgrey, juce::Colours::white };
     void makeBurgerButton();
 
+    // ------------------------------------------------
+
     juce::SidePanel sidePanel { "Menu", 300, false };
     void showOrHide()
     {
         sidePanel.showOrHide (! sidePanel.isPanelShowing());
     }
-
-    juce::ScopedMessageBox messageBox;
-    void alert(const juce::String&, const juce::String&);
 
     // ------------------------------------------------
 

@@ -98,7 +98,8 @@ public:
 
     void selectPreset(int preset);
 
-    juce::Label statusLabel, presetLabel  {{}, "Shader Preset:"};
+    juce::Label statusLabel;  // displays shader compile errors
+    juce::Label presetLabel  {{}, "Shader Preset:"};
     juce::ComboBox presetBox;
 
     juce::CodeDocument codeDocument;
