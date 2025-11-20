@@ -149,5 +149,8 @@ int main() {
 
     // ----------------------------------
 
+    // avoid window from closing immediately
+    std::cin.get();
+
     return 0;
 }

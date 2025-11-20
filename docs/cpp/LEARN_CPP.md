@@ -50,6 +50,16 @@ https://www.programiz.com/cpp-programming/online-compiler/ (Programiz Online-Com
 
 ## Modern C++
 
+Modern C++ Tutorial: C++11/14/17/20 On the Fly
+
+https://github.com/changkun/modern-cpp-tutorial
+
+Modern C++ Programming Cookbook (Code Repository)
+
+https://github.com/PacktPublishing/Modern-Cpp-Programming-Cookbook-Third-Edition
+
+---
+
 https://isocpp.org/std/the-standard
 
 C++ 1985 by Bjarne Stroustrup at AT&T Bell Labs
