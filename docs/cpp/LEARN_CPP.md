@@ -18,15 +18,63 @@ https://cplusplus.com/reference/
 
 https://isocpp.org/get-started
 
-Microsoft C++ Reference
-
-https://learn.microsoft.com/en-us/cpp/cpp/?view=msvc-170 (C/C++)
+https://learn.microsoft.com/en-us/cpp/cpp/?view=msvc-170 (Microsoft C++)
 
 https://learn.microsoft.com/en-us/cpp/cpp/welcome-back-to-cpp-modern-cpp?view=msvc-170 (Modern C++)
 
 https://code.visualstudio.com/docs/languages/cpp (VScode)
 
+## C++ Best Practices
+
 https://google.github.io/styleguide/cppguide.html (Google C++ Style Guide)
+
+https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines (C++ Core Guidelines, Bjarne Stroustrup, Herb Sutter)
+
+https://github.com/isocpp/CppCoreGuidelines
+
+https://github.com/cpp-best-practices/cppbestpractices (C++ Best Practices)
+
+https://lefticus.gitbooks.io/cpp-best-practices/content/
+
+https://leanpub.com/cppbestpractices
+
+https://docs.nvidia.com/cuda/pdf/CUDA_C_Best_Practices_Guide.pdf
+
+## C++ books
+
+https://github.com/yuchdev/CppBooks
+
+https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list
+
+https://medium.com/@Code_Analysis/collecting-the-best-c-practices-4b867006849f
+
+https://github.com/rigtorp/awesome-modern-cpp
+
+---
+
+Modern C++ Tutorial: C++11/14/17/20 On the Fly
+
+https://github.com/changkun/modern-cpp-tutorial
+
+https://github.com/federico-busato/Modern-CPP-Programming
+
+(Effective C++: 55 Specific Ways to Improve Your Programs and Designs, 3. Auflage, Scott Meyers, 2005)
+
+(More Effective C++: 35 New Ways to Improve Your Programs and Designs, Scott Meyers, 1996)
+
+Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14, Scott Meyers, 2014
+
+Modern C++ Design, Andrei Alexandrescu
+
+Modern C++ Programming Cookbook: Master Modern C++ with comprehensive solutions for C++23 and all previous standards
+
+C++ High Performance: Master the art of optimizing the functioning of your C++ code, Björn Andrist, Viktor Sehr
+
+C++ Concurrency in Action, Anthony Williams, 2019
+
+Beautiful C++: 30 Core Guidelines for Writing Clean, Safe, and Fast Code, 2021
+
+Modern CMake for C++: Effortlessly build cutting-edge C++ code and deliver high-quality solutions, 2024
 
 ## C++ Tutorials
 
@@ -48,17 +96,7 @@ https://www.programiz.com/cpp-programming/online-compiler/ (Programiz Online-Com
 
 ---
 
-## Modern C++
-
-Modern C++ Tutorial: C++11/14/17/20 On the Fly
-
-https://github.com/changkun/modern-cpp-tutorial
-
-Modern C++ Programming Cookbook (Code Repository)
-
-https://github.com/PacktPublishing/Modern-Cpp-Programming-Cookbook-Third-Edition
-
----
+### C++ Standards
 
 https://isocpp.org/std/the-standard
 
@@ -69,15 +107,9 @@ C++ 98, 03
 - Strings 
 - IO-Streams
 
-Modern C++:
-
-C++ 11, 14, 17
-
-C++ 20, 23, (26) 
+Modern C++ 11, 14, 17, 20, 23, (26) 
 
 https://en.wikipedia.org/wiki/C%2B%2B11
-
-### Standards
 
 C++11 standard
 - smart pointers (std::shared_ptr, std::unique_ptr = ... std::make_unique)
@@ -166,7 +198,9 @@ std::weak_ptr<String> strPtr = std::weak_ptr<String>();
 
 {}
 
-()
+() has pitfalls
+
+constructor initialization
 
 ### function parameters
 
@@ -176,9 +210,11 @@ pass by reference
 
 pass by const reference
 
+pass by rvalue reference
+
 pass by value & std::move
 
-### functions, function pointers, lambdas
+### functions
 
 functions are defined outside of classes or functions
 
@@ -197,6 +233,8 @@ ptr = &add;
 #### Lambdas
 
 https://www.w3schools.com/cpp/cpp_functions_lambda.asp
+
+type: `std::function<void()>`
 
 ```c++
 auto l = []() { return 0; };
@@ -221,8 +259,6 @@ std::mem_fn(&UI::alert)               // Using Member Function Pointer (If API S
 auto lam = [this](const juce::String& title){alert(title, "World!")};
 subMenuHelp.addItem("about", lam("Hello "));
 ```
-
-type: `std::function<void()>`
 
 capture by reference: `[&x](int a, int b){ cout << x(a, b) << endl; }`
 

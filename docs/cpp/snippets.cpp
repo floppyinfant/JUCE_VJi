@@ -16,17 +16,19 @@
 using namespace std;
 
 // ---------------------------------------------------------------------------
-
 // prototypes in header
+// ---------------------------------------------------------------------------
+
 class Entity;
 void printEntityPtr(Entity* e);
 void printEntityRef(Entity& e);
 void printEntityCRef(const Entity& e);
 void printEntityRValue(Entity&& e);
 
-// ---------------------------------------------------------------------------
-
+// ----------------------------------
 // type definitions in header
+// ----------------------------------
+
 class Entity {
 public:
     // Default Constructor
@@ -55,12 +57,22 @@ public:
         return e;
     }
 
+    bool equals(const Entity& other) const {
+        return x == other.x && y == other.y;
+    }
+
+    // operator overloading
+    bool operator==(const Entity& other) const {
+        return (*this).equals(other);
+    }
+
 private:
     string m_name;
 };
 
 // ---------------------------------------------------------------------------
 // implementation in cpp-file
+// ---------------------------------------------------------------------------
 
 // namespace Entity
 string& Entity::getName() {
@@ -69,6 +81,7 @@ string& Entity::getName() {
 
 // ---------------------------------------------------------------------------
 // global namespace; functions
+// ---------------------------------------------------------------------------
 
 // pass-by-value (copy)
 void printEntity(Entity e) {
@@ -85,19 +98,20 @@ void printEntityRef(Entity& e) {
     cout << e.getName() << " (" << e.x << "," << e.y << ")" << endl;
 }
 
-// pass-by-reference (takes an lvalue or an rvalue as input)
+// pass-by-const-reference (takes an lvalue or an rvalue as input)
 void printEntityCPtr(const Entity& e) {
     cout << e.getNameConst() << " (" << e.x << "," << e.y << ")" << endl;
 }
 
-// pass-by-reference (takes an rvalue)
+// pass-by-rvalue-reference (takes an rvalue)
 void printEntityRValue(Entity&& e) {
     cout << e.getName() << " (" << e.x << "," << e.y << ")" << endl;
 }
 
-// ---------------------------------------------------------------------------
-
+// ----------------------------------
 // entry point (Main.cpp)
+// ----------------------------------
+
 int main() {
     // ----------------------------------
     // object creation (instantiation)

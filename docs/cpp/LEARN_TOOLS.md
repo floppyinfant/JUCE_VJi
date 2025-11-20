@@ -341,6 +341,8 @@ https://cmake.org/cmake/help/latest/guide/tutorial/A%20Basic%20Starting%20Point.
 
 https://cmake.org/cmake/help/book/mastering-cmake/cmake/Help/guide/tutorial/
 
+https://github.com/friendlyanon/cmake-init
+
 CMakeLists.txt example files see:
 - JUCE
 - VST_SDK, Will Pirkle
