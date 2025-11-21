@@ -40,7 +40,7 @@ https://leanpub.com/cppbestpractices
 
 https://docs.nvidia.com/cuda/pdf/CUDA_C_Best_Practices_Guide.pdf
 
-## C++ books
+## C++ Books
 
 https://github.com/yuchdev/CppBooks
 
@@ -58,7 +58,7 @@ https://github.com/changkun/modern-cpp-tutorial
 
 https://github.com/federico-busato/Modern-CPP-Programming
 
-(Effective C++: 55 Specific Ways to Improve Your Programs and Designs, 3. Auflage, Scott Meyers, 2005)
+(Effective C++: 55 Specific Ways to Improve Your Programs and Designs, 3. Ed., Scott Meyers, 2005)
 
 (More Effective C++: 35 New Ways to Improve Your Programs and Designs, Scott Meyers, 1996)
 
@@ -87,6 +87,8 @@ https://www.youtube.com/watch?v=8jLOx1hD3_o (C++ in 31 hours)
 https://www.youtube.com/watch?v=_apAsU9ROp0 (C++ in 60 minutes, deutsch)
 
 (CppCon)
+
+---
 
 https://www.w3schools.com/cpp/
 
@@ -162,39 +164,171 @@ C++26 standard
 
 ---
 
-## Notes
+## C++ Pocket Reference
 
-### Objects, Instantiation, Memory
+1. program structure: 
+   - header files, preprocessor, macros
+   - source files, main function, compiler
+   - linker, libraries
+   - toolchain, IDE Setup, CMake --> [@see LEARN_TOOLS.md](LEARN_TOOLS.md)
+2. identifiers, keywords, literals, operators, expressions
+3. types
+4. statements
+5. exception handling
+6. assertions
+7. namespaces
+8. functions
+9. classes
+10. object-oriented programming
+11. templates
+12. standard library --> [@see LEARN_LIBRARIES.md](LEARN_LIBRARIES.md)
+    - concurrency
 
-// Stack memory allocation
+---
 
-String str;
+### Compiler, Linker
 
-String str = String();
+https://caiorss.github.io/C-Cpp-Notes/compiler-flags-options.html
 
-// Heap memory allocation
+```bash
+g++ -std=c++17 -Wall -Wextra -pendantic -lm -Llibs -Iincludes -Dflag=1 snippets.cpp -o snippets.exe
+```
 
-String* strPtr = new String();
+-Wall: all warnings, -Wextra: extra warnings, -pendantic: all warnings as errors
 
-delete str;
+-lm: link math library, -lpthread: link pthread library
 
-char** strPtr = nullptr;
+-Llibs: link shared libraries (*.dll, *.so, *.dylib) in libs folder
 
-### RAW Pointers (C-Pointers)
+-Iincludes: include headers in includes folder
 
+-Dflag=1: #define flag=1 (preprocessor)
+
+*.cpp: source files
+
+-o snippets.exe: output file name
+
+### Header Files
+
+@see snippets.h
+
+```c++
+#pragma once
+#define PI 3.14159265358979323846
+// Makros
+#define ADD(a, b) a + b
+#ifdef JUCE_ANDROID
+#include <android/log.h>
+#endif
+```
+
+### Source Files
+
+@see snippets.cpp
+
+```c++
+#include <iostream>
+#include "snippets.h"
+int main(int argc, char* argv[]){
+    std::cout << "Program name: " << argv[0] << "\n";
+    std::cout << "Program arguments: ";
+    for(int i = 1; i < argc; i++){
+        std::cout << argv[i] << " ";
+    }
+    std::cout << "\n";
+    std::cin.get();
+    return 0;
+}
+```
+
+---
+
+### Types
+
+primitive types: 
+- bool
+- char, wchar_t, char16_t, char32_t
+- short, int, long, long long
+- float, double, long double
+- void
+
+reference types: 
+- enum
+- C-Arrays (a[])
+- C-Strings (const char*, char*)
+- Pointer (*ptr, std::unique_ptr, std::shared_ptr, std::weak_ptr)
+- References (&ref)
+- Classes, Structs, Unions
+- Functions (std::function, std::bind, (*func)(...) = func, lambdas [](){})
+
+---
+
+### Pointers
+
+#### RAW-Pointers (C-Pointers)
+
+```c++
 void* ptr = malloc(1024);
+```
 
-### Smart Pointers
+##### Pointer-Arithmetics
 
+##### void-Pointer
+
+can point to any type
+
+`void* p = &c;`
+
+##### Null-Pointer
+
+`nullptr`
+
+#### Smart Pointers
+
+```c++
 std::unique_ptr<String> strPtr = std::make_unique<String>();
 
 std::shared_ptr<String> strPtr = std::make_shared<String>();
 
 std::weak_ptr<String> strPtr = std::weak_ptr<String>();
+```
 
-### RAII
+### References
 
-### Initializer Lists
+- References are aliases for objects
+- They can't be reassigned
+
+---
+
+### Objects, Instantiation, Memory
+
+Memory allocation
+- stack
+- heap
+
+```c++
+// Stack memory allocation
+String str;
+String str = String();
+```
+
+```c++
+// Heap memory allocation
+String* strPtr = new String();
+delete str;
+
+char** strPtr = nullptr;
+```
+
+#### Declaration
+
+#### Initialization
+
+##### RAII
+
+Resource Acquisition Is Initialization
+
+##### Initializer Lists
 
 {}
 
@@ -202,33 +336,22 @@ std::weak_ptr<String> strPtr = std::weak_ptr<String>();
 
 constructor initialization
 
-### function parameters
+---
 
-pass by value
+### Functions
 
-pass by reference
+- functions are defined outside of classes or functions
+- methods are defined inside classes
 
-pass by const reference
-
-pass by rvalue reference
-
-pass by value & std::move
-
-### functions
-
-functions are defined outside of classes or functions
-
-methods are defined inside classes
-
-#### function pointers
+#### Function Pointers
 
 https://www.w3schools.com/c/c_functions_pointers.php
 
+```c++
 int (*ptr)(int, int);
-
 ptr = &add;
-
 (*ptr)(5, 3);
+```
 
 #### Lambdas
 
@@ -282,9 +405,17 @@ int main() {
 }
 ```
 
----
+#### Function Parameters
 
-### lvalues, rvalues
+- pass by value
+- pass by reference
+- pass by const reference
+- pass by rvalue reference
+- pass by value & std::move
+
+C-Functions always pass by value (if you pass a pointer, the pointer is copied, not the object it points to)
+
+#### lvalues, rvalues
 
 https://youtu.be/fbYknr-HPYE?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&t=749
 
@@ -359,25 +490,21 @@ int main() {
 }
 ```
 
-### move-semantics
+#### move-semantics
 
 use case of rvalue-references
 
 https://www.youtube.com/watch?v=ehMg6zvXuMY
 
----
-
-### copy-constructor
-
----
-
-### value semantics
+#### value-semantics
 
 https://en.wikipedia.org/wiki/Value_semantics
 
 https://isocpp.org/wiki/faq/value-vs-ref-semantics
 
 copy-by-value semantics
+
+#### copy-constructor
 
 ---
 
@@ -386,11 +513,13 @@ copy-by-value semantics
 const reference: accepts lvalues and rvalues
 
 const with pointers:
-- const char* ptr        // pointer to a constant char
-- char* const ptr        // constant pointer to a char
-- const char* const ptr  // constant pointer to a constant char
+- `const char* ptr`        // pointer to a constant char
+- `char* const ptr`        // constant pointer to a char
+- `const char* const ptr`  // constant pointer to a constant char
 
----
+```c++
+int f(const char* s) const {}
+```
 
 ### static
 
@@ -402,25 +531,70 @@ extern: variable is defined in another translation unit
 
 ---
 
-### Strings
+### Data Structures
 
+#### Strings
+
+Strings in C++:
+
+```c++
+// C-String
 const char* c-string // null-terminated
+```
 
+```c++
+// C++-String
 std::string stdString
+```
 
+```c++
+// JUCE-String type
 juce::String juceString
-
-R"()" // Raw-String (multiline)
+```
 
 Unicode Strings
 
+```c++
+// Raw-Strings (multiline, may contain escape sequences)
+R"(text is
+here\n)"
+
+// Raw-String with separator (may contain ")
+R"separator(text with "")separator"
+```
+
+String Concatenation:
+
+```c++
+// String concatenation
+std::string str = "void main()\n"
+"{\n"
+"    vec4 colour1 = vec4 (1.0, 0.4, 0.6, 1.0);\n"
+"    vec4 colour2 = vec4 (0.0, 0.8, 0.6, 1.0);\n"
+"    float alpha = pixelPos.x / 1000.0;\n"
+"    gl_FragColor = pixelAlpha * mix (colour1, colour2, alpha);\n"
+"}\n"
+
+// String concatenation with +=
+std::string str = "Hello, ";
+str += name;
+
+// String concatenation with +
+std::string str = "Hello, " + name;
+
+// String on multiple lines
+std::string str = "Hello, \\
+World!";
+```
+
+Print character streams to the console:
 
 ```c++
 #include <iostream>
 
 int main()
 {
-std::cout << "Hello, world!\n";
+    std::cout << "Hello, world!\n";
 }
 ```
 
@@ -433,7 +607,35 @@ int main() {
 }
 ```
 
+#### Vector
+
+```c++
+std::vector<T>
+```
+
+#### Arrays
+
+C-Arrays
+
+```c++
+a[] = {1, 2, 3};
+```
+
+```c++
+std::array<T>
+```
+
 ---
+
+### Paradigms
+
+Procedural Programming (PP): C functions, loops, conditionals
+
+Object Oriented Programming (OOP): Classes, Objects, Inheritance
+
+Functional Programming (FP): Higher-Order Functions, Lambdas, Closures
+
+Generic Programming (GP): Templates, Type Traits, Metaprogramming
 
 ---
 
@@ -441,7 +643,11 @@ int main() {
 
 ```
 
+---
+
 ```c++
 
 ```
+
+---
 
