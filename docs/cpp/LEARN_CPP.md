@@ -166,7 +166,7 @@ C++26 standard
 
 ## C++ Pocket Reference
 
-1. program structure: 
+1. program structure
    - header files, preprocessor, macros
    - source files, main function, compiler
    - linker, libraries
@@ -302,9 +302,63 @@ std::weak_ptr<String> strPtr = std::weak_ptr<String>();
 
 ### Objects, Instantiation, Memory
 
-Memory allocation
-- stack
-- heap
+#### Object Instantiation
+
+@see snippets.cpp
+
+Object creation (Instantiation):
+
+```c++
+// ... on the Stack
+Entity e;
+Entity e1(void);
+Entity e2(1, 1);
+Entity e3 = Entity(2, 2);
+
+// ... on the Heap with raw pointers (must use 'delete' to free memory)
+Entity* e4 = new Entity;
+Entity* e5 = new Entity();  // Java style
+Entity* e6 = (Entity*)malloc(sizeof(Entity));  // raw pointer C-style (use 'free' to free memory)
+const Entity* e7 = new Entity();
+
+// smart pointers
+std::unique_ptr<Entity> e8 = std::make_unique<Entity>(1, 2);
+e8.reset();
+e8.reset(new Entity(2, 1));
+Entity* e9 = e8.get();
+
+// lvalue-References
+Entity& e11 = Entity(3, 3);
+
+// const References
+const Entity& e12 = Entity(3, 3);
+
+// rvalue-References
+Entity&& e13 = Entity(3, 3);
+
+// array instantiation
+Entity a[3] = {Entity(1, 1), Entity(2, 2), Entity(3, 3)};
+Entity* a2 = new Entity[3];
+```
+
+free memory, delete objects, call destructor, avoid memory leaks:
+
+```c++
+free(e6);       // does not call the destructor; always use delete
+delete e5;
+delete[] a;     // delete[] is only used for arrays
+e8.reset();     // smart pointers: call destructor and free memory
+```
+
+#### Dynamic Memory Allocation
+
+https://openframeworks.cc/ofBook/chapters/memory.html
+
+https://www.geeksforgeeks.org/cpp/memory-layout-of-cpp-program/
+
+- stack (local data)
+- static memory (global data)
+- heap (dynamically allocated data)
 
 ```c++
 // Stack memory allocation
@@ -322,6 +376,16 @@ char** strPtr = nullptr;
 
 #### Declaration
 
+- Forward-Declaration of classes (without definition)
+- Function without a Body is a Declaration (Prototype)
+- static variables are initialized outside the class
+- extern variables are defined in another translation unit
+- typedef, using
+
+#### Definition
+
+most Declarations are Definitions (memory is allocated)
+
 #### Initialization
 
 ##### RAII
@@ -334,7 +398,37 @@ Resource Acquisition Is Initialization
 
 () has pitfalls
 
-constructor initialization
+```c++
+int i = 0;
+int i(0);
+char c(260);    // Narrowing: char 8 bit == 256 values; hidden error not thrown
+int i = {0};
+int i{0};
+int i{};        // default initialization: i = 0
+```
+
+```c++
+int a[3] = {1,2,3};
+int a[3]{1,2,3};
+
+std::vector<int> v{1,2,3};
+
+const int* pa = new const int[3]{1,2,3};
+```
+
+Constructor Initialization:
+
+```c++
+class Entity {
+public:
+    Entity(float posX, float posY) : x{posX}, y{posY} {
+        // constructor body
+    }
+private:
+    float x;
+    float y;
+}
+```
 
 ---
 
@@ -383,7 +477,20 @@ auto lam = [this](const juce::String& title){alert(title, "World!")};
 subMenuHelp.addItem("about", lam("Hello "));
 ```
 
-capture by reference: `[&x](int a, int b){ cout << x(a, b) << endl; }`
+Closures: capture variables from the enclosing scope
+
+```c++
+[]          // capture nothing
+[=]         // capture all by value (copy)
+[&]         // capture all by reference
+[this]      // capture this by reference
+[*this]     // capture this by copy
+[&x](int a, int b){ cout << x(a, b) << endl; }  // capture x by reference
+[a]{a=5;};  // error, if a copy is modified
+[a]() mutable {a=5;};  // ok, mutable allows a copy to be modified
+```
+
+Lamdas as function parameters:
 
 ```c++
 #include <iostream>
@@ -513,9 +620,14 @@ copy-by-value semantics
 const reference: accepts lvalues and rvalues
 
 const with pointers:
-- `const char* ptr`        // pointer to a constant char
-- `char* const ptr`        // constant pointer to a char
-- `const char* const ptr`  // constant pointer to a constant char
+
+```c++
+const char* ptr        // pointer to a constant char
+char* const ptr        // constant pointer to a char
+const char* const ptr  // constant pointer to a constant char
+```
+
+const with functions / methods:
 
 ```c++
 int f(const char* s) const {}
@@ -530,6 +642,40 @@ static outside of classes: hides the variable
 extern: variable is defined in another translation unit
 
 ---
+
+### statements
+
+- expression statements
+- assignments
+- for loops: `for (auto i = 0; i < 10; ++i)`
+- foreach (range based for): `for (auto& element : vector)`
+- while: while(true)
+- do, while
+- if, else
+- switch, case, brake, continue
+- return
+
+### exceptions
+
+- try, catch, throw
+- noexcept
+
+---
+
+### Standard Library
+
+```c++
+#include <iostream>
+#include <string>
+#include <vector>
+#include <array>
+#include <functional>
+#include <memory>
+
+std::string name;
+std::cout << "Hello, World!" << std::endl;
+std::cin >> name;
+```
 
 ### Data Structures
 
@@ -608,6 +754,8 @@ int main() {
 ```
 
 #### Vector
+
+https://www.programiz.com/cpp-programming/vectors
 
 ```c++
 std::vector<T>
