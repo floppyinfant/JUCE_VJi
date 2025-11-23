@@ -213,13 +213,30 @@ g++ -std=c++17 -Wall -Wextra -pendantic -lm -Llibs -Iincludes -Dflag=1 snippets.
 @see snippets.h
 
 ```c++
-#pragma once
-#define PI 3.14159265358979323846
-// Makros
-#define ADD(a, b) a + b
+// include guards
+#ifndef VJI_MAIN_H
+#define VJI_MAIN_H
+// or #pragma once
+
+// CAVE with includes: cyclic dependencies
+// resolve by using forward declaration (include in source file)
 #ifdef JUCE_ANDROID
 #include <android/log.h>
 #endif
+
+#define PI 3.14159265358979323846
+
+// Makros
+#define ADD(a, b) a + b
+
+// typedefs
+typedef int INT;
+
+// declarations: 
+// function prototypes
+
+// include guards
+#endif //VJI_MAIN_H
 ```
 
 ### Source Files
