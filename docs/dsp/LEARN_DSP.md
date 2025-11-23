@@ -21,6 +21,19 @@ by example
    - VCV-Rack
    - MODEP
 
+## OpenSource C++ Code
+
+- Surge XT (Synthesizer, Effects)
+- Vital Synthesizer
+- Modep / ModDuo
+- VCV-Rack: Audible Instruments
+- Will Pirkle (FX, SynthLab)
+- Blue Cat Plug'n Script
+- DaisySP
+- Teensy Audio Library
+- Korg NTS-1
+- Axoloti (Patcher, Intermediate Code)
+
 ---
 
 ## Platforms

@@ -30,15 +30,15 @@ https://google.github.io/styleguide/cppguide.html (Google C++ Style Guide)
 
 https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines (C++ Core Guidelines, Bjarne Stroustrup, Herb Sutter)
 
-https://github.com/isocpp/CppCoreGuidelines
+https://github.com/isocpp/CppCoreGuidelines (C++ Core Guidelines - GitHub)
 
-https://github.com/cpp-best-practices/cppbestpractices (C++ Best Practices)
+https://github.com/cpp-best-practices/cppbestpractices (C++ Best Practices - GitHub)
 
-https://lefticus.gitbooks.io/cpp-best-practices/content/
+https://lefticus.gitbooks.io/cpp-best-practices/content/ (C++ Best Practices - read ebook)
 
-https://leanpub.com/cppbestpractices
+https://leanpub.com/cppbestpractices (C++ Best Practices - buy ebook)
 
-https://docs.nvidia.com/cuda/pdf/CUDA_C_Best_Practices_Guide.pdf
+https://docs.nvidia.com/cuda/pdf/CUDA_C_Best_Practices_Guide.pdf (CUDA C++ Best Practices Guide)
 
 ## C++ Books
 
@@ -86,7 +86,7 @@ https://www.youtube.com/watch?v=8jLOx1hD3_o (C++ in 31 hours)
 
 https://www.youtube.com/watch?v=_apAsU9ROp0 (C++ in 60 minutes, deutsch)
 
-(CppCon)
+https://www.youtube.com/user/CppCon/videos (CppCon)
 
 ---
 
@@ -239,6 +239,18 @@ int main(int argc, char* argv[]){
     std::cin.get();
     return 0;
 }
+```
+
+### C-Language Code
+
+```c++
+#ifdef __cplusplus
+extern "C" {
+#endif
+// separate the C code from the C++ code
+#ifdef __cplusplus
+}
+#endif
 ```
 
 ---
@@ -416,7 +428,7 @@ std::vector<int> v{1,2,3};
 const int* pa = new const int[3]{1,2,3};
 ```
 
-Constructor Initialization:
+Constructor Initialization: member initializer list
 
 ```c++
 class Entity {
@@ -641,7 +653,15 @@ static outside of classes: hides the variable
 
 extern: variable is defined in another translation unit
 
+### nullptr
+
+### constexpr
+
+### decltype
+
 ---
+
+### expressions
 
 ### statements
 

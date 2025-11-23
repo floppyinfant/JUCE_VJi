@@ -160,6 +160,7 @@ int main() {
     delete e5;
     delete e6;
     delete e7;
+    // delete[] a;  // delete[] for arrays
 
     // ----------------------------------
 

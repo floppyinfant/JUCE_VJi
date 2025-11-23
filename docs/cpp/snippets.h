@@ -3,18 +3,24 @@
 // Snippets, Kitchensink
 //
 
+// include guards:
 #ifndef VJI_MAIN_H
 #define VJI_MAIN_H
 // or #pragma once
 
-// includes
+// includes:
 #include <iostream>
+// caution for cyclic includes: resolve with forward declaration
+// better include in source file
 
-// declarations
+// Caution:
+// never use `using namespace`: pollutes namespace for every source file including this header
+
+// declarations:
 // prototypes
 
 
-// typedefs
+// typedefs:
 // ...
 
 #endif //VJI_MAIN_H
