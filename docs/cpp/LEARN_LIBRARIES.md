@@ -1,5 +1,52 @@
 # LEARN C++ Libraries
 
+## Link Libraries
+
+### Command Line
+
+```bash
+g++ -lm -Llibs -Iincludes snippets.cpp -o snippets.exe
+```
+
+Compiler Flags:
+- `-lm` link math library, -lpthread: link pthread library
+- `-Llibs` link shared libraries (*.dll, *.so, *.dylib) in libs folder
+- `-Iincludes` include headers in includes folder
+
+### Visual Studio
+
+https://www.youtube.com/watch?v=or1dAmUO8k0&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&index=49 (The Cherno - Static Linking in Visual Studio)
+
+https://www.youtube.com/watch?v=Wt4dxDNmDA8&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&index=51 (The Cherno - Solution Setup)
+
+Example File Structure (Folder Hierarchy):
+- `Dependencies\glfw\lib\glfw3.lib`
+- `Dependencies\glfw\includes`
+
+Project Properties (RMB on Project, Alt + Enter):
+- Project Properties > C/C++ > General > Additional Include Directories: `$(SolutionDir)Dependencies\glfw\includes`
+- Project Properties > Linker > General > Additional Library Directories: `$(SolutionDir)Dependencies\glfw\lib`
+- Project Properties > Linker > Input > Additional Dependencies: `glfw3.lib`
+
+Relative Paths: use Macro `$(SolutionDir)`
+
+### CMake
+
+```cmake
+target_include_directories(VJi 
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glfw/includes
+)
+
+target_link_libraries(VJi PRIVATE glfw)
+
+target_link_directories(VJi PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Dependencies/glfw/lib)
+
+# conventional cmake targets
+add_executable(VJi main.cpp)
+add_library()
+add_custom_target()
+```
 
 ---
 
@@ -529,11 +576,98 @@ https://dev.epicgames.com/documentation/de-de/unreal-engine/API (C++ API)
 
 https://www.sqlite.org/index.html
 
-https://www.sqlite.org/howtocompile.html
-
 https://github.com/sqlite/sqlite
 
 C API
+
+### Linux
+
+`sudo apt-get install libsqlite3-dev`
+
+https://stackoverflow.com/questions/10574933/compiling-of-sqlite3-in-c
+
+### Windows
+
+@see README.md
+
+To build SQlite:
+
+https://www.sqlite.org/howtocompile.html
+
+```shell
+# open Developer Command Prompt for VS2022
+# https://learn.microsoft.com/de-de/cpp/build/reference/running-nmake?view=msvc-170
+cd libs
+git clone https://github.com/sqlite/sqlite.git
+cd sqlite
+# remove git repo
+rmdir /s /q .git
+#mkdir build
+#set OUTDIR=./build
+nmake /f Makefile.msc
+```
+
+make targets:
+- libsqlite3.lib (static library)
+- sqlite3.lib (static library)
+- sqlite3.dll (dynamic library)
+- sqlite3.pdb (debug symbols)
+- sqlite3.h (C-language interface header file)
+- sqlite3.c (amalgamation source file)
+- sqlite3.exe (command line tool)
+
+or download the amalgamation library from https://www.sqlite.org/download.html and extract it into the "libs/sqlite3" folder.
+
+```cmake
+# Define the directory where you put the source files
+set(SQLITE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/sqlite3)
+
+# Add SQLite as a static library target
+add_library(sqlite3 STATIC
+${SQLITE_SOURCE_DIR}/sqlite3.c
+)
+
+# Set include directories
+target_include_directories(sqlite3 PUBLIC
+${SQLITE_SOURCE_DIR}
+)
+
+# Recommended: Set specific compiler flags if needed (e.g., thread safety)
+# target_compile_definitions(sqlite3 PRIVATE SQLITE_THREADSAFE=1)
+
+# Set properties for the library (optional but good practice)
+set_target_properties(sqlite3 PROPERTIES
+POSITION_INDEPENDENT_CODE ON
+)
+
+# ----------------------------------------------------------------------------
+
+# Link the sqlite3 library to your main application target
+target_link_libraries(VJi PRIVATE sqlite3)
+```
+
+Include SQlite in Code:
+
+```c++
+#include "sqlite3.h"
+// ... use sqlite functions
+```
+
+https://sqlite.org/docs.html
+
+https://sqlite.org/quickstart.html
+
+https://sqlite.org/cintro.html
+
+```c++
+#ifdef __cplusplus
+extern "C" {
+#endif
+// separate the C code from the C++ code
+#ifdef __cplusplus
+}
+#endif
+```
 
 ---
 

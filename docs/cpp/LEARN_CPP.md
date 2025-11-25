@@ -220,7 +220,7 @@ g++ -std=c++17 -Wall -Wextra -pendantic -lm -Llibs -Iincludes -Dflag=1 snippets.
 
 // CAVE with includes: cyclic dependencies
 // resolve by using forward declaration (include in source file)
-#ifdef JUCE_ANDROID
+#ifdef JUCE_ANDROID  // JUCE_MAC, ...
 #include <android/log.h>
 #endif
 
@@ -238,6 +238,30 @@ typedef int INT;
 // include guards
 #endif //VJI_MAIN_H
 ```
+
+#### Macros
+
+#### includes
+
+```c++
+#include <iostream>         // cout, endl, ...
+#include <functional>       // std::function, std::bind, lambda
+
+#include <memory>           // std::unique_ptr, std::shared_ptr, std::weak_ptr
+#include <thread>           // std::thread
+#include <future>           // std::future, std::async
+
+#include <string>           // std::string, std::to_string, std::getline, std::stoi, ...
+#include <vector>           // std::vector
+#include <array>            // std::array
+#include <map>
+
+#include <algorithm>        // std::sort, std::find, ...
+
+#include "PluginEditor.h"  // use "" for anything in your project folder
+```
+
+#### Precompiled Header-Files (.pch)
 
 ### Source Files
 
@@ -260,6 +284,8 @@ int main(int argc, char* argv[]){
 
 ### C-Language Code
 
+@see LEARN_C.md
+
 ```c++
 #ifdef __cplusplus
 extern "C" {
@@ -271,6 +297,30 @@ extern "C" {
 ```
 
 ---
+
+### Keywords
+
+### Operators
+
+#### Operator Precedence
+
+#### Operator Overloading
+
+```c++
+class Entity {
+public:
+    Entity operator+(const Entity& other) const {
+        return Entity(x + other.x, y + other.y);
+    }
+    Entity operator+=(const Entity& other) {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+private:
+    float x, y;
+}
+```
 
 ### Types
 
@@ -697,24 +747,39 @@ extern: variable is defined in another translation unit
 - try, catch, throw
 - noexcept
 
+### templates
+
+```c++
+template <typename T>
+T add(T& a, T& b) {
+    return a + b;
+}
+
+template <typename T>
+void print(T& value) {
+    cout << value << endl;
+}
+```
+
 ---
 
 ### Standard Library
 
 ```c++
 #include <iostream>
+#include <memory>       // smart pointers
+#include <functional>   // std::function
+
 #include <string>
 #include <vector>
 #include <array>
-#include <functional>
-#include <memory>
 
 std::string name;
 std::cout << "Hello, World!" << std::endl;
 std::cin >> name;
 ```
 
-### Data Structures
+### Data Structures, Containers
 
 #### Strings
 

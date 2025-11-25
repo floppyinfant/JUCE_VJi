@@ -68,6 +68,10 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
 
     // --------
 
+    // addKeyListener(eventListener);
+    // setWantsKeyboardFocus (true);
+    // addMouseListener(eventListener);
+
     setSize(500, 500);
     setResizable(true, true);
 }
@@ -178,24 +182,6 @@ void ShaderEditor::resized() {
     uiOverlay->setBounds(getLocalBounds());
 }
 
-void ShaderEditor::toggleFullscreen() {
-
-    isFullscreen = !isFullscreen;
-
-    getPeer()->setFullScreen(isFullscreen);
-
-    //if (isFullscreen) {}
-
-    // --------------------------------
-
-    // ResizableWindow::
-    // getPeer()->setFullScreen(true);
-    // getPeer()->setTitleBarHeight(0);
-
-    // Desktop::
-    // Desktop::getInstance().setKioskModeComponent(getTopLevelComponent(), false);
-}
-
 // ===========================================================================
 
 void ShaderEditor::selectPreset(int preset) {
@@ -203,21 +189,91 @@ void ShaderEditor::selectPreset(int preset) {
     startTimer(TIMER_DOCUMENT_CHANGED, 1);
 }
 
+void ShaderEditor::codeDocumentTextInserted(const juce::String & /* newText */, int /* insertIndex */) {
+    startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
+}
+
+void ShaderEditor::codeDocumentTextDeleted(int /* startIndex */, int /* endIndex */) {
+    startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
+}
+
+void ShaderEditor::timerCallback(int id) {
+    if (id == TIMER_DOCUMENT_CHANGED) {
+        // OpenGL 2D Demo App
+        shaderCode = convert(codeDocument.getAllContent()); // <======== convert()
+        if (isConverted) {
+            // update the editor only, if the String was changed by convert()
+            codeDocument.replaceAllContent(shaderCode);
+            isConverted = false;
+        }
+        stopTimer(TIMER_DOCUMENT_CHANGED);
+        repaint();
+    } else if (id == TIMER_ANIMATION) {
+        // AnimatedAppComponent
+        ++totalUpdates;
+        update();
+        repaint();
+        lastUpdateTime = Time::getCurrentTime();
+    }
+}
+
 // ---------------------------------------------------------------------------
+
+// AnimatedAppComponent
+// juce_gui_extra/misc/juce_AnimatedAppComponent.h
+
+// Timer | MultiTimer
+// https://docs.juce.com/master/classjuce_1_1Timer.html
+
+void ShaderEditor::setFramesPerSecond(int framesPerSecondIn) {
+    jassert(0 < framesPerSecond && framesPerSecond < 1000);
+    framesPerSecond = framesPerSecondIn;
+    updateSync();
+}
+
+void ShaderEditor::updateSync() {
+    if (useVBlank) {
+        stopTimer(TIMER_ANIMATION);
+
+        if (vBlankAttachment.isEmpty())
+            vBlankAttachment = {this, [this] { timerCallback(TIMER_ANIMATION); }};
+    } else {
+        vBlankAttachment = {};
+
+        const auto timerInterval = 1000 / framesPerSecond;
+
+        if (getTimerInterval(TIMER_ANIMATION) != timerInterval)
+            startTimer(TIMER_ANIMATION, timerInterval);
+    }
+}
+
+void ShaderEditor::setSynchroniseToVBlank(bool syncToVBlank) {
+    useVBlank = syncToVBlank;
+    updateSync();
+}
+
+int ShaderEditor::getMillisecondsSinceLastUpdate() const noexcept {
+    return (int) (Time::getCurrentTime() - lastUpdateTime).inMilliseconds();
+}
+
+void ShaderEditor::update() {
+}
+
+// ===========================================================================
 
 /**
  * Convert GLSL fragment shader code from other sources to run in JUCE
- * @param _shaderCode
+ * @param originalShaderCode
  * @return converted shaderCode
  */
-juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
+juce::String ShaderEditor::convert(const juce::String &originalShaderCode) {
 
     juce::String juceShader;
 
     // --------------------------------
 
     // add Uniforms (do it just once)
-    if (!_shaderCode.contains("// JUCE Uniforms")) {
+    if (!originalShaderCode.contains("// JUCE Uniforms")) {
         isConverted = true;
 
         // Add JUCE-compatible uniforms header:
@@ -358,13 +414,13 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
     }
 
     // after the uniforms are declared, add the original code
-    juceShader += _shaderCode;
+    juceShader += originalShaderCode;
 
     // --------------------------------
 
     // Check if it's a ShaderToy shader (has mainImage)
-    if (_shaderCode.contains("mainImage")
-        && !_shaderCode.contains("main()")) {
+    if (originalShaderCode.contains("mainImage")
+        && !originalShaderCode.contains("main()")) {
         isConverted = true;
 
         // Add JUCE main() wrapper
@@ -384,77 +440,27 @@ juce::String ShaderEditor::convert(const juce::String &_shaderCode) {
     return juceShader;
 }
 
-// ===========================================================================
-
-void ShaderEditor::codeDocumentTextInserted(const juce::String & /* newText */, int /* insertIndex */) {
-    startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
-}
-
-void ShaderEditor::codeDocumentTextDeleted(int /* startIndex */, int /* endIndex */) {
-    startTimer(TIMER_DOCUMENT_CHANGED, shaderLinkDelay);
-}
-
-void ShaderEditor::timerCallback(int id) {
-    if (id == TIMER_DOCUMENT_CHANGED) {
-        // OpenGL 2D Demo App
-        shaderCode = convert(codeDocument.getAllContent()); // <======== convert()
-        if (isConverted) {
-            // update the editor only, if the String was changed by convert()
-            codeDocument.replaceAllContent(shaderCode);
-            isConverted = false;
-        }
-        stopTimer(TIMER_DOCUMENT_CHANGED);
-        repaint();
-    } else if (id == TIMER_ANIMATION) {
-        // AnimatedAppComponent
-        ++totalUpdates;
-        update();
-        repaint();
-        lastUpdateTime = Time::getCurrentTime();
-    }
-}
-
 // ---------------------------------------------------------------------------
 
-// AnimatedAppComponent
-// juce_gui_extra/misc/juce_AnimatedAppComponent.h
+void ShaderEditor::toggleFullscreen() {
 
-// Timer | MultiTimer
-// https://docs.juce.com/master/classjuce_1_1Timer.html
+    isFullscreen = !isFullscreen;
 
-void ShaderEditor::setFramesPerSecond(int framesPerSecondIn) {
-    jassert(0 < framesPerSecond && framesPerSecond < 1000);
-    framesPerSecond = framesPerSecondIn;
-    updateSync();
+    getPeer()->setFullScreen(isFullscreen);
+
+    //if (isFullscreen) {}
+
+    // --------------------------------
+
+    // ResizableWindow::
+    // getPeer()->setFullScreen(true);
+    // getPeer()->setTitleBarHeight(0);
+
+    // Desktop::
+    // Desktop::getInstance().setKioskModeComponent(getTopLevelComponent(), false);
 }
 
-void ShaderEditor::updateSync() {
-    if (useVBlank) {
-        stopTimer(TIMER_ANIMATION);
 
-        if (vBlankAttachment.isEmpty())
-            vBlankAttachment = {this, [this] { timerCallback(TIMER_ANIMATION); }};
-    } else {
-        vBlankAttachment = {};
-
-        const auto timerInterval = 1000 / framesPerSecond;
-
-        if (getTimerInterval(TIMER_ANIMATION) != timerInterval)
-            startTimer(TIMER_ANIMATION, timerInterval);
-    }
-}
-
-void ShaderEditor::setSynchroniseToVBlank(bool syncToVBlank) {
-    useVBlank = syncToVBlank;
-    updateSync();
-}
-
-int ShaderEditor::getMillisecondsSinceLastUpdate() const noexcept {
-    return (int) (Time::getCurrentTime() - lastUpdateTime).inMilliseconds();
-}
-
-void ShaderEditor::update() {
-}
 
 // ===========================================================================
 
