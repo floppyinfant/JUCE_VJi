@@ -23,6 +23,9 @@
  * ViewController, UIViewController in Swift (iOS)
  * https://developer.apple.com/documentation/uikit/view-controllers
  * https://developer.apple.com/documentation/UIKit/UIViewController
+ *
+ * EventListener, ActionListener Callbacks
+ * Event Dispatch Thread (EDT)
  */
 class ViewController : public juce::Component
 {

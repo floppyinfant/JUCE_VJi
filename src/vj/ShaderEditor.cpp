@@ -85,6 +85,8 @@ ShaderEditor::~ShaderEditor() {
 
 void ShaderEditor::paint(juce::Graphics &g) {
 
+    //g.fillAll(juce::Colours::black);
+
     // -----------------------------------------------------------------------
     // shader is not set OR new shader code in editor
     // -----------------------------------------------------------------------
@@ -110,7 +112,10 @@ void ShaderEditor::paint(juce::Graphics &g) {
             // -----------------------------
             // do once (not @60 fps)
             // -----------------------------
+
             g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::darkgrey);
+            //g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::black);
+
             statusLabel.setText({}, juce::NotificationType::dontSendNotification);
 
             shaderProgram = shader->getProgram(g.getInternalContext());
@@ -152,11 +157,45 @@ void ShaderEditor::paint(juce::Graphics &g) {
         // TODO uniforms
         // uniform float     iTimeDelta;            // render time (in seconds)
         // uniform float     iFrameRate;            // shader frame rate
-        // uniform float     iChannelTime[4];       // channel playback time (in seconds)
-        // uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
-        // uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
         // uniform vec4      iDate;                 // (year, month, day, time in seconds)
         // uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
+
+        // --------------------------------
+        // TODO input channels (iChannel0..3 for each Buffer)
+        // uniform float     iChannelTime[4];       // channel playback time (in seconds)
+        // uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
+        // uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube (sampler2D, sampler3D, samplerCube)
+
+        // Textures (8x8 or 64x64 or 256x256 or 512x512 or 1024x1024 or 256x32, 1ch or 3ch or 4ch, uint8): 22 presets (bw, RGB, RGBA)
+        // Cubemaps (64x64 or 256x256, 3ch, uint8): 6 presets
+        // Volumes (32x32x32, 1ch, uint8 or 4ch, uint8): 2 presets
+        // Videos (e.g. 640x320@29fps, 3ch, uint8, 29s length): 4 presets
+        // Music (e.g. 44100 Hz, 2ch, sint16, 452s length): 7 presets
+        // Misc:
+        // Keyboard (256x3, 1ch, int8)
+        // Webcam (1280x720, 4ch, int8, sRGB)
+        // Microphone (512x2, 1ch, int8)
+        // Soundcloud (512x2, 1ch int8): takes a URL
+        // Buffer_A..D (viewport resolution, 4ch, float32, linear)
+        // Cubemap_A (1024x1024, 4ch, float16, linear)
+
+        // --------------------------------
+        // ShaderToy
+        // @see docs/shaders/demos/shadertoy/README.md  <==============
+        // @see Editor Help (? in the bottom left)
+        // https://www.shadertoy.com/howto
+
+        // vertex shader:   ?
+        // Shader Inputs:   uniform <type> <identifier>;
+
+        // Code Buffers (3688 chars):
+        // Image:           void mainImage(out vec4 fragColor, in vec2 fragCoord);
+        // Common:          vec4 someFunction(vec4 a, float b);
+        // Buffer A..D:     void mainImage(out vec4 fragColor, in vec2 fragCoord);
+        // Cube A:          void mainCubemap(out vec4 fragColor, in vec2 fragCoord, in vec3 rayOri, in vec3 rayDir);
+        // Sound:           vec2 mainSound(int samp, float time);
+
+        // iChannel0..3 for each Buffer
 
         // -------------------------------------------------------------------
 
@@ -272,7 +311,7 @@ juce::String ShaderEditor::convert(const juce::String &originalShaderCode) {
 
     // --------------------------------
 
-    // add Uniforms (do it just once)
+    // add Uniform Declarations (do it just once)
     if (!originalShaderCode.contains("// JUCE Uniforms")) {
         isConverted = true;
 

@@ -145,6 +145,8 @@ juce_add_binary_data(PluginData SOURCES res/open-source.png)  # fi
 # Finally, we supply a list of source files that will be built into the target. This is a standard
 # CMake command.
 
+# fi: don't add header-files; they are included into source files (precompiler text inserts).
+
 target_sources(VJi
     PRIVATE
         src/PluginProcessor.cpp
@@ -156,8 +158,9 @@ target_sources(VJi
         src/gui/OpenGLEditor.cpp
         src/gui/components/OpenGLComponent.cpp
         src/gui/ViewController.cpp
-        #src/vj/shaders/shaders.h
         src/gui/UI.cpp
+        src/gui/UICodeView.cpp
+        src/gui/UIParameterView.cpp
         src/Parameters.cpp
 )
 

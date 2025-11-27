@@ -243,8 +243,12 @@ typedef int INT;
 
 #### includes
 
+https://en.cppreference.com/w/cpp/standard_library.html
+
 ```c++
 #include <iostream>         // cout, endl, ...
+#include <fstream>          // ifstream, ofstream (filestream)
+
 #include <functional>       // std::function, std::bind, lambda
 
 #include <memory>           // std::unique_ptr, std::shared_ptr, std::weak_ptr
@@ -258,7 +262,13 @@ typedef int INT;
 
 #include <algorithm>        // std::sort, std::find, ...
 
-#include "PluginEditor.h"  // use "" for anything in your project folder
+
+// C-libraries for compatibility (have a '.h' at the end)
+#include <string.h>
+
+
+// for anything in your project folder use "double quotes"
+#include "PluginEditor.h"  
 ```
 
 #### Precompiled Header-Files (.pch)
@@ -328,6 +338,7 @@ primitive types:
 - bool
 - char, wchar_t, char16_t, char32_t
 - short, int, long, long long
+- uint32_t
 - float, double, long double
 - void
 

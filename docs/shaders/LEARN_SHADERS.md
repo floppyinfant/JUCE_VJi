@@ -382,6 +382,9 @@ Tools (mentioned in the Tutorial):
 #### Uniforms
 
 - https://www.shadertoy.com/howto
+- @see ShaderToy Editor Help (? in the bottom left)
+
+@see docs/shaders/demos/shadertoy/[README.md](demos/shadertoy/README.md)
 
 ```c++
 uniform vec3      iResolution;           // viewport resolution (in pixels)
@@ -666,6 +669,46 @@ https://turtletoy.net/
 #### OpenFrame
 
 https://openframe.io/
+
+---
+
+### Vertex Shader
+
+#### Vertex Shader Art
+
+https://www.vertexshaderart.com/
+
+```c++
+Inputs
+-------------------------------------------------------------
+vertexId    : float     : number of the vertex 0, 1, 2
+vertexCount : float     : total number of vertices
+resolution  : vec2      : resolution of the art
+mouse       : vec2      : mouse position normalized (-1 to 1)
+touch       : sampler2D : touch history 32x240 (4sec @60fps)
+            :           : x = x, y = y, z = pressure, w = time
+            :           : column 0 is mouse or first finger.
+            :           : column 1 is second finger ...
+time        : float     : time in seconds
+volume      : sampler2D : volume for music 1x240 alpha only
+sound       : sampler2D : data from the music Nx240, alpha only
+            :           : 240 rows of history (4secs @60fps)
+floatSound  : sampler2D : data from the music Nx240, alpha only
+            :           : 240 rows of history (4secs @60fps)
+            :           : see spec for difference between
+            :           : getFloatFrequencyData and
+            :           : getByteFrenquencyData.
+soundRes    : vec2      : resolution of sound
+background  : vec4      : background color
+
+Outputs:
+-------------------------------------------------------------
+gl_Position : vec4    : standard GLSL vertex shader output
+v_color     : vec4    : color to output from fragment shader
+
+BLEND is enabled, function is ONE,ONE_MINUS_SRC_ALPHA,
+DEPTH_TEST is enabled.
+```
 
 ---
 
