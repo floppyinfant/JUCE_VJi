@@ -1,6 +1,8 @@
 # LEARN DSP
 
-by example
+https://audiodev.blog/newbie-resources/
+
+Learn DSP by example
 
 1. Visual Programming:
    - Pure Data
@@ -21,32 +23,13 @@ by example
    - VCV-Rack
    - MODEP
 
-## OpenSource C++ Code
-
-- Surge XT (Synthesizer, Effects)
-- Vital Synthesizer
-- Modep / ModDuo
-- VCV-Rack: Audible Instruments
-- Will Pirkle (FX, SynthLab)
-- Blue Cat Plug'n Script
-- DaisySP
-- Teensy Audio Library
-- Korg NTS-1
-- Axoloti (Patcher, Intermediate Code)
-
 ---
 
 ## Platforms
 
-### Blue Cat Audio Plug'n Script (VST)
+### Visual Programming
 
-https://www.bluecataudio.com/Products/Product_PlugNScript/
-
-https://github.com/bluecataudio/plugnscript
-
----
-
-### Max/MSP
+#### Max/MSP
 
 https://cycling74.com/
 
@@ -73,7 +56,7 @@ Max/MSP/Jitter for Music, V.J. Manzo
 
 https://global.oup.com/us/companion.websites/9780190243746/
 
-#### Max for Live (M4L)
+##### Max for Live (M4L)
 
 https://cycling74.com/products/maxforlive
 
@@ -81,7 +64,17 @@ https://www.ableton.com/de/live/max-for-live/
 
 https://maxforlive.com/
 
-#### Jitter
+BEAP
+
+https://www.ableton.com/en/blog/beap-powerful-modules-max-live/
+
+https://github.com/stretta/BEAP
+
+Max for Cats - OSCiLLOT
+
+https://www.ableton.com/en/packs/oscillot/
+
+##### Jitter
 
 https://cycling74.com/products/jitter
 
@@ -101,19 +94,19 @@ https://soundand.design/vizzie-1-dab74c39190e?gi=b800daca3336
 
 https://www.ableton.com/de/blog/vizzable-visuals-max-live-new-tutorial-point-blank/
 
-#### gen~
+##### gen~
 
 https://docs.cycling74.com/legacy/max8/vignettes/gen_topic
 
 @see Daisy Oopsy
 
-#### RNBO
+##### RNBO
 
-#### Mira
+##### Mira
 
 ---
 
-### Pure Data (Pd)
+#### Pure Data (Pd)
 
 https://puredata.info/
 
@@ -131,29 +124,93 @@ https://cycling74.com/articles/book-review-designing-sound
 
 https://github.com/unriginal/Designing-Sound-Max-Patches
 
-#### Automatonism
+##### Automatonism
 
 https://www.automatonism.com/
 
-#### libPd
+##### libPd
 
 https://github.com/libpd/libpd
 
-#### RjDj
+##### RjDj
+
+##### Camomile
+
+https://github.com/pierreguillot/Camomile/wiki
+
+https://patchstorage.com/platform/camomile/
 
 ---
 
-### Native Instruments Reaktor
+#### Native Instruments Reaktor
+
+https://www.native-instruments.com/de/products/komplete/synths/reaktor-6/
+
+https://www.native-instruments.com/de/products/komplete/synths/reaktor-6/learning-resources/
 
 ---
 
-### Axoloti
+### Embedded Systems
+
+https://sdiy.info/wiki/Open_source_music_hardware_projects (SDIY Wiki)
+
+https://sdiy.info/wiki/List_of_synth_DIY_repositories
+
+Adafruit
+
+https://learn.adafruit.com/
+
+https://learn.adafruit.com/waveform-generator
+
+SparkFun Electronics
+
+https://learn.sparkfun.com/
+
+https://learn.sparkfun.com/tutorials/midi-tutorial/all
+
+Instructables
+
+https://midi.org/a-curated-list-of-midi-diy-projects-on-instructables
+
+Hackaday
+
+https://hackaday.io/list/88186-eurorack-modules-and-modular-synths
+
+Look Mum No Computer (LMNC)
+
+https://www.lookmumnocomputer.com/projects
+
+https://www.lookmumnocomputer.com/big-button
+
+https://www.lookmumnocomputer.com/cem-3340-diy-simple
+
+https://www.lookmumnocomputer.com/simple-filter
+
+ElectricDruid (UK)
+
+https://electricdruid.net/
+
+@see `docs/LEARN DSP.md/Embedded Systems/Eurorack/Shops`
+
+
+
+#### Axoloti
 
 http://www.axoloti.com/
 
+https://github.com/axoloti
+
+C++ Code can be copied from the Nodes in the Patcher or the generated Intermediate Code (IC) can be used.
+
+#### Organelle
+
+https://www.critterandguitari.com/organelle
+
 ---
 
-### Blokas MODEP (Mod Duo)
+#### Blokas
+
+##### MODEP (Mod Duo)
 
 https://blokas.io/modep/
 
@@ -161,19 +218,25 @@ https://blokas.io/modep/docs/modep-and-pisound/
 
 https://github.com/BlokasLabs/modep-debs
 
-Patchbox OS
+##### Patchbox OS
 
 https://blokas.io/patchbox-os/
 
-Pisound (Raspberry Pi Audio Board)
+##### Pisound
+
+Raspberry Pi Audio Board
 
 https://blokas.io/pisound/
 
 https://blokas.io/pisound/docs/
 
+##### Patchstorage
+
+https://patchstorage.com/
+
 ---
 
-### Korg NTS-1
+#### Korg NTS-1
 
 https://www.korg.com/de/products/dj/nts_1/
 
@@ -197,7 +260,7 @@ https://korginc.github.io/logue-sdk/ref/nutekt-digital/v1.1-0/html/index.html
 
 ---
 
-### ElectroSmith Daisy
+#### ElectroSmith Daisy
 
 https://github.com/electro-smith
 
@@ -227,7 +290,7 @@ Pd2dsy (Pure Data to Daisy Patch Converter)
 
 https://github.com/electro-smith/pd2dsy
 
-#### Oopsy (gen~)
+##### Oopsy (gen~)
 
 https://daisy.audio/tutorials/oopsy-dev-env/
 
@@ -239,7 +302,7 @@ https://daisy.audio/tutorials/oopsy/oopsy-patch-sm/
 
 https://cycling74.com/tutorials/oopsydaisy-patch-an-introduction
 
-#### OWL / OWLsy
+##### OWL / OWLsy
 
 https://forum.electro-smith.com/t/owlsy-a-port-of-openware-to-daisy-platform/788
 
@@ -255,7 +318,7 @@ https://learn.bela.io/products/modular/pepper/
 
 ---
 
-### Teensy
+#### Teensy
 
 https://www.pjrc.com/
 
@@ -279,13 +342,13 @@ https://www.pjrc.com/teensy/td_libs_Audio.html
 
 https://github.com/PaulStoffregen/Audio
 
-#### Arduino
+##### Arduino
 
 https://www.arduino.cc/
 
 Arduino for Musicians (Book)
 
-#### Ornament And Crime (o_C)
+##### Ornament And Crime (o_C)
 
 https://ornament-and-cri.me/
 
@@ -295,9 +358,15 @@ https://github.com/mxmxmx/O_C
 
 https://github.com/Chysn/O_C-HemisphereSuite
 
+OCP - Ornament and Crime Plus
+
+https://diy.plum-audio.com/projects/OCP/OCP.html (DIY PTH)
+
+https://pushermanproductions.com/product/plum-audio-intellijel-1u-ornament-crime-pcb-screen-and-brushed-aluminium-panel/
+
 ---
 
-### MIDIbox Hardware Platform (MBHP)
+#### MIDIbox Hardware Platform (MBHP)
 
 http://www.ucapps.de/
 
@@ -313,7 +382,7 @@ https://github.com/midibox/mios32
 
 ---
 
-### Bela
+#### Bela
 
 https://bela.io/
 
@@ -335,21 +404,270 @@ https://www.beagleboard.org/boards/pocketbeagle-original
 
 Beagle Bone Black (BBB)
 
-Bela Pepper
-
-https://learn.bela.io/products/modular/pepper/
-
 Bela GEM
 
 https://www.beagleboard.org/blog/2025-07-10-bela-gem-brings-ultra-low-latency-audio-to-pocketbeagle-2
 
+##### Bela Pepper
+
+https://learn.bela.io/products/modular/pepper/
+
+https://github.com/BelaPlatform/bela-pepper/wiki
+
+@see Eurorack/Rebel Technology/OWL
+
 ---
+
+#### Eurorack
+
+1. Analoge Circuits
+
+2. Digital Embedded Systems
+
+##### Docs and Resources
+
+https://github.com/newdigate/eurorack-awesome
+
+https://www.modwiggler.com/forum/index.php
+
+https://modulargrid.net/
+
+https://learningmodular.com/
+
+http://idreamofwires.org/
+
+https://intellijel.com/support/eurorack-101/
+
+https://www.musicthing.co.uk/books.html
+
+https://www.musicstore.de/de_DE/EUR/SynMag-A-Guide-to-Modular-Worlds/art-NOT0013154-000
+
+https://bjooks.com/products/patch-tweak-exploring-modular-synthesis
+
+###### Modular Hardware Systems
+
+AE Modular
+
+https://www.tangiblewaves.com/
+
+https://www.tangiblewaves.com/diy-info.html (DIY)
+
+https://wiki.aemodular.com/#/diy/ (DIY)
+
+Buchla
+
+https://buchla.com/modular-systems/
+
+Moog
+
+Roland
+
+Korg
+
+###### Interfaces (DC-coupled I/O) for Hybrid Modular Systems
+
+https://www.sweetwater.com/sweetcare/articles/which-audio-interfaces-are-dc-coupled/
+
+https://youtu.be/6mOAgqcM2eI
+
+https://www.youtube.com/watch?v=NGtqnQm7W8Y
+
+Expert Sleepers
+
+https://www.expert-sleepers.co.uk/es8.html
+
+https://www.expert-sleepers.co.uk/silentway.html
+
+Doepfer MCV4, R2M
+
+https://doepfer.de/mcv4.htm
+
+https://doepfer.de/R2M.htm
+
+Ableton CV Tools
+
+https://help.ableton.com/hc/en-us/articles/360004966139-CV-Tools-Overview-Technical-FAQ
+
+###### Modular Simulation Software
+
+VCV-Rack
+
+https://library.vcvrack.com/
+
+https://github.com/VCVRack/
+
+Softube Modular
+
+https://www.softube.com/plug-ins/modular
+
+Cherry Audio - Voltage Modular
+
+https://cherryaudio.com/products/voltage-modular
+
+Bitwig Studio - The Grid
+
+https://www.bitwig.com/de/the-grid/
+
+Audulus (iPad App)
+
+https://audulus.com/
+
+Max for Cats - OSCiLLOT
+
+https://www.ableton.com/en/packs/oscillot/
+
+###### Programming
+
+@see VCV
+
+@see Mutable Instruments
+
+@see Brands (OpenSource)
+
+@see Embedded Systems
+
+https://eurorack-blocks.readthedocs.io/en/latest/
+
+##### Shops
+
+https://www.thonk.co.uk/ (UK)
+
+https://www.3u-shop.de/ (3U Shop, Berlin)
+
+https://pushermanproductions.com/ (UK)
+
+https://modularaddict.com/ (USA)
+
+https://electricdruid.net/ (Portugal ?)
+
+https://www.sweetwater.com/insync/eurorack-buying-guide/
+
+https://schneidersladen.de/ (Berlin)
+
+##### Brands
+
+- Mutable Instruments
+- Befaco
+- Erica Synths
+- Daisy
+- Rebel Technology
+- Ornament & Crime (o_C)
+- BASTL Instruments
+- Music Thing Modular (Tom Whitwell)
+
+###### Doefer
+
+https://www.doepfer.de/home.htm
+
+https://www.doepfer.de/a100p_e.htm
+
+https://www.doepfer.de/home_e.htm (FAQ)
+
+https://www.doepfer.de/DIY/a100_diy.htm (DIY)
+
+https://www.doepfer.de/a100_man/a100t_d.htm (Technische Hinweise)
+
+https://www.doepfer.de/a100_man/a100m_d.htm (Mechanische Hinweise)
+
+https://www.doepfer.de/a100_man/a100t_e.htm (Technical Details)
+
+https://www.doepfer.de/a100_man/a100m_e.htm (Construction Details)
+
+###### Erica Synths
+
+https://www.ericasynths.lv/
+
+https://www.ericasynths.lv/news/diy-kits-are-now-open-source/
+
+https://www.ericasynths.lv/shop/diy-kits-1/
+
+https://github.com/erica-synths/diy-eurorack
+
+###### Befaco
+
+https://www.befaco.org/
+
+https://github.com/Befaco
+
+###### Bastl Instruments
+
+https://github.com/bastl-instruments
+
+###### Music Thing Modular (Tom Whitwell)
+
+https://www.musicthing.co.uk/
+
+https://www.musicthing.co.uk/books.html
+
+https://github.com/TomWhitwell
+
+###### 4ms
+
+https://4mscompany.com/
+
+###### Rebel Technology - OWL
+
+https://www.rebeltech.org/product/owl-modular/
+
+https://www.openwarelab.org/OWL_Modular/
+
+https://github.com/pingdynasty/OwlWare
+
+@see Bela Pepper, Daisy Owlsy, Ornament And Crime (o_C, OCP)
+
+---
+
+## Code
+
+https://en.wikipedia.org/wiki/List_of_audio_programming_languages
+
+https://thewolfsound.com/top-5-languages-for-audio-programming/
+
+SuperCollider
+
+https://supercollider.github.io/
+
+Sonic Pi
+
+https://sonic-pi.net/
+
+https://de.wikipedia.org/wiki/Sonic_Pi
+
+Chuck
+
+https://chuck.stanford.edu/
+
+CSound
+
+https://csound.com/
+
+FAUST
+
+https://faust.grame.fr/
 
 ### Mutable Instruments
 
 https://github.com/pichenettes/eurorack
 
 https://pichenettes.github.io/mutable-instruments-documentation/
+
+https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/open_source/
+
+https://github.com/pichenettes/mutable-dev-environment
+
+https://medium.com/music-thing-modular-notes/how-to-get-started-writing-your-own-firmware-for-mutable-instruments-clouds-a08173cec317
+
+Code is used 
+- official Eurorack Modules (e.g. Plaits)
+- Befaco
+- Arturia Micro Freak
+- Axoloti Patcher
+- VCV-Rack Audible Instruments
+- Surge XT
+
+Daisy
+
+https://forum.electro-smith.com/t/porting-mutable-instruments-code/131/5
 
 #### Audible Instruments (VCV-Rack)
 
@@ -359,15 +677,11 @@ https://github.com/VCVRack/AudibleInstruments
 
 ---
 
-### SuperCollider
+### Blue Cat Audio - Plug'n Script (VST)
 
-https://supercollider.github.io/
+https://www.bluecataudio.com/Products/Product_PlugNScript/
 
-#### Sonic Pi
-
-https://sonic-pi.net/
-
-https://de.wikipedia.org/wiki/Sonic_Pi
+https://github.com/bluecataudio/plugnscript
 
 ---
 
@@ -405,9 +719,68 @@ https://rackafx.wordpress.com/
 
 ### JUCE
 
-@see LEARN
+@see LEARN_LIBRARIES.md
 
 ---
+
+## Projects
+
+@see above Code, Embedded Systems, Eurorack, Visual Programming
+
+OpenSource C++ Code
+
+- Surge XT (Synthesizer, Effects)
+- Vital Synthesizer
+- Modep / ModDuo
+- VCV-Rack: Audible Instruments
+- Will Pirkle (FX, SynthLab)
+- Blue Cat Plug'n Script
+- DaisySP
+- Teensy Audio Library
+- Korg NTS-1
+- Axoloti (Patcher, Intermediate Code)
+
+https://github.com/jonmoshier/awesome-open-source-synths
+
+#### Surge XT
+
+https://surge-synthesizer.github.io/
+
+#### Matt Tytel
+
+Vital Synthesizer
+
+https://vital.audio/
+
+https://juce.com/made-with-juce/matt-tytel-from-vital-audio/
+
+https://github.com/mtytel/vital
+
+https://forum.vital.audio/t/vital-vial-open-source-repository/9736
+
+Dexed
+
+Helm
+
+https://tytel.org/helm/
+
+Visage (GLSL)
+
+https://github.com/VitalAudio/visage
+
+#### DISTROH-Ports
+
+https://github.com/DISTRHO/DISTRHO-Ports/tree/master
+
+Dexed, Obxd, TAL, ...
+
+#### Chowdhury DSP
+
+https://github.com/Chowdhury-DSP
+
+#### Paul Stretch
+
+https://github.com/paulnasca/paulstretch_cpp
 
 ---
 
@@ -446,4 +819,18 @@ Designing Audio Effect Plugins in C++, Will Pirkle
 https://www.willpirkle.com/
 
 ...
+
+### Websites
+
+https://www.musicdsp.org/en/latest/
+
+https://audiodev.blog/newbie-resources/
+
+https://www.native-instruments.com/de/products/komplete/synths/reaktor-6/
+
+https://www.native-instruments.com/de/products/komplete/synths/reaktor-6/learning-resources/
+
+https://github.com/jonmoshier/awesome-open-source-synths
+
+---
 

@@ -1,5 +1,7 @@
 # C++ Language
 
+https://www.youtube.com/watch?v=7fGB-hjc2Gc <================
+
 @see Google Docs: Development 2025, C++, Creative Coding
 
 https://en.wikipedia.org/wiki/C%2B%2B
@@ -385,8 +387,47 @@ std::weak_ptr<String> strPtr = std::weak_ptr<String>();
 
 ### References
 
+@see Functions/Function Parameters
+
 - References are aliases for objects
 - They can't be reassigned
+- pass by reference without creating a copy
+
+#### const lvalue-References (const Type&)
+
+- can bind to everything
+- can't be modified (const-ness)
+- in-parameters of functions
+
+```c++
+void foo(const Type&);
+```
+
+#### lvalues-References (Type&)
+
+- only non-const named objects (lvalues)
+- left side of assignment
+- in-out-parameters of functions (write access)
+
+```c++
+void foo(Type&);
+```
+
+#### rvalue-References (Type&&)
+
+- temporary objects 
+- only objects without a name or std::move() passed as parameter to functions
+- can't be assigned to
+
+```c++
+```
+
+#### move-Semantics
+
+https://www.youtube.com/watch?v=Bt3zcJZIalk
+
+```c++
+```
 
 ---
 
@@ -612,7 +653,9 @@ int main() {
 
 C-Functions always pass by value (if you pass a pointer, the pointer is copied, not the object it points to)
 
-#### lvalues, rvalues
+##### lvalues, rvalues
+
+@see References
 
 https://youtu.be/fbYknr-HPYE?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&t=749
 
@@ -687,13 +730,13 @@ int main() {
 }
 ```
 
-#### move-semantics
+##### move-semantics
 
 use case of rvalue-references
 
 https://www.youtube.com/watch?v=ehMg6zvXuMY
 
-#### value-semantics
+##### value-semantics
 
 https://en.wikipedia.org/wiki/Value_semantics
 
@@ -701,7 +744,7 @@ https://isocpp.org/wiki/faq/value-vs-ref-semantics
 
 copy-by-value semantics
 
-#### copy-constructor
+##### copy-constructor
 
 ---
 

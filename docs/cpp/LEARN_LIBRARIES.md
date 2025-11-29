@@ -1,5 +1,79 @@
 # LEARN C++ Libraries
 
+## LICENSES
+
+Open Source Licenses for Commercial Products
+
+// by Claude 4.5 Sonnet, 2025-11-29
+
+### ✅ Permitted Licenses (commercial use unproblematic)
+
+#### Permissive Licenses (best suited)
+
+- **MIT License** - Very liberal, commercial use without restrictions
+- **Apache 2.0** - Similar to MIT, additionally offers patent protection
+- **BSD (2-Clause/3-Clause)** - Very permissive, minimal requirements
+- **Boost Software License** - Specifically for C++ libraries, very developer-friendly
+- **zlib/libpng License** - Very simple and permissive
+
+**Requirements:** Usually only include copyright notice and license text (not in the product itself, but e.g. in documentation or About dialog).
+
+
+### ⚠️ Licenses with Restrictions
+
+#### LGPL (Lesser GPL)
+- **Allowed:** Dynamic linking (as shared library/.dll/.so)
+- **Not allowed:** Static linking (compiled into your binary)
+- **Condition:** Users must be able to replace the library
+- **Example:** Qt is LGPL (or commercially licensed)
+
+#### MPL 2.0 (Mozilla Public License)
+- Modifications to MPL code must be published
+- Your own code remains proprietary
+- File-level copyleft (not the entire project)
+
+
+### 🚫 NOT Allowed Licenses for Commercial Closed-Source Products
+
+#### GPL (v2/v3) - GNU General Public License
+- **Copyleft license:** Forces you to publish the entire source code of your product
+- **"Viral":** Infects your entire project
+- **Not allowed for commercial closed-source software**
+
+#### AGPL (Affero GPL)
+- Like GPL, but even stricter
+- Also applies when used over network (SaaS)
+
+#### CC-BY-NC (Creative Commons Non-Commercial)
+- Explicitly no commercial use allowed
+
+---
+
+Best Practices for Your Project
+
+1. **Conduct License Audit:**
+    - List all used libraries
+    - Check each license
+
+2. **Check Dependencies:**
+
+3. **Documentation:**
+    - Create a `LICENSES.txt` or `THIRD_PARTY_NOTICES.txt`
+    - List all used libraries with their licenses
+
+4. **When in Doubt:**
+    - For commercial products: prefer MIT, Apache 2.0, BSD
+    - Avoid GPL libraries or replace with alternatives
+    - For LGPL: use dynamic linking
+
+Practical Tips
+
+- **JUCE Framework:** You have the choice between GPL or commercial license
+- **Boost Libraries:** Boost License is very permissive and commercially usable
+- Many popular C++ libraries (like fmt, spdlog, GLM) are MIT-licensed
+
+---
+
 ## Link Libraries
 
 ### Command Line
@@ -515,6 +589,8 @@ http://docs.juce.com/master/index.html (Documentation)
 
 #### YouTube Tutorials
 
+WolfSound Audio
+
 https://www.youtube.com/@JUCElibrary (JUCE / WolfSound)
 
 https://www.youtube.com/watch?v=0ALLRitFE34&list=PLrJPU5Myec8ZGjG3dpd7ZH3TX4Wn6Z5RE&index=2 (JUCE WebView2)
@@ -527,9 +603,13 @@ https://www.youtube.com/playlist?list=PLJLybGgHYEIeW8OaapEOVelSm-gP9d0MV (WolfSo
 
 https://thewolfsound.com/how-to-build-audio-plugin-with-juce-cpp-framework-cmake-and-unit-tests/
 
+Matcatmusic / freeCodeCamp
+
 https://www.youtube.com/watch?v=i_Iq4_Kd7Rc (freeCodeCamp Matcatmusic: Learn Modern C++ with JUCE)
 
 https://www.youtube.com/watch?v=Mo0Oco3Vimo (freeCodeCamp Matcatmusic: 3-Band-Compressor)
+
+The Audio Programmer
 
 https://www.youtube.com/@TheAudioProgrammer (TheAudioProgrammer)
 
@@ -541,6 +621,47 @@ https://www.youtube.com/playlist?list=PLLgJJsrdwhPxBKE-bWNPj1oq8k_upTWsa (TheAud
 
 https://www.youtube.com/playlist?list=PLLgJJsrdwhPwR6a2nG8XRvBkXbnKcexlO (TheAudioProgrammer - Unreal MetaSound)
 
+### People
+
+The WolfSound
+
+https://thewolfsound.com/
+
+https://www.wolfsoundacademy.com/dsp-pro#
+
+https://github.com/JanWilczek
+
+https://www.youtube.com/c/WolfSoundAudio
+
+https://www.youtube.com/watch?v=Ah4P-zOfdYc
+
+https://www.youtube.com/@JUCElibrary
+
+freeCodeCamp Matcatmusic
+
+https://www.youtube.com/watch?v=i_Iq4_Kd7Rc
+
+https://github.com/matkatmusic/SimpleEQ
+
+https://www.programmingformusicians.com/
+
+https://www.programmingformusicians.com/pfmcpp/
+
+https://www.programmingformusicians.com/simpleeq/
+
+The Audio Programmer
+
+https://www.youtube.com/@TheAudioProgrammer
+
+### Libraries
+
+#### PluginGuiMagic
+
+https://foleysfinest.com/developer/pluginguimagic/
+
+https://github.com/ffAudio/PluginGuiMagic
+
+https://github.com/ffAudio/foleys_gui_magic
 
 ---
 
