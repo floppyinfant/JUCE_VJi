@@ -1,9 +1,13 @@
+# -----------------------------
 # OS-specific
+# -----------------------------
 .DS_Store
 Thumbs.db
 *.lnk
 
-# Jetbrains IDE
+# -----------------------------
+# Jetbrains IDEs
+# -----------------------------
 .idea/
 .idea/workspace.xml
 .idea/tasks.xml
@@ -17,22 +21,30 @@ Thumbs.db
 #!.idea/.name
 #!.idea/vcs.xml
 
-# Visual Studio
+# -----------------------------
+# Visual Studio IDE
+# -----------------------------
 .vs
 
+# -----------------------------
 # build directories
+# -----------------------------
 build/
 cmake-build-*/
 # Projucer files:
 Builds/
 JuceLibraryCode/
 
+# -----------------------------
 # Local libraries (not managed as submodules)
+# -----------------------------
 libs/sqlite
 libs_dsp/
 examples/
 
+# -----------------------------
 # local only temporary files
+# -----------------------------
 _local/
 JUCE-IDEAs-2025-10-06.txt
 VJi.zip

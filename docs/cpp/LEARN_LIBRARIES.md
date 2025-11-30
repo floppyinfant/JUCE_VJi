@@ -804,3 +804,41 @@ Mesh Loading Library
 
 ---
 
+## Visage
+
+https://github.com/VitalAudio/visage
+
+UI library meets creative coding
+
+---
+
+## ImGui
+
+https://github.com/ocornut/imgui/tree/docking
+
+`git submodule add -b docking https://github.com/ocornut/imgui.git libs/imgui`
+
+https://github.com/thedmd/imgui-node-editor
+
+---
+
+What is immediate mode GUI vs. retained mode?
+
+immediate mode GUI
+- draw everything at once, e.g. in a render loop, every frame
+
+retained mode GUI
+- draw only what is visible
+- callbacks
+- widgets
+
+https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
+
+https://youtu.be/LSRJ1jZq90k (CppCon)
+
+https://www.youtube.com/watch?v=vWXrFetSH8w (The Cherno)
+- https://github.com/TheCherno (Walnut and Hazel Engine are Dear ImGui example projects)
+- https://github.com/StudioCherno/Walnut
+
+---
+

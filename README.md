@@ -19,13 +19,14 @@ made with JUCE Framework
 # usage of this repository
 # ----------------------------------------------------------------------------
 git clone --recursive https://github.com/floppyinfant/JUCE_VJi.git
-# alternative: --recurse-submodules
 cd JUCE_VJi
-# if you downloaded the repository without "--recursive" or got the zip-file:
+
+# if you cloned the repository without "--recursive" or "--recurse-submodules"
+# or downloaded the zip-file:
 # git submodule update --init --recursive
 
 # ----------------------------------------------------------------------------
-# Install WebView2 on Windows (only) in PowerShell:
+# Install WebView2 (on Windows only using PowerShell):
 # ----------------------------------------------------------------------------
 Register-PackageSource -provider NuGet -name nugetRepository -location https://www.nuget.org/api/v2
 Install-Package Microsoft.Web.WebView2 -Scope CurrentUser -RequiredVersion 1.0.1901.177 -Source nugetRepository
@@ -43,6 +44,8 @@ cmake --build build
 To build the Android APK:
 
 Open the Projucer project file (VJi.juce) and export to Android Studio.
+
+**Maybe I forgot to update the Jucer-file between commits: please add the files or libs manually and send me a message!**
 
 ---
 
@@ -66,15 +69,17 @@ git remote add origin https://github.com/floppyinfant/JUCE_VJi.git
 git push -u origin master
 ```
 
-#### Add Libraries as gitmodules
+#### Add Libraries as gitmodules (submodules)
+
+`libs/` must not be in the .gitignore file.
 
 ```shell
 git submodule add https://github.com/assimp/assimp.git libs/assimp
 git rm --cached -r libs/assimp
 git commit -m "Remove assimp from version control"
 
-git add .gitmodules libs/library-name
-git commit -m "Add library-name as submodule"
+git submodule add https://github.com/VitalAudio/visage.git libs/visage
+
 
 # ----------------------------------------------------------------------------
 # cloning the repo:

@@ -506,6 +506,45 @@ https://git-scm.com/book/en/v2
 @see README.md
 
 ```shell
+git init
+git add .
+git commit -m "initial commit"
+git remote add origin https://github.com/floppyinfant/JUCE_VJi.git
+git push -u origin master
+# git push origin main
+
+# ----------------------------------------------------------------------------
+# clone with submodules
+# ----------------------------------------------------------------------------
+git clone --recursive https://github.com/floppyinfant/JUCE_VJi.git
+#git clone --recurse-submodules https://github.com/floppyinfant/JUCE_VJi.git
+git submodule update --init --recursive
+
+
+# ----------------------------------------------------------------------------
+# submodules (.gitmodules)
+# ----------------------------------------------------------------------------
+git submodule add https://github.com/juce-framework/JUCE.git libs/juce
+git submodule --init --recursive
+
+git submodule add https://github.com/assimp/assimp.git libs/assimp
+git rm --cached -r libs/assimp
+git commit -m "Remove assimp from version control"
+
+git submodule add https://github.com/VitalAudio/visage.git libs/visage
+
+# update all submodules to their latest versions
+git submodule update --remote --merge
+# update a specific submodule
+git submodule update --remote libs/assimp
+
+# check status of submodules
+git submodule status
+
+# remove a submodule
+git submodule deinit libs/assimp
+git rm libs/assimp
+git commit -m "Remove assimp submodule"
 ```
 
 #### Git commit messages
