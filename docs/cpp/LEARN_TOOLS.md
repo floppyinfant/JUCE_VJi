@@ -501,6 +501,33 @@ https://git-scm.com/book/en/v2
 - https://git-scm.com/cheat-sheet
 - https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
 
+#### Git Commands
+
+@see README.md
+
+```shell
+```
+
+#### Git commit messages
+
+```shell
+git commit -m "feat: add new feature"
+```
+
+Git commit messages should be written in the imperative present tense (command form)
+- consistency with git itself (e.g. `merge brach`, `revert`)
+- describe what the commit does
+
+Common Prefixes:
+- `feat:` Add new feature
+- `fix:` Fix a bug
+- `docs:` Documentation only
+- `refactor:` Code refactoring
+- `test:` Add tests
+- `chore:` Maintenance tasks
+
+Example: `feat: Add git submodule for SQLite library`
+
 #### Git Workflows
 
 - Feature Branch Workflow

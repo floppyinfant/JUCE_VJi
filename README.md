@@ -55,9 +55,6 @@ Open the Projucer project file (VJi.juce) and export to Android Studio.
 # create local repo 
 git init .
 git submodule add https://github.com/juce-framework/JUCE.git libs/juce
-#git submodule add https://github.com/assimp/assimp.git libs/assimp
-#git rm --cached -r libs/assimp
-#git commit -m "Remove assimp from version control"
 git submodule --init --recursive
 
 # stage and commit
@@ -67,6 +64,43 @@ git commit -m "initial commit"
 # create remote repo
 git remote add origin https://github.com/floppyinfant/JUCE_VJi.git
 git push -u origin master
+```
+
+#### Add Libraries as gitmodules
+
+```shell
+git submodule add https://github.com/assimp/assimp.git libs/assimp
+git rm --cached -r libs/assimp
+git commit -m "Remove assimp from version control"
+
+git add .gitmodules libs/library-name
+git commit -m "Add library-name as submodule"
+
+# ----------------------------------------------------------------------------
+# cloning the repo:
+git clone https://github.com/floppyinfant/JUCE_VJi.git
+cd JUCE_VJi
+git submodule update --init --recursive
+# or:
+git clone --recurse-submodules https://github.com/floppyinfant/JUCE_VJi.git
+# or:
+git clone https://github.com/floppyinfant/JUCE_VJi.git
+cd JUCE_VJi
+git submodule init
+git submodule update
+# ----------------------------------------------------------------------------
+# update all submodules to their latest versions
+git submodule update --remote --merge
+# update a specific submodule
+git submodule update --remote libs/assimp
+# ----------------------------------------------------------------------------
+# check status of submodules
+git submodule status
+# ----------------------------------------------------------------------------
+# remove a submodule
+git submodule deinit libs/assimp
+git rm libs/assimp
+git commit -m "Remove assimp submodule"
 ```
 
 #### Build SQLite
