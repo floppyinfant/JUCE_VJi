@@ -5,10 +5,10 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../PluginProcessor.h"
+#include "../../PluginProcessor.h"
 #include <juce_opengl/juce_opengl.h>
 #include <juce_gui_extra/juce_gui_extra.h>
-#include "components/OpenGLComponent.h"
+#include "OpenGLComponent.h"
 
 class OpenGLEditor final : public juce::AudioProcessorEditor
 {

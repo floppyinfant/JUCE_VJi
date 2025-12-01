@@ -47,6 +47,16 @@ set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 # or
 add_subdirectory(libs/juce)             # If you've put JUCE in a subdirectory called JUCE
 
+add_subdirectory(libs/visage)
+
+# static linking
+# Add the pre-built visage library as an IMPORTED target
+#add_library(visage STATIC IMPORTED)
+#set_target_properties(visage PROPERTIES
+#        IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage/build/Debug/visage.lib"  # Adjust path as needed
+#        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage"
+#)
+
 # ---
 
 # If you are building a VST2 or AAX plugin, CMake needs to be told where to find these SDKs on your
@@ -150,18 +160,28 @@ juce_add_binary_data(PluginData SOURCES res/open-source.png)  # fi
 target_sources(VJi
     PRIVATE
         src/PluginProcessor.cpp
+        src/Parameters.cpp
+        # --- Editors ---
         src/PluginEditor.cpp
-        src/gui/WebViewEditor.cpp
+        src/gui/webview/WebViewEditor.cpp
+        src/gui/imgui/ImGuiEditor.cpp
+        src/gui/visage/VisageEditor.cpp
+        src/gui/medium/OpenGLEditor.cpp
+        src/gui/medium/OpenGLComponent.cpp
+        # --- Main Editor / vj functionality ---
         src/vj/ShaderEditor.cpp
-        src/dsp/DspProcessor.cpp
-        #src/sq/MidiProcessor.cpp
-        src/gui/OpenGLEditor.cpp
-        src/gui/components/OpenGLComponent.cpp
+        # --- GUI - modules, views, widgets, components ---
         src/gui/ViewController.cpp
         src/gui/UI.cpp
         src/gui/UICodeView.cpp
         src/gui/UIParameterView.cpp
-        src/Parameters.cpp
+        #src/gui/components/KeyboardComponent.cpp
+        #src/gui/components/SynthComponent.cpp
+        # --- Functionality ---
+        #src/sq/MidiProcessor.cpp
+        src/dsp/DspProcessor.cpp
+        #src/synth/
+
 )
 
 # ----------------------------------------------------------------------------
@@ -171,12 +191,6 @@ target_sources(VJi
 target_include_directories(VJi
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/src
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/dsp
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/components
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/sq
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/synth
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/vj
         PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}/includes
 )
@@ -199,10 +213,12 @@ target_link_libraries(VJi
         juce::juce_audio_utils
         juce::juce_opengl
         #sqlite3             # see README.md on how to add sqlite3 to CMakeLists.txt
+        visage
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
-        juce::juce_recommended_warning_flags)
+        juce::juce_recommended_warning_flags
+)
 
 
 # fi: library path for compiled libraries

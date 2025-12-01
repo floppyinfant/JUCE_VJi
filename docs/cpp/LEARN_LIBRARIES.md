@@ -331,10 +331,10 @@ https://github.com/ocornut/imgui/wiki/Useful-Extensions#node-editors
 #### Tutorials
 
 https://www.youtube.com/watch?v=-vXSmDAmXS8 (ADC24 Talk) <========
-    - https://www.github.com/free-audio/clap-imgui-support
-    - https://www.github.com/schwaaa/clap-imgui
-    - https://www.github.com/Krasjet/imgui_juce
-    - https://www.github.com/noizebox/vstimgui
+- https://www.github.com/free-audio/clap-imgui-support
+- https://www.github.com/schwaaa/clap-imgui
+- https://www.github.com/Krasjet/imgui_juce
+- https://www.github.com/noizebox/vstimgui
 
 #### Examples
 
@@ -384,6 +384,12 @@ https://github.com/wxFormBuilder/wxFormBuilder
 ---
 
 ### Qt
+
+---
+
+## VSTGUI
+
+https://steinbergmedia.github.io/vst3_doc/vstgui/html/
 
 ---
 
@@ -665,6 +671,364 @@ https://github.com/ffAudio/foleys_gui_magic
 
 ---
 
+## Assimp
+
+https://github.com/assimp/assimp
+
+https://learnopengl.com/Model-Loading/Assimp
+
+Mesh Loading Library
+
+---
+
+## Visage
+
+https://github.com/VitalAudio/visage
+
+UI library meets creative coding
+
+by Matt Tytel (Vital Synthesizer, Dexed, Helm)
+
+active development!
+
+https://www.youtube.com/watch?v=Lrj9R-h8bnA (The Audio Programmer: Interview with Matt Tytel and Demo)
+
+---
+
+### Setup
+
+Git Submodule:
+
+```shell
+# add library as a submodule to the project
+git submodule add https://github.com/VitalAudio/visage.git libs/visage
+```
+
+CMakeLists.txt:
+
+```cmake
+# add library to the build system
+add_subdirectory(libs/visage)
+
+# ...
+
+target_link_libraries(VJi
+        PRIVATE
+        # ...
+        visage
+        # ...
+)
+```
+
+Visual Studio:
+
+```shell
+# Build examples and library in Visual Studio: this is not necessary, because it can be directly added to CMakeLists.txt
+cd libs/visage
+mkdir build
+cmake -G "Visual Studio 17 2022" -A x64 -S . -B build
+#cmake --build build
+# open the solution file in build/Visage.sln
+# In Visual Studio: RMB Click on Example Project -> Set as Startup Project; F5 (Start Debugging)
+```
+
+Static Linking:
+
+```cmake
+# THIS IS NOT NECESSARY, JUST FOR REFERENCE (other libraries): @see ImGui
+# Add a library for static linking to the build system (if the library does not have a CMakeLists.txt or you have the prebuild lib file)
+
+# Add the pre-built visage library as an IMPORTED target
+add_library(visage STATIC IMPORTED)
+set_target_properties(visage PROPERTIES
+    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage/build/Debug/visage.lib"  # Adjust path as needed
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage"
+)
+
+# If you need release builds too:
+set_target_properties(visage PROPERTIES
+    IMPORTED_LOCATION_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage/build/Debug/visage.lib"
+    IMPORTED_LOCATION_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage/build/Release/visage.lib"
+)
+```
+
+---
+
+### Usage Examples
+
+There are two ways of Programming with Visage:
+
+```c++
+#include <visage/app.h>
+
+// ExampleBasic:
+int runExample() {
+  visage::ApplicationWindow app;
+
+  app.onDraw() = [&app](visage::Canvas& canvas) {
+    canvas.setColor(0xff000066);
+    canvas.fill(0, 0, app.width(), app.height());
+    // ...
+  };
+
+  app.setTitle("Visage Basic Example");
+  app.show(800, 600);
+  app.runEventLoop();
+  return 0;
+}
+
+// ---------------------------------------------
+
+int main(int, char**) {
+  return runExample();
+}
+```
+
+Inheritance: inherit from Frame and override draw()
+
+```c++
+#include <visage/app.h>
+
+// ExampleBloom:
+class AnimatedLine : public visage::Frame {
+public:
+  static constexpr int kNumPoints = 1200;
+
+  AnimatedLine() : graph_line_(kNumPoints) {
+    addChild(&graph_line_);
+  }
+
+  void resized() override { 
+    graph_line_.setBounds(0, 0, width(), height()); 
+  }
+  void draw(visage::Canvas& canvas) override {
+    // 
+  }
+
+private:
+  visage::GraphLine graph_line_;
+};
+
+// ---------------------------------------------
+
+class ExampleEditor : public visage::ApplicationWindow {
+public:
+  ExampleEditor() {
+    addChild(&animated_line_);
+    animated_line_.layout().setMargin(0);
+
+    onDraw() = [this](visage::Canvas& canvas) {
+      canvas.setColor(0xff22282d);
+      canvas.fill(0, 0, width(), height());
+    };
+  }
+
+private:
+  AnimatedLine animated_line_;
+};
+
+// ---------------------------------------------
+
+int runExample() {
+  ExampleEditor editor;
+  editor.setWindowDecoration(visage::Window::Decoration::Client);
+  if (visage::isMobileDevice())
+    editor.showMaximized();
+  else
+    editor.show(visage::Dimension::widthPercent(50.0f), visage::Dimension::widthPercent(14.0f));
+
+  editor.runEventLoop();
+  return 0;
+}
+
+// ---------------------------------------------
+
+int main(int, char**) {
+  return runExample();
+}
+```
+
+---
+
+## ImGui
+
+@see GUI Libraries
+
+https://github.com/ocornut/imgui/tree/docking
+
+`git submodule add -b docking https://github.com/ocornut/imgui.git libs/imgui`
+
+https://github.com/thedmd/imgui-node-editor
+
+What is immediate mode GUI vs. retained mode?
+
+immediate mode GUI
+- draw everything at once, e.g. in a render loop, every frame
+
+retained mode GUI
+- draw only what is visible
+- callbacks
+- widgets
+
+https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
+
+https://youtu.be/LSRJ1jZq90k (CppCon)
+
+https://www.youtube.com/watch?v=vWXrFetSH8w (The Cherno)
+- https://github.com/TheCherno (Walnut and Hazel Engine are Dear ImGui example projects)
+- https://github.com/StudioCherno/Walnut
+
+
+Add ImGui to the Juce Project: 
+
+Create a new file libs/imgui/CMakeLists.txt:
+
+Since you're using JUCE with OpenGL, you likely want imgui_impl_opengl3.cpp and possibly need to write a custom JUCE integration.
+
+```cmake
+cmake_minimum_required(VERSION 3.22)
+project(imgui)
+
+set(CMAKE_CXX_STANDARD 23)
+
+# Core ImGui files
+set(IMGUI_SOURCES
+    imgui.cpp
+    imgui_demo.cpp
+    imgui_draw.cpp
+    imgui_tables.cpp
+    imgui_widgets.cpp
+)
+
+set(IMGUI_HEADERS
+    imgui.h
+    imgui_internal.h
+    imconfig.h
+    imstb_rectpack.h
+    imstb_textedit.h
+    imstb_truetype.h
+)
+
+# Choose which backend(s) you need based on your rendering system
+# For OpenGL3 + your existing windowing system:
+set(IMGUI_BACKEND_SOURCES
+    backends/imgui_impl_opengl3.cpp
+    # Add your platform backend:
+    # backends/imgui_impl_win32.cpp    # Windows
+    # backends/imgui_impl_osx.mm       # macOS
+    # backends/imgui_impl_glfw.cpp     # if using GLFW
+)
+
+set(IMGUI_BACKEND_HEADERS
+    backends/imgui_impl_opengl3.h
+    backends/imgui_impl_opengl3_loader.h
+    # Add corresponding headers:
+    # backends/imgui_impl_win32.h
+    # backends/imgui_impl_osx.h
+    # backends/imgui_impl_glfw.h
+)
+
+# Create the library
+add_library(imgui STATIC
+    ${IMGUI_SOURCES}
+    ${IMGUI_BACKEND_SOURCES}
+)
+
+target_include_directories(imgui PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/backends
+)
+
+# Link OpenGL if using OpenGL backend
+find_package(OpenGL REQUIRED)
+target_link_libraries(imgui PUBLIC OpenGL::GL)
+
+# Platform-specific linking
+if(WIN32)
+    target_link_libraries(imgui PUBLIC imm32)
+endif()
+```
+
+Then in your main `CMakeLists.txt` add:
+
+```cmake
+# ...
+
+add_subdirectory(libs/imgui)
+
+# ...
+
+target_link_libraries(VJi 
+    PRIVATE
+        # ...
+        imgui
+        # ...
+)
+```
+
+### VSTImGui
+
+https://github.com/noizebox/vstimgui
+
+dead project ?
+
+---
+
+## React Native
+
+https://reactnative.dev/
+
+https://github.com/facebook/react-native
+
+Tutorials
+- https://en.wikipedia.org/wiki/React_Native
+- https://learn.microsoft.com/de-de/windows/dev-environment/javascript/react-native-for-android
+- https://microsoft.github.io/react-native-windows/
+- https://www.youtube.com/watch?v=J50gwzwLvAk
+- https://www.geeksforgeeks.org/reactjs/introduction-react-native/
+- https://docs.flutter.dev/get-started/flutter-for/react-native-devs (Flutter)
+
+
+### WebView2
+
+https://developer.microsoft.com/en-us/Microsoft-edge/webview2/?form=MA13LH
+
+@see README.md for Installation on Windows
+
+### React-Juce
+
+https://docs.react-juce.dev/
+
+https://github.com/JoshMarler/react-juce
+
+https://github.com/JoshMarler/react-juce/blob/master/docs/guides/Integrating_Your_Project.md
+
+dead project?
+
+---
+
+## JavaScript Frameworks and Stuff
+
+Node.js
+
+https://nodejs.org/
+
+Ionic
+
+https://ionicframework.com/
+
+Capacitor
+
+https://capacitorjs.com/
+
+Vue
+
+https://vuejs.org/
+
+https://ionicframework.com/docs/vue/overview
+
+---
+
 ## openFrameworks (of)
 
 https://openframeworks.cc/learning/
@@ -680,7 +1044,6 @@ https://openframeworks.cc/ofBook/chapters/shaders.html
 - https://github.com/openframeworks/openFrameworks/tree/master/examples/shader
 
 ```c++
-
 ```
 
 ---
@@ -791,54 +1154,6 @@ extern "C" {
 }
 #endif
 ```
-
----
-
-## Assimp
-
-https://github.com/assimp/assimp
-
-https://learnopengl.com/Model-Loading/Assimp
-
-Mesh Loading Library
-
----
-
-## Visage
-
-https://github.com/VitalAudio/visage
-
-UI library meets creative coding
-
----
-
-## ImGui
-
-https://github.com/ocornut/imgui/tree/docking
-
-`git submodule add -b docking https://github.com/ocornut/imgui.git libs/imgui`
-
-https://github.com/thedmd/imgui-node-editor
-
----
-
-What is immediate mode GUI vs. retained mode?
-
-immediate mode GUI
-- draw everything at once, e.g. in a render loop, every frame
-
-retained mode GUI
-- draw only what is visible
-- callbacks
-- widgets
-
-https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
-
-https://youtu.be/LSRJ1jZq90k (CppCon)
-
-https://www.youtube.com/watch?v=vWXrFetSH8w (The Cherno)
-- https://github.com/TheCherno (Walnut and Hazel Engine are Dear ImGui example projects)
-- https://github.com/StudioCherno/Walnut
 
 ---
 

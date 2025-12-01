@@ -1,9 +1,11 @@
 #include "PluginProcessor.h"
 
+#include "gui/imgui/ImGuiEditor.h"
 #include "PluginEditor.h"
+#include "gui/visage/VisageEditor.h"
 #include "vj/ShaderEditor.h"
-#include "gui/WebViewEditor.h"
-#include "gui/OpenGLEditor.h"
+#include "gui/webview/WebViewEditor.h"
+#include "gui/medium/OpenGLEditor.h"
 
 
 //==============================================================================
@@ -193,7 +195,9 @@ juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
     //return new PluginAudioProcessorEditor (*this);  // JUCE Default
     //return new PluginWebViewEditor (*this);         // WolfSound Tutorial
     return new ShaderEditor (*this);                // <-- VJi
-    //return new OpenGLEditor (*this);                // medium.com (Article)
+    //return new OpenGLEditor (*this);                // medium.com Article
+    //return new ImGuiEditor(*this);
+    //return new VisageEditor(*this);
 }
 
 //==============================================================================

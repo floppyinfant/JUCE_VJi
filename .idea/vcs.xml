@@ -2,7 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/assimp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/imgui" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/juce" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/sqlite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/visage" vcs="Git" />
   </component>
 </project>

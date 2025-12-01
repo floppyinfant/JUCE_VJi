@@ -3,7 +3,7 @@
 //
 
 #include "UI.h"
-#include "ShaderEditor.h"  // Include the full definition here (not in the header, because of circular dependencies)
+#include "vj/ShaderEditor.h"  // Include the full definition here (not in the header, because of circular dependencies)
                            // https://en.wikipedia.org/wiki/Circular_dependency
 
 UI::UI(ShaderEditor* e) : shaderEditor(e)
