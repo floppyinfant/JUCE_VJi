@@ -999,13 +999,6 @@ Tutorials
 - https://www.geeksforgeeks.org/reactjs/introduction-react-native/
 - https://docs.flutter.dev/get-started/flutter-for/react-native-devs (Flutter)
 
-
-### WebView2
-
-https://developer.microsoft.com/en-us/Microsoft-edge/webview2/?form=MA13LH
-
-@see README.md for Installation on Windows
-
 ### React-Juce
 
 https://docs.react-juce.dev/
@@ -1015,6 +1008,12 @@ https://github.com/JoshMarler/react-juce
 https://github.com/JoshMarler/react-juce/blob/master/docs/guides/Integrating_Your_Project.md
 
 dead project?
+
+### WebView2
+
+https://developer.microsoft.com/en-us/Microsoft-edge/webview2/?form=MA13LH
+
+@see README.md for Installation on Windows
 
 ---
 
@@ -1165,6 +1164,118 @@ extern "C" {
 }
 #endif
 ```
+
+---
+
+## VST3 SDK
+
+https://www.steinberg.net/developers/
+
+https://github.com/steinbergmedia/vst3sdk
+
+https://github.com/steinbergmedia/vst3_example_plugin_hello_world
+
+### VSTGUI
+
+https://github.com/steinbergmedia/vstgui
+
+---
+
+## CLAP
+
+https://github.com/free-audio/clap
+
+https://github.com/free-audio/clap-juce-extensions
+
+---
+
+## Melatonin Inspector
+
+https://github.com/sudara/melatonin_inspector
+
+A JUCE module that gives you the ability to inspect and visually edit (non-destructively) components in your UI.
+
+https://melatonin.dev/blog/
+
+### Awesome Juce
+
+https://github.com/sudara/awesome-juce
+
+Awesome DSP
+
+https://github.com/olilarkin/awesome-musicdsp
+
+https://github.com/BillyDM/awesome-audio-dsp
+
+...
+
+https://github.com/COx2/glslEditor_AudioPlugin
+
+https://github.com/ianacaburian/LiveShaderPalette
+
+https://github.com/JanosGit/OpenGLRealtimeVisualization4JUCE
+
+#### Surge Synthesizer
+
+https://github.com/surge-synthesizer
+
+https://github.com/surge-synthesizer/sst-effects
+
+https://github.com/surge-synthesizer/sst-jucegui/tree/main
+
+https://github.com/surge-synthesizer/OB-Xf (see libs/)
+
+#### Mat Tytel
+
+https://github.com/mtytel
+
+https://github.com/mtytel/vital (Vital)
+
+https://github.com/VitalAudio/visage (Visage)
+
+https://github.com/mtytel/helm (Helm)
+
+#### ffAudio
+
+https://github.com/ffAudio
+
+foleys gui magic
+
+https://github.com/ffAudio/foleys_gui_magic
+
+https://foleysfinest.com/foleys_gui_magic/
+
+PluginGuiMagic (obsolete)
+
+https://github.com/ffAudio/PluginGuiMagic
+
+#### ChowDSP
+
+https://github.com/Chowdhury-DSP
+
+https://github.com/Chowdhury-DSP/chowdsp_utils
+
+https://github.com/jatinchowdhury18
+
+#### WoldSound
+
+https://github.com/JanWilczek
+
+https://thewolfsound.com/
+
+https://www.youtube.com/c/WolfSoundAudio
+
+https://www.youtube.com/watch?v=mjp4Xu1QA0w&list=PLrJPU5Myec8ZGjG3dpd7ZH3TX4Wn6Z5RE
+
+---
+
+## Will Pirkle
+
+https://www.willpirkle.com/
+
+https://www.willpirkle.com/fx-book/project-gallery/
+
+https://github.com/willpirkleaudio
 
 ---
 

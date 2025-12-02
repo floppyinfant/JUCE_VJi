@@ -11,3 +11,6 @@
 	path = libs/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
+[submodule "libs/imgui_juce"]
+	path = libs/imgui_juce
+	url = https://github.com/Krasjet/imgui_juce.git

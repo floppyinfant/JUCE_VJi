@@ -78,9 +78,18 @@ git submodule add https://github.com/assimp/assimp.git libs/assimp
 git rm --cached -r libs/assimp
 git commit -m "Remove assimp from version control"
 
+# GUI
 git submodule add https://github.com/VitalAudio/visage.git libs/visage
+git submodule add https://github.com/Krasjet/imgui_juce.git libs/imgui_juce
 
+# DSP
+#git submodule add https://github.com/electro-smith/DaisySP.git libs/DaisySP
+#git submodule add ... libs/...
+```
 
+Working with git submodules:
+
+```shell
 # ----------------------------------------------------------------------------
 # cloning the repo:
 git clone https://github.com/floppyinfant/JUCE_VJi.git
@@ -107,6 +116,42 @@ git submodule deinit libs/assimp
 git rm libs/assimp
 git commit -m "Remove assimp submodule"
 ```
+
+#### Add Examples
+
+```shell
+mkdir examples
+cd examples
+
+git clone --recurse-submodules https://github.com/electro-smith/Daisy-JUCE-Example
+# has submodules DaisySP, Juce
+
+cd Daisy-JUCE-Example/plugin
+mkdir build
+cd build
+cmake ..
+cmake --build .  # or open the generated *.sln in Visual Studio
+```
+
+```shell
+git clone https://github.com/COx2/juce_meets_DaisySP.git
+# has submodules DaisySP, Juce
+```
+
+```shell
+git clone --recursive https://github.com/noizebox/vstimgui.git
+# has submodules imgui, glfw
+```
+
+```shell
+# dead project
+git clone --recursive https://github.com/JoshMarler/react-juce.git
+```
+
+```shell
+```
+
+---
 
 #### Build SQLite
 
