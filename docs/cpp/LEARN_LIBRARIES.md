@@ -870,11 +870,25 @@ retained mode GUI
 - callbacks
 - widgets
 
-https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
-
 https://youtu.be/LSRJ1jZq90k (CppCon)
 
-https://www.youtube.com/watch?v=vWXrFetSH8w (The Cherno)
+VSTImGui
+
+- https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
+- https://github.com/noizebox/vstimgui
+
+ImGui Juce
+
+- https://github.com/Krasjet/imgui_juce
+- https://github.com/Krasjet/imgui_juce/blob/master/examples/mwe/src/ImGuiComponent.h
+
+The Cherno
+
+- https://www.youtube.com/watch?v=vWXrFetSH8w (ImGui Examples)
+- https://www.youtube.com/watch?v=5zS-DZhCA2g (Walnut)
+- https://www.youtube.com/watch?v=-NJDxf4XwlQ
+- https://www.youtube.com/watch?v=WIe-ewLxHSY
+- https://www.youtube.com/watch?v=5glH8dGoeCA (Setup Projects in Visual Studio)
 - https://github.com/TheCherno (Walnut and Hazel Engine are Dear ImGui example projects)
 - https://github.com/StudioCherno/Walnut
 
@@ -952,12 +966,9 @@ endif()
 Then in your main `CMakeLists.txt` add:
 
 ```cmake
-# ...
-
 add_subdirectory(libs/imgui)
 
 # ...
-
 target_link_libraries(VJi 
     PRIVATE
         # ...
