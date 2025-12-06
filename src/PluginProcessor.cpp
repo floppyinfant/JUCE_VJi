@@ -194,10 +194,10 @@ juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 {
     // return new PluginAudioProcessorEditor (*this);  // JUCE Default
     // return new PluginWebViewEditor (*this);         // WolfSound Tutorial
-    //return new ShaderEditor (*this);                  // <-- VJi
+    return new ShaderEditor (*this);                  // <-- VJi
     // return new OpenGLEditor (*this);                // medium.com Article
     //return new VisageEditor(*this);                  // GLSL GUI
-    return new ImGuiEditor(*this);                  // imgui_juce
+    //return new ImGuiEditor(*this);                  // imgui_juce
 }
 
 //==============================================================================

@@ -37,7 +37,9 @@ ImGuiEditor::ImGuiEditor (PluginAudioProcessor& p)
 {
     juce::ignoreUnused (processorRef);
 
+    // --------------------------------
     // ImGui
+    // --------------------------------
     addAndMakeVisible(imGuiComponent);
 
     // Make sure that before the constructor has finished, you've set the
@@ -53,6 +55,7 @@ ImGuiEditor::~ImGuiEditor()
 void ImGuiEditor::paint (juce::Graphics& g)
 {
     // don't use it for ImGui
+    juce::ignoreUnused (g);
 }
 
 void ImGuiEditor::resized()

@@ -21,6 +21,9 @@ private:
     // access the processor object that created it.
     PluginAudioProcessor& processorRef;
 
+    // --------------------------------
+    // ImGui
+    // --------------------------------
     ImGuiComponent imGuiComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ImGuiEditor)
