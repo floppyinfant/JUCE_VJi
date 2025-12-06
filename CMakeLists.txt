@@ -171,7 +171,9 @@ target_sources(VJi
         src/gui/medium/OpenGLEditor.cpp
         src/gui/medium/OpenGLComponent.cpp
         src/gui/visage/VisageEditor.cpp     # GUI using GLSL
+        src/gui/visage/VisageComponent.cpp
         src/gui/imgui/ImGuiEditor.cpp       # imgui_juce + imgui + Extensions (Node-Editor, ImPlot)
+        src/gui/imgui/ImGuiComponent.cpp
         src/gui/webview/WebViewEditor.cpp   # with React-native
         # --- GUI - modules, views, widgets, components ---
         src/gui/ViewController.cpp          # Design-Pattern: EventListener Callbacks etc.

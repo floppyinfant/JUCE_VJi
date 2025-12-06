@@ -5,6 +5,7 @@
 #ifndef VJI_IMGUIEDITOR_H
 #define VJI_IMGUIEDITOR_H
 
+#pragma once
 
 class ImGuiEditor {
 };

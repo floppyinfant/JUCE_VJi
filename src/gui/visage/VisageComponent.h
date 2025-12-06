@@ -6,7 +6,7 @@
 #define VJI_VISAGEVIEW_H
 
 
-class VisageView {
+class VisageComponent {
 };
 
 
