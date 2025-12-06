@@ -12,6 +12,20 @@ https://en.wikipedia.org/wiki/Standard_Template_Library (STL)
 
 https://en.wikipedia.org/wiki/Boost_(C%2B%2B_libraries) (Boost Library)
 
+## C++ Online Compiler
+
+https://godbolt.org/
+
+https://onecompiler.com/cpp
+
+https://www.programiz.com/cpp-programming/online-compiler/
+
+https://www.onlinegdb.com/online_c++_compiler
+
+https://www.w3schools.com/c/c_compiler.php
+
+https://cpp.sh/
+
 ## C++ Reference
 
 https://cppreference.com/
@@ -100,7 +114,7 @@ https://www.programiz.com/cpp-programming/online-compiler/ (Programiz Online-Com
 
 ---
 
-### C++ Standards
+## C++ Standards
 
 https://isocpp.org/std/the-standard
 
@@ -252,10 +266,12 @@ https://en.cppreference.com/w/cpp/standard_library.html
 #include <fstream>          // ifstream, ofstream (filestream)
 
 #include <functional>       // std::function, std::bind, lambda
-
+#include <utility>          // std::move
 #include <memory>           // std::unique_ptr, std::shared_ptr, std::weak_ptr
 #include <thread>           // std::thread
 #include <future>           // std::future, std::async
+#include <chrono>           // std::chrono::system_clock::now()
+#include <type_traits>      // static_assert
 
 #include <string>           // std::string, std::to_string, std::getline, std::stoi, ...
 #include <vector>           // std::vector
@@ -266,6 +282,7 @@ https://en.cppreference.com/w/cpp/standard_library.html
 
 
 // C-libraries for compatibility (have a '.h' at the end)
+#include <stdio.h>
 #include <string.h>
 
 

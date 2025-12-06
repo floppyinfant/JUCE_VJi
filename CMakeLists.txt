@@ -49,6 +49,10 @@ add_subdirectory(libs/juce)             # If you've put JUCE in a subdirectory c
 
 add_subdirectory(libs/visage)
 
+#add_subdirectory(libs/imgui)           # can not `git add libs/imgui/CMakeLists.txt` because imgui is a submodule ... so include a cmake-file
+include(cmake/imgui.cmake)              # create the library: add_library(imgui STATIC ...)
+add_subdirectory(libs/imgui_juce)
+
 # static linking
 # Add the pre-built visage library as an IMPORTED target
 #add_library(visage STATIC IMPORTED)
@@ -163,30 +167,32 @@ target_sources(VJi
         src/Parameters.cpp
         # --- Editors ---
         src/PluginEditor.cpp
-        src/gui/webview/WebViewEditor.cpp
-        src/gui/imgui/ImGuiEditor.cpp
-        src/gui/visage/VisageEditor.cpp
+        src/vj/ShaderEditor.cpp             # Main Editor / vj functionality
         src/gui/medium/OpenGLEditor.cpp
         src/gui/medium/OpenGLComponent.cpp
-        # --- Main Editor / vj functionality ---
-        src/vj/ShaderEditor.cpp
+        src/gui/visage/VisageEditor.cpp     # GUI using GLSL
+        src/gui/imgui/ImGuiEditor.cpp       # imgui_juce + imgui + Extensions (Node-Editor, ImPlot)
+        src/gui/webview/WebViewEditor.cpp   # with React-native
         # --- GUI - modules, views, widgets, components ---
-        src/gui/ViewController.cpp
-        src/gui/UI.cpp
-        src/gui/UICodeView.cpp
-        src/gui/UIParameterView.cpp
+        src/gui/ViewController.cpp          # Design-Pattern: EventListener Callbacks etc.
+        src/gui/UI.cpp                      # contains Menu Overlay
+        src/gui/UICodeView.cpp              # contains CodeEditor (UI)
+        src/gui/UIParameterView.cpp         # contains Parameter (UI)
         #src/gui/components/KeyboardComponent.cpp
         #src/gui/components/SynthComponent.cpp
         # --- Functionality ---
-        #src/sq/MidiProcessor.cpp
-        src/dsp/DspProcessor.cpp
+        #src/sq/MidiProcessor.cpp           # MIDI-Filter, Arpeggiator, Step-Sequencer
+        src/dsp/DspProcessor.cpp            # Audio-Effects
         #src/synth/
-
+        #ShaderEditor                       # Visual-Effects + GUI: OpenGL, GLSL, immediate mode GUI vs. retained mode
 )
 
 # ----------------------------------------------------------------------------
 
 # fi: include directory
+# don't include libraries (that have their own CMakeList.txt)
+# see CLion Project View > External Libraries > Header Search Paths
+
 # this translates to compiler flags like: "g++ -I/include main.cpp"
 target_include_directories(VJi
         PRIVATE
@@ -207,6 +213,8 @@ target_include_directories(VJi
 # linked automatically. If we'd generated a binary data target above, we would need to link to it
 # here too. This is a standard CMake command.
 
+# fi: add_subdirectory(libs/...) to execute their CMakeLists.txt (see above)
+
 target_link_libraries(VJi
     PRIVATE
         PluginData           # If we'd created a binary data target, we'd link to it here; fi
@@ -214,6 +222,8 @@ target_link_libraries(VJi
         juce::juce_opengl
         #sqlite3             # see README.md on how to add sqlite3 to CMakeLists.txt
         visage
+        imgui                # need to write your own CMakeLists.txt for imgui
+        imgui_impl_juce
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags

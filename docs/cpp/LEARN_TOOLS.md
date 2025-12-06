@@ -374,6 +374,38 @@ https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view
 
 ---
 
+Link against libraries added as git-submodules (when they have a CMakeLists.txt):
+
+```cmake
+add_subdirectory(libs/visage)
+target_link_libraries(VJi PRIVATE visage)
+```
+
+Link against pre-compiled libraries (static):
+
+```cmake
+# Add the pre-built visage library as an IMPORTED target
+add_library(visage STATIC IMPORTED)
+
+set_target_properties(visage PROPERTIES
+    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage/build/Debug/visage.lib"  # Adjust path as needed
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage"
+)
+# If you need release builds too:
+set_target_properties(visage PROPERTIES
+    IMPORTED_LOCATION_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage/build/Debug/visage.lib"
+    IMPORTED_LOCATION_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/libs/visage/build/Release/visage.lib"
+)
+
+target_link_libraries(VJi
+        PRIVATE
+        # ... other libraries
+        visage
+)
+```
+
+---
+
 ### Premake
 
 https://premake.github.io/
@@ -496,6 +528,8 @@ https://git-scm.com/book/en/v2
 
 @see Google Docs: Development 2025
 
+@see Github (learn, skills)
+
 #### Git Cheat Sheets
 - https://education.github.com/git-cheat-sheet-education.pdfhttps://education.github.com/git-cheat-sheet-education.pdf
 - https://git-scm.com/cheat-sheet
@@ -592,7 +626,7 @@ https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/propos
 
 #### Git Hosting Services
 
-Github
+##### Github
 - https://github.com/
 - Github Desktop
 - Github Copilot
@@ -602,25 +636,26 @@ Github
 - https://github.com/collections/learn-to-code
 - https://learn.github.com/
 - https://docs.github.com/en/get-started/start-your-journey/git-and-github-learning-resources
+- https://skills.github.com/
 - https://learn.microsoft.com/en-us/training/github/
 
-GitLab
+##### GitLab
 - https://about.gitlab.com/
 - https://about.gitlab.com/install/ (self-hosted)
 
-Bitbucket
+##### Bitbucket
 - https://bitbucket.org/product/
 
-Gitea (self-hosted)
+##### Gitea (self-hosted)
 - https://about.gitea.com/
 - https://github.com/go-gitea/gitea
 
-Gogs (self-hosted)
+##### Gogs (self-hosted)
 - https://gogs.io/
 
-AWS CodeCommit
+##### AWS CodeCommit
 
-Google Cloud Source Repositories
+##### Google Cloud Source Repositories
 
 ---
 

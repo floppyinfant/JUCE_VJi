@@ -84,8 +84,49 @@ git submodule add https://github.com/Krasjet/imgui_juce.git libs/imgui_juce
 
 # DSP
 #git submodule add https://github.com/electro-smith/DaisySP.git libs/DaisySP
-#git submodule add ... libs/...
 ```
+
+Link against the submodule libraries:
+
+```cmake
+add_subdirectory(libs/visage)
+target_link_libraries(VJi PRIVATE visage)
+```
+
+```cmake
+add_subdirectory(libs/imgui_juce)
+target_link_libraries(VJi PRIVATE imgui_impl_juce)
+
+# write a CMakeLists.txt file for imgui
+add_subdirectory(libs/imgui)
+target_link_libraries(VJi PRIVATE imgui)
+```
+
+Link against precompiled libraries:
+
+```cmake
+# TODO: compile imgui from source
+# Add the pre-built library as an IMPORTED target
+add_library(imgui STATIC IMPORTED)
+
+set_target_properties(imgui PROPERTIES 
+    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/libs/imgui/build/Debug/imgui.lib"
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libs/imgui"
+)
+
+# If you need release builds too:
+set_target_properties(sqlite3 PROPERTIES
+    IMPORTED_LOCATION_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/libs/imgui/build/Debug/imgui.lib"
+    IMPORTED_LOCATION_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/libs/imgui/build/Release/imgui.lib"
+)
+
+target_link_libraries(VJi PRIVATE
+        # ... other libraries
+        imgui
+)
+```
+
+---
 
 Working with git submodules:
 

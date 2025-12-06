@@ -274,6 +274,12 @@ DaisySP (DSP Library)
 
 https://github.com/electro-smith/DaisySP
 
+```shell
+git clone --recursive https://github.com/electro-smith/DaisySP.git
+cd DaisySP
+make
+```
+
 libDaisy (C++)
 
 https://github.com/electro-smith/libDaisy
@@ -649,6 +655,10 @@ https://faust.grame.fr/
 
 https://github.com/pichenettes/eurorack
 
+```shell
+git clone --recursive https://github.com/pichenettes/eurorack.git
+```
+
 https://pichenettes.github.io/mutable-instruments-documentation/
 
 https://pichenettes.github.io/mutable-instruments-documentation/modules/plaits/open_source/
@@ -675,6 +685,10 @@ https://vcvrack.com/AudibleInstruments
 
 https://github.com/VCVRack/AudibleInstruments
 
+```shell
+git clone --recursive https://github.com/VCVRack/AudibleInstruments.git
+```
+
 ---
 
 ### Blue Cat Audio - Plug'n Script (VST)
@@ -682,6 +696,10 @@ https://github.com/VCVRack/AudibleInstruments
 https://www.bluecataudio.com/Products/Product_PlugNScript/
 
 https://github.com/bluecataudio/plugnscript
+
+```shell
+git clone --recursive https://github.com/bluecataudio/plugnscript.git
+```
 
 ---
 
@@ -721,6 +739,14 @@ https://rackafx.wordpress.com/
 
 @see LEARN_LIBRARIES.md
 
+https://juce.com/learn/tutorials/
+
+Juce DemoRunner
+
+Awesome Juce
+
+https://github.com/sudara/awesome-juce
+
 ---
 
 ## Projects
@@ -757,8 +783,6 @@ https://juce.com/made-with-juce/matt-tytel-from-vital-audio/
 https://github.com/mtytel/vital
 
 https://forum.vital.audio/t/vital-vial-open-source-repository/9736
-
-Dexed
 
 Helm
 

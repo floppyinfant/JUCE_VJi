@@ -2,6 +2,14 @@
 
 ## LICENSES
 
+https://docs.github.com/de/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#disclaimer
+
+https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
+
+https://choosealicense.com/
+
+https://opensource.guide/legal/#which-open-source-license-is-appropriate-for-my-project
+
 Open Source Licenses for Commercial Products
 
 // by Claude 4.5 Sonnet, 2025-11-29
@@ -858,7 +866,22 @@ https://github.com/ocornut/imgui/tree/docking
 
 `git submodule add -b docking https://github.com/ocornut/imgui.git libs/imgui`
 
+https://github.com/ocornut/imgui/wiki
+
+### Extensions
+
+https://github.com/ocornut/imgui/wiki/Useful-Extensions
+
+#### ImPlot
+
+https://github.com/epezent/implot
+
+#### ImGui-Node-Editor
+
 https://github.com/thedmd/imgui-node-editor
+
+
+---
 
 What is immediate mode GUI vs. retained mode?
 
@@ -872,26 +895,33 @@ retained mode GUI
 
 https://youtu.be/LSRJ1jZq90k (CppCon)
 
-VSTImGui
+### VSTImGui
 
-- https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
-- https://github.com/noizebox/vstimgui
+https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
 
-ImGui Juce
+https://github.com/noizebox/vstimgui
 
-- https://github.com/Krasjet/imgui_juce
-- https://github.com/Krasjet/imgui_juce/blob/master/examples/mwe/src/ImGuiComponent.h
+uses GLFW
 
-The Cherno
+### imgui_juce (module)
 
-- https://www.youtube.com/watch?v=vWXrFetSH8w (ImGui Examples)
-- https://www.youtube.com/watch?v=5zS-DZhCA2g (Walnut)
-- https://www.youtube.com/watch?v=-NJDxf4XwlQ
-- https://www.youtube.com/watch?v=WIe-ewLxHSY
-- https://www.youtube.com/watch?v=5glH8dGoeCA (Setup Projects in Visual Studio)
+https://github.com/Krasjet/imgui_juce
+
+https://github.com/Krasjet/imgui_juce/blob/master/examples/mwe/src/ImGuiComponent.h
+
+### Walnut (The Cherno)
+
 - https://github.com/TheCherno (Walnut and Hazel Engine are Dear ImGui example projects)
 - https://github.com/StudioCherno/Walnut
 
+- https://www.youtube.com/watch?v=vWXrFetSH8w (ImGui Examples)
+- https://www.youtube.com/watch?v=5zS-DZhCA2g (Walnut uses Vulkan)
+- https://www.youtube.com/watch?v=-NJDxf4XwlQ
+- https://www.youtube.com/watch?v=WIe-ewLxHSY
+- https://www.youtube.com/watch?v=5glH8dGoeCA (Setup Projects in Visual Studio)
+- https://www.youtube.com/watch?v=WIe-ewLxHSY (How to Debug Graphics Issues)
+
+---
 
 Add ImGui to the Juce Project: 
 
@@ -976,12 +1006,6 @@ target_link_libraries(VJi
         # ...
 )
 ```
-
-### VSTImGui
-
-https://github.com/noizebox/vstimgui
-
-dead project ?
 
 ---
 

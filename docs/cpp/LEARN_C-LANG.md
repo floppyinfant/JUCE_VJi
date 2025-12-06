@@ -8,6 +8,14 @@
 
 ## Notes
 
+```c++
+#include <stdio.h>
+
+int main() {
+    printf("Hello %s\n", "World!");
+}
+```
+
 ### Pointers and Memory
 
 ```c++
