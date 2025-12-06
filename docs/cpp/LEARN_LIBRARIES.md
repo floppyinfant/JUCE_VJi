@@ -862,27 +862,6 @@ int main(int, char**) {
 
 @see GUI Libraries
 
-https://github.com/ocornut/imgui/tree/docking
-
-`git submodule add -b docking https://github.com/ocornut/imgui.git libs/imgui`
-
-https://github.com/ocornut/imgui/wiki
-
-### Extensions
-
-https://github.com/ocornut/imgui/wiki/Useful-Extensions
-
-#### ImPlot
-
-https://github.com/epezent/implot
-
-#### ImGui-Node-Editor
-
-https://github.com/thedmd/imgui-node-editor
-
-
----
-
 What is immediate mode GUI vs. retained mode?
 
 immediate mode GUI
@@ -895,37 +874,13 @@ retained mode GUI
 
 https://youtu.be/LSRJ1jZq90k (CppCon)
 
-### VSTImGui
+https://github.com/ocornut/imgui/tree/docking
 
-https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
+### Add ImGui to the Juce Project
 
-https://github.com/noizebox/vstimgui
+`git submodule add -b docking https://github.com/ocornut/imgui.git libs/imgui`
 
-uses GLFW
-
-### imgui_juce (module)
-
-https://github.com/Krasjet/imgui_juce
-
-https://github.com/Krasjet/imgui_juce/blob/master/examples/mwe/src/ImGuiComponent.h
-
-### Walnut (The Cherno)
-
-- https://github.com/TheCherno (Walnut and Hazel Engine are Dear ImGui example projects)
-- https://github.com/StudioCherno/Walnut
-
-- https://www.youtube.com/watch?v=vWXrFetSH8w (ImGui Examples)
-- https://www.youtube.com/watch?v=5zS-DZhCA2g (Walnut uses Vulkan)
-- https://www.youtube.com/watch?v=-NJDxf4XwlQ
-- https://www.youtube.com/watch?v=WIe-ewLxHSY
-- https://www.youtube.com/watch?v=5glH8dGoeCA (Setup Projects in Visual Studio)
-- https://www.youtube.com/watch?v=WIe-ewLxHSY (How to Debug Graphics Issues)
-
----
-
-Add ImGui to the Juce Project: 
-
-Create a new file libs/imgui/CMakeLists.txt:
+#### Create a new file libs/imgui/CMakeLists.txt
 
 Since you're using JUCE with OpenGL, you likely want imgui_impl_opengl3.cpp and possibly need to write a custom JUCE integration.
 
@@ -1006,6 +961,141 @@ target_link_libraries(VJi
         # ...
 )
 ```
+
+#### ... because imgui is a git submodule
+
+@see cmake/imgui.cmake
+
+If you want to add the CMakeLists.txt to the repo, you can only commit it to the submodule.
+
+To add it to the main repo, create a cmake-file and include it in the root CMakeLists.txt:
+
+```cmake
+set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/imgui)
+
+set(IMGUI_SOURCES
+        ${IMGUI_DIR}/imgui.cpp
+        ${IMGUI_DIR}/imgui_demo.cpp
+        ${IMGUI_DIR}/imgui_draw.cpp
+        ${IMGUI_DIR}/imgui_tables.cpp
+        ${IMGUI_DIR}/imgui_widgets.cpp
+)
+
+set(IMGUI_BACKEND_SOURCES
+        ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
+)
+
+add_library(imgui STATIC
+        ${IMGUI_SOURCES}
+        ${IMGUI_BACKEND_SOURCES}
+)
+
+target_include_directories(imgui PUBLIC
+        ${IMGUI_DIR}                # ${IMGUI_HEADERS}
+        ${IMGUI_DIR}/backends       # ${IMGUI_BACKEND_HEADERS}
+)
+
+# Link OpenGL if using OpenGL backend
+find_package(OpenGL REQUIRED)
+target_link_libraries(imgui PUBLIC OpenGL::GL)
+
+# Platform-specific linking
+if(WIN32)
+    target_link_libraries(imgui PUBLIC imm32)
+endif()
+```
+
+```cmake
+add_subdirectory(libs/juce)
+
+include(cmake/imgui.cmake)
+add_subdirectory(libs/imgui_juce)
+
+# ...
+
+target_link_libraries(VJi
+    PRIVATE
+        juce::juce_opengl
+        imgui
+        imgui_impl_juce
+        # ...
+)
+```
+
+---
+
+https://github.com/ocornut/imgui/wiki
+
+https://github.com/ocornut/imgui/wiki/Docking
+
+```c++
+ImGui::NewFrame();
+
+// -----------------------------------------------------------------------
+// imgui Docking
+// -----------------------------------------------------------------------
+
+// Create a dockspace in main viewport.
+// https://github.com/ocornut/imgui/wiki/Docking
+// enable `Demo > Configuration > Docking > io.ConfigFlags: Docking Enabled`
+ImGui::DockSpaceOverViewport();
+
+// -----------------------------------------------------------------------
+// imgui begin
+// -----------------------------------------------------------------------
+ImGui::Begin("Settings");
+//ImGui::Begin("window", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+ImGui::Button("Hello");
+ImGui::Text("Hello, world");
+ImGui::ShowDemoWindow();
+
+ImGui::End();
+// -----------------------------------------------------------------------
+// imgui end
+// -----------------------------------------------------------------------
+
+ImGui::Render();
+```
+
+### Extensions
+
+https://github.com/ocornut/imgui/wiki/Useful-Extensions
+
+#### ImPlot
+
+https://github.com/epezent/implot
+
+#### ImGui-Node-Editor
+
+https://github.com/thedmd/imgui-node-editor
+
+
+### VSTImGui
+
+https://youtu.be/-vXSmDAmXS8 (ADC - Audio Developers Conference; vstimgui)
+
+https://github.com/noizebox/vstimgui
+
+uses GLFW
+
+### imgui_juce (module)
+
+https://github.com/Krasjet/imgui_juce
+
+https://github.com/Krasjet/imgui_juce/blob/master/examples/mwe/src/ImGuiComponent.h
+
+### Walnut (The Cherno)
+
+- https://github.com/TheCherno (Walnut and Hazel Engine are Dear ImGui example projects)
+- https://github.com/StudioCherno/Walnut
+
+- https://www.youtube.com/watch?v=vWXrFetSH8w (ImGui Examples)
+- https://www.youtube.com/watch?v=5zS-DZhCA2g (Walnut uses Vulkan)
+- https://www.youtube.com/watch?v=-NJDxf4XwlQ
+- https://www.youtube.com/watch?v=WIe-ewLxHSY
+- https://www.youtube.com/watch?v=5glH8dGoeCA (Setup Projects in Visual Studio)
+- https://www.youtube.com/watch?v=WIe-ewLxHSY (How to Debug Graphics Issues)
 
 ---
 

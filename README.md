@@ -86,23 +86,31 @@ git submodule add https://github.com/Krasjet/imgui_juce.git libs/imgui_juce
 #git submodule add https://github.com/electro-smith/DaisySP.git libs/DaisySP
 ```
 
-Link against the submodule libraries:
+##### Link against submodule libraries
+
+Visage:
 
 ```cmake
 add_subdirectory(libs/visage)
 target_link_libraries(VJi PRIVATE visage)
 ```
 
+ImGui + juce_imgui (imgui_impl backend as juce module):
+
 ```cmake
 add_subdirectory(libs/imgui_juce)
 target_link_libraries(VJi PRIVATE imgui_impl_juce)
 
-# write a CMakeLists.txt file for imgui
-add_subdirectory(libs/imgui)
+# write a CMakeLists.txt file for imgui (can not add file to git because imgui is a submodule):
+#add_subdirectory(libs/imgui)
+#target_link_libraries(VJi PRIVATE imgui)
+
+# or write a cmake-file and include it (can be added to git):
+include(cmake/imgui.cmake)  # instead of add_subdirectory()
 target_link_libraries(VJi PRIVATE imgui)
 ```
 
-Link against precompiled libraries:
+##### Link against precompiled libraries
 
 ```cmake
 # TODO: compile imgui from source
@@ -128,7 +136,7 @@ target_link_libraries(VJi PRIVATE
 
 ---
 
-Working with git submodules:
+##### (Working with git submodules)
 
 ```shell
 # ----------------------------------------------------------------------------

@@ -1,11 +1,11 @@
 #include "PluginProcessor.h"
 
-#include "gui/imgui/ImGuiEditor.h"
 #include "PluginEditor.h"
-#include "gui/visage/VisageEditor.h"
 #include "vj/ShaderEditor.h"
-#include "gui/webview/WebViewEditor.h"
 #include "gui/medium/OpenGLEditor.h"
+#include "gui/visage/VisageEditor.h"
+#include "gui/imgui/ImGuiEditor.h"
+#include "gui/webview/WebViewEditor.h"
 
 
 //==============================================================================
@@ -192,12 +192,12 @@ bool PluginAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 {
-    //return new PluginAudioProcessorEditor (*this);  // JUCE Default
-    //return new PluginWebViewEditor (*this);         // WolfSound Tutorial
-    return new ShaderEditor (*this);                // <-- VJi
-    //return new OpenGLEditor (*this);                // medium.com Article
-    //return new ImGuiEditor(*this);
-    //return new VisageEditor(*this);
+    // return new PluginAudioProcessorEditor (*this);  // JUCE Default
+    // return new PluginWebViewEditor (*this);         // WolfSound Tutorial
+    //return new ShaderEditor (*this);                  // <-- VJi
+    // return new OpenGLEditor (*this);                // medium.com Article
+    //return new VisageEditor(*this);                  // GLSL GUI
+    return new ImGuiEditor(*this);                  // imgui_juce
 }
 
 //==============================================================================
