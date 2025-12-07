@@ -5,6 +5,8 @@
 
 // -----------------------------------------------------------------------
 
+#define MEDIUM_COM 0
+#define DEMORUNNER 1
 
 // -----------------------------------------------------------------------
 
@@ -30,25 +32,28 @@ private:
 
     void freeAllContextObjects()
     {
-        //*
         shape     .reset();
         shader    .reset();
         attributes.reset();
         uniforms  .reset();
         texture   .release();
-        //*/
     }
 
     OpenGLContext openGLContext;
-    //*
-    std::unique_ptr<OpenGLShaderProgram> shader;
+
+    std::unique_ptr<OpenGLShaderProgram> shader;  // shaderProgram
     std::unique_ptr<OpenGLUtils::Shape> shape;
     std::unique_ptr<OpenGLUtils::Attributes> attributes;
     std::unique_ptr<OpenGLUtils::Uniforms> uniforms;
     OpenGLTexture texture;
-    //*/
-    String vertexShaderCode;
-    String fragmentShaderCode;
+
+    String vertexShader;
+    String fragmentShader;
+
+    std::vector<OpenGLUtils::Vertex> vertexBuffer;
+    std::vector<unsigned int> indexBuffer;
+    GLuint vbo;
+    GLuint ibo;
 
     // --------------------------------
 

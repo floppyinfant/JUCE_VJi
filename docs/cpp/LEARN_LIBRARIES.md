@@ -552,7 +552,9 @@ private:
 
 ```
 
-### JUCE Tutorials
+### Tutorials
+
+#### JUCE Tutorials
 
 https://juce.com/learn/tutorials/
 
@@ -635,7 +637,9 @@ https://www.youtube.com/playlist?list=PLLgJJsrdwhPxBKE-bWNPj1oq8k_upTWsa (TheAud
 
 https://www.youtube.com/playlist?list=PLLgJJsrdwhPwR6a2nG8XRvBkXbnKcexlO (TheAudioProgrammer - Unreal MetaSound)
 
-### People
+### Projects, People and Code
+
+https://github.com/sudara/awesome-juce (Awesome JUCE Projects) <================
 
 The WolfSound
 
@@ -666,8 +670,6 @@ https://www.programmingformusicians.com/simpleeq/
 The Audio Programmer
 
 https://www.youtube.com/@TheAudioProgrammer
-
-### Libraries
 
 #### PluginGuiMagic
 
