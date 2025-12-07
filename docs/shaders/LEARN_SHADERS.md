@@ -170,7 +170,9 @@ Juce Documentation:
 - https://docs.juce.com/master/classjuce_1_1OpenGLImageType.html
 - https://docs.juce.com/master/classjuce_1_1OpenGLPixelFormat.html
 
-#### @see src/vj/ShderEditor.cpp
+#### 2D (OpenGLGraphicsContextCustomShader)
+
+@see src/vj/ShderEditor.cpp
 
 ```C++
 juce::OpenGLContext openGLContext;
@@ -197,11 +199,13 @@ std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix;
 projectionMatrix.reset(new OpenGLShaderProgram::Uniform(shaderProgram, "projectionMatrix"));
 ```
 
-#### @see src/gui/components/OpenGLComponent.cpp
+#### medium.com
 
-based on https://medium.com/@Im_Jimmi/using-opengl-for-2d-graphics-in-a-juce-plug-in-24aa82f634ff
+@see src/gui/medium/OpenGLComponent.cpp
 
-```C++
+https://medium.com/@Im_Jimmi/using-opengl-for-2d-graphics-in-a-juce-plug-in-24aa82f634ff
+
+```c++
 // Snippets
 --- GL ---
 juce::OpenGLContext openGLContext;
@@ -250,15 +254,17 @@ gl_FragColor = pixelAlpha * fragColor;
 
 ```
 
-#### Uniforms and other Code Snippets
+#### Juce Code Snippets
 
-```C++
+```c++
 #ifdef GL_ES
 precision mediump float;
 #endif
 ```
 
-```C++
+OpenGLHelpers
+
+```c++
 // --- OpenGLHelpers::getGLSLVersionString() ---
 if (getOpenGLVersion() >= Version (3, 2)) {
     #if JUCE_OPENGL_ES 
@@ -268,9 +274,21 @@ if (getOpenGLVersion() >= Version (3, 2)) {
 else {
     return "#version 110";
 }
+
+// --- OpenGLHelpers::translateVertexShaderToV3 ---
+code.replace ("attribute", "in");
+output.replace ("varying", "out");
+
+// --- OpenGLHelpers::translateFragmentShaderToV3 ---
+out vec4 fragColor;
+code.replace ("varying", "in")
+code.replace ("texture2D", "texture")
+code.replace ("gl_FragColor", "fragColor");
 ```
 
-```C++
+OpenGLGraphicsContext
+
+```c++
 // --- GLSL defined Attributes, Uniforms
 gl_Position
 gl_FragCoord
@@ -296,17 +314,6 @@ uniform vec4 gradientInfo;
 gradientPos
 uniform sampler2D imageTexture;
 uniform vec2 imageLimits;
-
-// --- juce_OpenGLHelpers.cpp  ---
-if (getOpenGLVersion() >= Version (3, 2))
-// --- OpenGLHelpers::translateVertexShaderToV3 ---
-code.replace ("attribute", "in");
-output.replace ("varying", "out");
-// --- OpenGLHelpers::translateFragmentShaderToV3 ---
-out vec4 fragColor;
-code.replace ("varying", "in")
-code.replace ("texture2D", "texture")
-code.replace ("gl_FragColor", "fragColor");
 ```
 
 ---

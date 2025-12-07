@@ -43,10 +43,11 @@ void ImGuiComponent::renderOpenGL()
     // imgui Docking
     // -----------------------------------------------------------------------
 
-    // Create a dockspace in main viewport.
+    // Example: imgui_demo.cpp/ShowExampleAppDockSpace(bool* p_open)
     // https://github.com/ocornut/imgui/wiki/Docking
-    // enable `Demo > Configuration > Docking > io.ConfigFlags: Docking Enabled`
-    ImGui::DockSpaceOverViewport();
+    // App: enable `Demo > Configuration > Docking > io.ConfigFlags: Docking Enabled`
+    ImGui::DockSpaceOverViewport(); // Create a dockspace in main viewport
+    //ImGui::DockSpaceOverViewport(0, nullptr, ImGuiDockNodeFlags_PassthruCentralNode); // Create a dockspace in main viewport, where central node is transparent.
 
     // -----------------------------------------------------------------------
     // imgui begin

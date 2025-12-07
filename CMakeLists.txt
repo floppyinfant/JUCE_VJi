@@ -150,7 +150,10 @@ juce_generate_juce_header(VJi)
 # static library. These source files can be of any kind (wav data, images, fonts, icons etc.).
 # Conversion to binary-data will happen when your target is built.
 
-juce_add_binary_data(PluginData SOURCES res/open-source.png)  # fi
+juce_add_binary_data(PluginData
+    SOURCES
+        res/open-source.png
+)  # fi
 
 # ----------------------------------------------------------------------------
 
@@ -170,6 +173,7 @@ target_sources(VJi
         src/vj/ShaderEditor.cpp             # Main Editor / vj functionality
         src/gui/medium/OpenGLEditor.cpp
         src/gui/medium/OpenGLComponent.cpp
+        src/gui/ogl/OpenGLComponent.cpp     # full OpenGLRenderer, ShaderProgram with VertexShader, Shape, Textures
         src/gui/visage/VisageEditor.cpp     # GUI using GLSL
         src/gui/visage/VisageComponent.cpp
         src/gui/imgui/ImGuiEditor.cpp       # imgui_juce + imgui + Extensions (Node-Editor, ImPlot)
@@ -199,6 +203,7 @@ target_sources(VJi
 target_include_directories(VJi
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/src
+            ${CMAKE_CURRENT_SOURCE_DIR}/libs/juce/examples/Assets
         PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}/includes
 )
