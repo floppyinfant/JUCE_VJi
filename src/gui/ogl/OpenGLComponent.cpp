@@ -35,10 +35,17 @@ OpenGLComponent::~OpenGLComponent() {
 void OpenGLComponent::paint (Graphics& g) {
     juce::ignoreUnused(g);
     //g.fillAll(juce::Colours::black);
+
+    // draw over OpenGL
+
 }
 
 void OpenGLComponent::resized() {
-    //Rectangle<int> bounds = getLocalBounds();
+    const ScopedLock lock (mutex);
+
+    bounds = getLocalBounds();
+    //controlsOverlay->setBounds (bounds);
+    draggableOrientation.setViewport (bounds);
 }
 
 // --------------------------------
@@ -96,7 +103,6 @@ void OpenGLComponent::renderOpenGL() {
     //shader->use();
     // set Uniforms
 
-    //*
 #if MEDIUM_COM
     // Medium.com
     openGLContext.extensions.glBindBuffer(gl::GL_ARRAY_BUFFER, vbo);
@@ -134,12 +140,149 @@ void OpenGLComponent::renderOpenGL() {
     openGLContext.extensions.glDisableVertexAttribArray(0);
     openGLContext.extensions.glDisableVertexAttribArray(1);
 #endif
-    //*/
+
+    // -----------------------------------------------------------------------
+
+#if OPENGL_APP_DEMO
+    using namespace ::juce::gl;
+    jassert (OpenGLHelpers::isContextActive());
+    OpenGLHelpers::clear (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+
+    auto desktopScale = (float) openGLContext.getRenderingScale();
+
+    glEnable (GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    {
+        const ScopedLock lock (mutex);
+        glViewport (0, 0,
+                    roundToInt (desktopScale * (float) bounds.getWidth()),
+                    roundToInt (desktopScale * (float) bounds.getHeight()));
+    }
+
+    shader->use();
+
+    if (uniforms->projectionMatrix != nullptr) {
+        uniforms->projectionMatrix->setMatrix4(getProjectionMatrix().mat, 1, false);
+    }
+
+    if (uniforms->viewMatrix != nullptr) {
+        uniforms->viewMatrix->setMatrix4(getViewMatrix().mat, 1, false);
+    }
+
+    shape->draw (*attributes);
+
+    // Reset the element buffers so child Components draw correctly
+    glBindBuffer (GL_ARRAY_BUFFER, 0);
+    glBindBuffer (GL_ELEMENT_ARRAY_BUFFER, 0);
+#endif
+
+    // -----------------------------------------------------------------------
+
+#if OPENGL_DEMO
+    using namespace ::juce::gl;
+
+        const ScopedLock lock (mutex);
+
+        jassert (OpenGLHelpers::isContextActive());
+
+        auto desktopScale = (float) openGLContext.getRenderingScale();
+
+        OpenGLHelpers::clear (getUIColourIfAvailable (LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
+                                                      Colours::lightblue));
+
+        if (textureToUse != nullptr)
+            if (! textureToUse->applyTo (texture))
+                textureToUse = nullptr;
+
+        // First draw our background graphics to demonstrate the OpenGLGraphicsContext class
+        if (doBackgroundDrawing)
+            drawBackground2DStuff (desktopScale);
+
+        updateShader();   // Check whether we need to compile a new shader
+
+        if (shader.get() == nullptr)
+            return;
+
+        // Having used the juce 2D renderer, it will have messed-up a whole load of GL state, so
+        // we need to initialise some important settings before doing our normal GL 3D drawing..
+        glEnable (GL_DEPTH_TEST);
+        glDepthFunc (GL_LESS);
+        glEnable (GL_BLEND);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glActiveTexture (GL_TEXTURE0);
+
+        if (! openGLContext.isCoreProfile())
+            glEnable (GL_TEXTURE_2D);
+
+        glViewport (0, 0,
+                    roundToInt (desktopScale * (float) bounds.getWidth()),
+                    roundToInt (desktopScale * (float) bounds.getHeight()));
+
+        texture.bind();
+
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+        shader->use();
+
+        if (uniforms->projectionMatrix != nullptr)
+            uniforms->projectionMatrix->setMatrix4 (getProjectionMatrix().mat, 1, false);
+
+        if (uniforms->viewMatrix != nullptr)
+            uniforms->viewMatrix->setMatrix4 (getViewMatrix().mat, 1, false);
+
+        if (uniforms->texture != nullptr)
+            uniforms->texture->set ((GLint) 0);
+
+        if (uniforms->lightPosition != nullptr)
+            uniforms->lightPosition->set (-15.0f, 10.0f, 15.0f, 0.0f);
+
+        if (uniforms->bouncingNumber != nullptr)
+            uniforms->bouncingNumber->set (bouncingNumber.getValue());
+
+        shape->draw (*attributes);
+
+        // Reset the element buffers so child Components draw correctly
+        glBindBuffer (GL_ARRAY_BUFFER, 0);
+        glBindBuffer (GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        if (! controlsOverlay->isMouseButtonDownThreadsafe())
+            rotation += (float) rotationSpeed;
+#endif
 }
 
 void OpenGLComponent::openGLContextClosing() {
     freeAllContextObjects();
 }
 
+void OpenGLComponent::freeAllContextObjects()
+{
+    shape     .reset();
+    shader    .reset();
+    attributes.reset();
+    uniforms  .reset();
+    texture   .release();
+}
+
 // -----------------------------------------------------------------------
 
+Matrix3D<float> OpenGLComponent::getProjectionMatrix() const
+{
+    const ScopedLock lock (mutex);
+
+    auto w = 1.0f / (scale + 0.1f);
+    auto h = w * bounds.toFloat().getAspectRatio (false);
+
+    return Matrix3D<float>::fromFrustum (-w, w, -h, h, 4.0f, 30.0f);
+}
+
+Matrix3D<float> OpenGLComponent::getViewMatrix() const
+{
+    const ScopedLock lock (mutex);
+
+    auto viewMatrix = Matrix3D<float>::fromTranslation ({ 0.0f, 1.0f, -10.0f }) * draggableOrientation.getRotationMatrix();
+    auto rotationMatrix = Matrix3D<float>::rotation ({ rotation, rotation, -0.3f });
+
+    return viewMatrix * rotationMatrix;
+}

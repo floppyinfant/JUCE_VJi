@@ -10,8 +10,10 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     if (auto *peer = getPeer())
         peer->setCurrentRenderingEngine(1);
 
-    //openGLContext.attachTo(*getTopLevelComponent());
+    // openGLContext.setOpenGLVersionRequired (OpenGLContext::openGL3_2);
     openGLContext.attachTo(*this);
+    //openGLContext.setSwapInterval(1);
+    openGLContext.setContinuousRepainting(true);
 
     // --------------------------------
     // statusLabel - shows shader compiler errors
@@ -259,6 +261,8 @@ void ShaderEditor::timerCallback(int id) {
 // ---------------------------------------------------------------------------
 
 // AnimatedAppComponent
+// https://juce.com/tutorials/tutorial_animation/
+// https://docs.juce.com/master/classjuce_1_1AnimatedAppComponent.html
 // juce_gui_extra/misc/juce_AnimatedAppComponent.h
 
 // Timer | MultiTimer
