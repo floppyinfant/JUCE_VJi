@@ -8,21 +8,6 @@
 
 ## CG Algorithms
 
-OpenGL
-- 3D models (mesh) -> Assimp Library
-- Textures
-- Buffers
-- Vertex Shaders (position)
-- Fragment Shaders (color)
-
----
-
-OpenPBR (Physically Based Rendering)
-- https://github.com/AcademySoftwareFoundation/OpenPBR
-- https://academysoftwarefoundation.github.io/OpenPBR/
-
----
-
 1. Ray Casting
 
 2. Ray Tracing
@@ -42,6 +27,41 @@ SDF
 - https://www.youtube.com/watch?v=NIpC53vesHo
 
 ---
+
+OpenPBR (Physically Based Rendering)
+- https://github.com/AcademySoftwareFoundation/OpenPBR
+- https://academysoftwarefoundation.github.io/OpenPBR/
+
+---
+
+## OpenGL
+
+Keywords:
+- Viewport
+- Projection Matrix
+- Model View Matrix
+- Shape: 3D models (mesh) -> Assimp Library
+- Shader Program
+  - Vertex Shaders (position)
+    - Attribute
+    - Varying
+  - Fragment Shaders (color)
+    - Uniforms
+    - Texture
+    - Sampler: sampler2D GL_TEXTURE_2D, samplerCube GL_TEXTURE_CUBE_MAP (HDRi)
+      - uniform sampler2D texture1;
+      - https://wikis.khronos.org/opengl/Sampler_(GLSL)
+    - Uniform Buffer Object (UBO)
+      - https://wikis.khronos.org/opengl/Uniform_Buffer_Object
+- Framebuffer Object (FBO)
+- Vertex Attrib Array
+  - openGLContext.extensions.glVertexAttribPointer()
+- Vertex Buffer Object (VBO)
+  - openGLContext.extensions.glGenBuffers(1, &vbo);
+  - openGLContext.extensions.glBindBuffer(gl::GL_ARRAY_BUFFER, vbo);
+  - openGLContext.extensions.glBufferData(...)
+- Index Buffer Object (IBO)
+  - openGLContext.extensions.glBindBuffer(gl::GL_ELEMENT_ARRAY_BUFFER, ibo);
 
 ---
 

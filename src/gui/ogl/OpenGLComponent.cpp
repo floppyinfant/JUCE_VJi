@@ -53,19 +53,20 @@ void OpenGLComponent::resized() {
 void OpenGLComponent::newOpenGLContextCreated() {
     freeAllContextObjects();
 
-    OpenGLUtils::Vertex ;
+    //OpenGLUtils::Vertex ;
 
-    //*
 #if MEDIUM_COM  // defined in header; set vert and frag code (strings) below
     // Medium.com
     openGLContext.extensions.glGenBuffers(1, &vbo);
     openGLContext.extensions.glGenBuffers(1, &ibo);
+
     vertexBuffer = {
         {{ 0.f, 0.5f, 0.f }, {}, { 1.f, 0.f, 0.f, 1.f }, {}},
         {{ 0.5f, -0.5f, 0.f }, {}, { 0.f, 1.f, 0.f, 1.f }, {}},
         {{ -0.5f, -0.5f, 0.f }, {}, { 0.f, 0.f, 1.f, 1.f }, {}}
     };
     indexBuffer = {0, 1, 2};
+
     openGLContext.extensions.glBindBuffer(gl::GL_ARRAY_BUFFER, vbo);
     openGLContext.extensions.glBufferData(
         gl::GL_ARRAY_BUFFER,                    // The type of data we're sending.
@@ -73,6 +74,7 @@ void OpenGLComponent::newOpenGLContextCreated() {
         vertexBuffer.data(),                    // A pointer to the actual data.
         gl::GL_STATIC_DRAW                      // How we want the buffer to be drawn.
     );
+
     openGLContext.extensions.glBindBuffer(gl::GL_ELEMENT_ARRAY_BUFFER, ibo);
     openGLContext.extensions.glBufferData(
         gl::GL_ELEMENT_ARRAY_BUFFER,
@@ -80,6 +82,8 @@ void OpenGLComponent::newOpenGLContextCreated() {
         indexBuffer.data(),
         gl::GL_STATIC_DRAW
     );
+
+    // --------------------------------
 
     vertexShader = R"()";   // get the shader (default) --- read from file
     fragmentShader = R"()"; // get the shader (default)
@@ -95,7 +99,6 @@ void OpenGLComponent::newOpenGLContextCreated() {
         jassertfalse;
     }
 #endif
-    //*/
 }
 
 void OpenGLComponent::renderOpenGL() {
