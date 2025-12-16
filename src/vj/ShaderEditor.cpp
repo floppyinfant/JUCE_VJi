@@ -92,7 +92,6 @@ void ShaderEditor::paint(juce::Graphics &g) {
     // -----------------------------------------------------------------------
     // shader is not set OR new shader code in editor
     // -----------------------------------------------------------------------
-
     if (shader.get() == nullptr || shader->getFragmentShaderCode() != shaderCode) {
         shader.reset();
 
@@ -114,7 +113,6 @@ void ShaderEditor::paint(juce::Graphics &g) {
             // -----------------------------
             // do once (not @60 fps)
             // -----------------------------
-
             g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::darkgrey);
             //g.fillCheckerBoard(getLocalBounds().toFloat(), 48.0f, 48.0f, juce::Colours::black, juce::Colours::black);
 
@@ -128,7 +126,6 @@ void ShaderEditor::paint(juce::Graphics &g) {
     // -----------------------------------------------------------------------
     // paint the shader
     // -----------------------------------------------------------------------
-
     if (shader.get() != nullptr) {
 
         // --------------------------------
