@@ -10,10 +10,15 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     if (auto *peer = getPeer())
         peer->setCurrentRenderingEngine(1);
 
-    // openGLContext.setOpenGLVersionRequired (OpenGLContext::openGL3_2);
+    // --------------------------------
+    // OpenGL
+    // --------------------------------
+    openGLContext.setOpenGLVersionRequired (OpenGLContext::openGL3_2);
+    openGLContext.setSwapInterval(1);  // 1: VSync; 2: VSync / 2 (=half fps)
+    openGLContext.setContinuousRepainting(true);  // should do the triggerRepaint
+    openGLContext.setComponentPaintingEnabled(true);
+    // openGLContext.setRenderer(this);  // must implement OpenGLRenderer
     openGLContext.attachTo(*this);
-    //openGLContext.setSwapInterval(1);
-    openGLContext.setContinuousRepainting(true);
 
     // --------------------------------
     // statusLabel - shows shader compiler errors
@@ -25,7 +30,6 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     // --------------------------------
     // Presets Selector
     // --------------------------------
-
     auto presets = ShaderPresets::getPresets();
 
     for (int i = 0; i < presets.size(); ++i) {
@@ -38,14 +42,12 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     presetBox.onChange = [this] { selectPreset(presetBox.getSelectedItemIndex()); };
     presetBox.setSelectedItemIndex(0);
 
-    // --------
-
     addAndMakeVisible(presetLabel);
     presetLabel.attachToComponent(&presetBox, true);
 
     // --------------------------------
-
     // Code Editor
+    // --------------------------------
     codeEditorComponent.setOpaque(false);
     codeDocument.addListener(this);
     codeEditorComponent.setColour(juce::CodeEditorComponent::backgroundColourId, juce::Colours::transparentBlack);
@@ -55,20 +57,18 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     addAndMakeVisible(codeEditorComponent);
 
     // --------------------------------
-
     // GUI
+    // --------------------------------
     uiOverlay = std::make_unique<UI>(this);
     addAndMakeVisible(*uiOverlay);
     //overlayUI->setBounds(getLocalBounds());
 
     // --------------------------------
-
     // init
+    // --------------------------------
     setFramesPerSecond(fps);
     isConverted = false;
     u_startTime = juce::Time::getMillisecondCounterHiRes() * 0.001f;
-
-    // --------
 
     // addKeyListener(eventListener);
     // setWantsKeyboardFocus (true);
@@ -253,7 +253,12 @@ void ShaderEditor::timerCallback(int id) {
         // AnimatedAppComponent
         ++totalUpdates;
         update();
+
+        ////////////////////////////////////
         repaint();
+        //openGLContext.triggerRepaint();
+        ////////////////////////////////////
+
         lastUpdateTime = Time::getCurrentTime();
     }
 }

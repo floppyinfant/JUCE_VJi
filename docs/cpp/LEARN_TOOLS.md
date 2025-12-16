@@ -196,23 +196,46 @@ https://learn.microsoft.com/en-us/cpp/cpp/welcome-back-to-cpp-modern-cpp?view=ms
 
 https://learn.microsoft.com/en-us/cpp/build/projects-and-build-systems-cpp?view=msvc-170
 
-MSVC toolset
+---
+
+**Keywords:**
+
+MSVC toolset (@see Toolchains)
 
 IntelliSense
 
-*.sln, *.vcxproj
+`*.sln, *.vcxproj`
 
-*.pdb
+`*.pdb`
 
-Configuration: Debug, Release
+Configuration: `Debug, Release`
 
 Project Properties: Includes, Link Libraries
 
 https://www.youtube.com/watch?v=or1dAmUO8k0&list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb (The Cherno - C++ - Using Libraries)
 
-Compiler Flags: -D (CMake options), -I (include directories), -L (library directories), -l (libraries), -std (C++ standard)
+Compiler Flags: 
 
+```
+-D      // CMake options
+-I      // include directories
+-L      // library directories
+-l      // libraries
+-std    // C++ standard
+```
 
+---
+
+Settings:
+
+Shortcuts:
+
+Adjust Editor Font Size:
+
+```
+Ctrl + Shift + .
+Ctrl + Shift + ,
+```
 
 ---
 
@@ -238,7 +261,17 @@ Compiler Flags: -D (CMake options), -I (include directories), -L (library direct
 
 ### VScode
 
+Microsoft Visual Studio Code
+
 https://code.visualstudio.com/docs/cpp/introvideos-cpp
+
+Shortcuts:
+
+```
+Ctrl + Shift + P    // Command Palette
+```
+
+---
 
 ### Sublime Text
 
@@ -259,13 +292,17 @@ C++ toolchain (build tools)
 
 ---
 
-### Microsoft Visual Studio
+### Microsoft Visual Studio Compiler
 
 https://learn.microsoft.com/en-us/visualstudio/ide/compiling-and-building-in-visual-studio?view=vs-2022
 
 https://learn.microsoft.com/en-us/cpp/build/projects-and-build-systems-cpp?view=msvc-170
 
-MSVC toolset, MSBuild , cl.exe
+MSVC toolset
+
+MSBuild
+
+cl.exe
 
 ---
 
@@ -291,7 +328,27 @@ https://en.wikipedia.org/wiki/GNU_Debugger
 
 https://gcc.gnu.org/
 
-gcc, g++.exe, GDB, make
+build-essential:
+
+gcc
+
+g++
+
+make
+
+libc6-dev
+
+dpkg-dev
+
+...
+
+GDB
+
+binutils (as, ld, objdump, nm, readelf)
+
+https://www.gnu.org/software/binutils/
+
+autotools
 
 #### MingGW
 
