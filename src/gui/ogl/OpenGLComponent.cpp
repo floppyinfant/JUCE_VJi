@@ -27,6 +27,8 @@ OpenGLComponent::OpenGLComponent() {
 }
 
 OpenGLComponent::~OpenGLComponent() {
+    //jassert (! openGLContext.isAttached());
+
     openGLContext.detach();
 }
 
@@ -51,6 +53,8 @@ void OpenGLComponent::resized() {
 // --------------------------------
 
 void OpenGLComponent::newOpenGLContextCreated() {
+    // initialize
+
     freeAllContextObjects();
 
     //OpenGLUtils::Vertex ;
@@ -102,6 +106,10 @@ void OpenGLComponent::newOpenGLContextCreated() {
 }
 
 void OpenGLComponent::renderOpenGL() {
+    // render
+    ++frameCounter;
+    jassert (OpenGLHelpers::isContextActive());
+
     OpenGLHelpers::clear(Colours::black);
     //shader->use();
     // set Uniforms
@@ -256,6 +264,8 @@ void OpenGLComponent::renderOpenGL() {
 }
 
 void OpenGLComponent::openGLContextClosing() {
+    // shutdown
+
     freeAllContextObjects();
 }
 

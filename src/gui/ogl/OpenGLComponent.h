@@ -49,11 +49,13 @@ public:
 
     // --------------------------------
 
+    // Component
     void paint (Graphics&) override;
     void resized() override;
 
     // --------------------------------
 
+    // OpenGLRenderer
     void newOpenGLContextCreated() override;
     void renderOpenGL() override;
     void openGLContextClosing() override;
@@ -66,20 +68,29 @@ private:
 
     Matrix3D<float> getViewMatrix() const;
 
-    OpenGLContext openGLContext;
+    // --------------------------------
 
-    std::unique_ptr<OpenGLShaderProgram> shader;  // shaderProgram
-    std::unique_ptr<OpenGLUtils::Shape> shape;
-    std::unique_ptr<OpenGLUtils::Attributes> attributes;
-    std::unique_ptr<OpenGLUtils::Uniforms> uniforms;
+    // OpenGL
+    OpenGLContext openGLContext;
+    // OpenGLRenderer (this)
+
+    // Vertex Struct (@see OpenGLUtilities.h)
+    // Vertex Data (Vertex Buffer Object, VBO)
+    std::unique_ptr<OpenGLUtils::Shape> shape;  // Mesh Data
     OpenGLTexture texture;
     //OpenGLUtils::DemoTexture* textureToUse = nullptr;
     //OpenGLUtils::DemoTexture* lastTexture  = nullptr;
 
-    String vertexShader;
-    String fragmentShader;
+    // Shaders | GLSL
+    std::unique_ptr<OpenGLShaderProgram> shader;  // shaderProgram
+    String vertexShader;  // Code (String)
+    String fragmentShader;  // Code (String)
     String newVertexShader;
     String newFragmentShader;
+    std::unique_ptr<OpenGLUtils::Attributes> attributes;
+    std::unique_ptr<OpenGLUtils::Uniforms> uniforms;
+
+    // --------------------------------
 
     // Medium.com
     std::vector<OpenGLUtils::Vertex> vertexBuffer;
@@ -87,6 +98,9 @@ private:
     GLuint vbo;
     GLuint ibo;
 
+    // --------------------------------
+
+    // OpenGLAppDemo (juce/examples/GUI)
     Rectangle<int> bounds;
     float scale = 0.5f;
     float rotation = 0.0f;
@@ -96,6 +110,11 @@ private:
     //BouncingNumber bouncingNumber;
     CriticalSection mutex;
     CriticalSection shaderMutex;
+
+    // --------------------------------
+
+    // Uniforms
+    int frameCounter = 0;
 
     // --------------------------------
     // more methods ...
