@@ -575,15 +575,14 @@ void ShaderEditor::mouseMagnify(const MouseEvent &event, float scaleFactor) {
 
 // -----------------------------------------------------------------------
 
-// juce::KeyListener
-// https://docs.juce.com/master/classjuce_1_1KeyListener.html
-// https://docs.juce.com/master/classjuce_1_1KeyPress.html
-// https://docs.juce.com/master/classjuce_1_1ModifierKeys.html
-
+// @see gui/UIController.h
 // keyPressed is called from the ComponentPeer (the actual OS window)
 // keyPressed requires that you setWantsKeyboardFocus(true) on the component
 // or manually grab focus with grabKeyboardFocus
 // https://melatonin.dev/blog/juce-component-mouse-and-keyboard/
+// https://docs.juce.com/master/classjuce_1_1KeyListener.html
+// https://docs.juce.com/master/classjuce_1_1KeyPress.html
+// https://docs.juce.com/master/classjuce_1_1ModifierKeys.html
 
 bool ShaderEditor::keyPressed(const KeyPress &key) {
     return AudioProcessorEditor::keyPressed(key);

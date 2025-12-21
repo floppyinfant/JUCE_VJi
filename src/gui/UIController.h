@@ -7,10 +7,26 @@
 #include "../PluginProcessor.h"
 
 /**
- * User Interface View Controller
- * MVC-Paradigm, Observer Pattern (notifyObservers())
+ * Event Loop, Event Handler (OnClick, ...), Action Listener (addListener), Callbacks
+ * https://juce.com/tutorials/tutorial_listeners_and_broadcasters/
+ * https://docs.juce.com/master/classjuce_1_1Button_1_1Listener.html
+ * https://docs.juce.com/master/classjuce_1_1KeyListener.html
+ * https://docs.juce.com/master/classjuce_1_1Component.html (MouseListener is extended by Component)
  *
- * Model, View, Controller (MVC)
+ * Parameters, APVTS (AudioProcessorValueTreeState), Properties
+ * https://juce.com/tutorials/tutorial_value_tree/
+ * https://docs.juce.com/master/classjuce_1_1ValueTree.html
+ * https://juce.com/tutorials/tutorial_audio_processor_value_tree_state/
+ * https://juce.com/tutorials/tutorial_audio_parameter/
+ *
+ * Event Dispatch Thread (EDT), Dispatcher
+ * https://docs.juce.com/master/classjuce_1_1AsyncUpdater.html (Async)
+ *
+ * --------------------------------------------------------------
+ *
+ * User Interface
+ *
+ * Model, View, Controller (MVC) Paradigm, Observer Pattern (notifyObservers())
  * https://de.wikipedia.org/wiki/Model_View_Controller
  * https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
  *
@@ -21,17 +37,16 @@
  * https://learn.microsoft.com/de-de/dotnet/architecture/maui/mvvm
  *
  * ViewController, UIViewController in Swift (iOS)
+ * https://docs.juce.com/master/classjuce_1_1UIViewComponent.html (UIViewComponent)
  * https://developer.apple.com/documentation/uikit/view-controllers
  * https://developer.apple.com/documentation/UIKit/UIViewController
- *
- * EventListener, ActionListener Callbacks
- * Event Dispatch Thread (EDT)
  */
-class ViewController : public juce::Component
+
+class UIController : public juce::Component //, public juce::KeyListener
 {
 public:
-    ViewController(PluginAudioProcessor&);
-    ~ViewController() override;
+    UIController(PluginAudioProcessor&);
+    ~UIController() override;
 
     // --------------------------------
 
@@ -64,5 +79,5 @@ private:
 
     // ===========================================================================
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ViewController)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UIController)
 };
