@@ -170,8 +170,9 @@ target_sources(VJi
         src/Parameters.cpp
         # --- Editors ---
         src/PluginEditor.cpp
+        #src/gui/custom/CustomSlider.cpp    # Juce Custom Component (Example)
         src/vj/ShaderEditor.cpp             # Main Editor / vj functionality
-        src/gui/medium/OpenGLEditor.cpp
+        src/gui/medium/OpenGLEditor.cpp     # OpenGL (Example)
         src/gui/medium/OpenGLComponent.cpp
         src/gui/ogl/OpenGLComponent.cpp     # full OpenGLRenderer, ShaderProgram with VertexShader, Shape, Textures
         src/gui/visage/VisageEditor.cpp     # GUI using GLSL
@@ -180,10 +181,11 @@ target_sources(VJi
         src/gui/imgui/ImGuiComponent.cpp
         src/gui/webview/WebViewEditor.cpp   # with React-native
         # --- GUI - modules, views, widgets, components ---
-        src/gui/ViewController.cpp          # Design-Pattern: EventListener Callbacks etc.
-        src/gui/UI.cpp                      # contains Menu Overlay
-        src/gui/UICodeView.cpp              # contains CodeEditor (UI)
-        src/gui/UIParameterView.cpp         # contains Parameter (UI)
+        src/gui/UI.cpp                      # contains Menu-Overlay
+        src/gui/UIController.cpp            # Event Handler, Listener, Callbacks etc.
+        src/gui/UICodeView.cpp              # contains CodeDocument-Editor (UI)
+        src/gui/UIParameterView.cpp         # contains Parameters (UI)
+        src/gui/UIPlaylistView.cpp          # contains Playlist (UI)
         #src/gui/components/KeyboardComponent.cpp
         #src/gui/components/SynthComponent.cpp
         # --- Functionality ---

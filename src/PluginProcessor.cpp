@@ -192,7 +192,8 @@ bool PluginAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 {
-    // return new PluginAudioProcessorEditor (*this);  // JUCE Default
+    // return new GenericAudioProcessorEditor(*this);  // control all parameters
+    // return new PluginAudioProcessorEditor (*this);  // JUCE Default (Components)
     // return new PluginWebViewEditor (*this);         // WolfSound Tutorial
     return new ShaderEditor (*this);                // <-- VJi
     // return new OpenGLEditor (*this);                // medium.com Article
