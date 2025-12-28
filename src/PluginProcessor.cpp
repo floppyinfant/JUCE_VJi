@@ -2,7 +2,6 @@
 
 #include "PluginEditor.h"
 #include "vj/ShaderEditor.h"
-#include "gui/medium/OpenGLEditor.h"
 #include "gui/visage/VisageEditor.h"
 #include "gui/imgui/ImGuiEditor.h"
 #include "gui/webview/WebViewEditor.h"
@@ -193,7 +192,7 @@ bool PluginAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 {
     // return new GenericAudioProcessorEditor(*this);  // control all parameters
-    // return new PluginAudioProcessorEditor (*this);  // JUCE Default (Components)
+    //return new PluginAudioProcessorEditor (*this);  // Editor (has Components)
     // return new PluginWebViewEditor (*this);         // WolfSound Tutorial
     return new ShaderEditor (*this);                // <-- VJi
     // return new OpenGLEditor (*this);                // medium.com Article

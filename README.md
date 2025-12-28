@@ -26,7 +26,7 @@ cd JUCE_VJi
 # git submodule update --init --recursive
 
 # ----------------------------------------------------------------------------
-# Install WebView2 (on Windows only using PowerShell):
+# Install WebView2 (on Windows only, using PowerShell)
 # ----------------------------------------------------------------------------
 Register-PackageSource -provider NuGet -name nugetRepository -location https://www.nuget.org/api/v2
 Install-Package Microsoft.Web.WebView2 -Scope CurrentUser -RequiredVersion 1.0.1901.177 -Source nugetRepository
@@ -53,7 +53,7 @@ Open the Projucer project file (VJi.juce) and export to Android Studio.
 
 ```shell
 # ----------------------------------------------------------------------------
-# Development of this repository
+# initialize git repository
 # ----------------------------------------------------------------------------
 # create local repo 
 git init .
@@ -88,19 +88,25 @@ git submodule add https://github.com/Krasjet/imgui_juce.git libs/imgui_juce
 
 ##### Link against submodule libraries
 
-Visage:
+###### Visage
 
 ```cmake
 add_subdirectory(libs/visage)
 target_link_libraries(VJi PRIVATE visage)
 ```
 
-ImGui + juce_imgui (imgui_impl backend as juce module):
+###### ImGui
+
+imgui_juce (imgui_impl_juce is the backend as a juce module):
 
 ```cmake
 add_subdirectory(libs/imgui_juce)
 target_link_libraries(VJi PRIVATE imgui_impl_juce)
+```
 
+Dear ImGui Library (has no CMakeLists.txt):
+
+```cmake
 # write a CMakeLists.txt file for imgui (can not add file to git because imgui is a submodule):
 #add_subdirectory(libs/imgui)
 #target_link_libraries(VJi PRIVATE imgui)
@@ -108,6 +114,84 @@ target_link_libraries(VJi PRIVATE imgui_impl_juce)
 # or write a cmake-file and include it (can be added to git):
 include(cmake/imgui.cmake)  # instead of add_subdirectory()
 target_link_libraries(VJi PRIVATE imgui)
+```
+
+cmake-file to compile ImGui:
+
+```cmake
+set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/imgui)
+
+# Core ImGui files
+set(IMGUI_SOURCES
+${IMGUI_DIR}/imgui.cpp
+${IMGUI_DIR}/imgui_demo.cpp
+${IMGUI_DIR}/imgui_draw.cpp
+${IMGUI_DIR}/imgui_tables.cpp
+${IMGUI_DIR}/imgui_widgets.cpp
+)
+
+set(IMGUI_HEADERS  # variable not used
+${IMGUI_DIR}/imgui.h
+${IMGUI_DIR}/imgui_internal.h
+${IMGUI_DIR}/imconfig.h
+${IMGUI_DIR}/imstb_rectpack.h
+${IMGUI_DIR}/imstb_textedit.h
+${IMGUI_DIR}/imstb_truetype.h
+)
+
+# Choose which backend(s) you need based on your rendering system
+# For OpenGL3 + your existing windowing system:
+set(IMGUI_BACKEND_SOURCES
+${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
+# ${IMGUI_DIR}/backends/imgui_impl_vulkan.cpp
+# ${IMGUI_DIR}/backends/imgui_impl_wgpu.cpp
+# ${IMGUI_DIR}/backends/imgui_impl_sdlgpu3_shaders.h
+# ${IMGUI_DIR}/backends/imgui_impl_metal.mm
+#
+# Add your platform backend:
+# ${IMGUI_DIR}/backends/imgui_impl_android.cpp
+# ${IMGUI_DIR}/backends/imgui_impl_win32.cpp    # Windows
+# ${IMGUI_DIR}/backends/imgui_impl_osx.mm       # macOS
+# ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp     # if using GLFW 
+# we will be using imgui_juce (imgui_impl_juce) as backend 
+)
+
+set(IMGUI_BACKEND_HEADERS  # variable not used
+${IMGUI_DIR}/backends/imgui_impl_opengl3.h
+${IMGUI_DIR}/backends/imgui_impl_opengl3_loader.h
+# ${IMGUI_DIR}/backends/imgui_impl_vulkan.h
+# ${IMGUI_DIR}/backends/imgui_impl_wgpu.h
+# ${IMGUI_DIR}/backends/imgui_impl_sdlgpu3_shaders.h
+# ${IMGUI_DIR}/backends/imgui_impl_metal.h
+#
+# Add corresponding headers:
+# ${IMGUI_DIR}/backends/imgui_impl_android.h
+# ${IMGUI_DIR}/backends/imgui_impl_win32.h
+# ${IMGUI_DIR}/backends/imgui_impl_osx.h
+# ${IMGUI_DIR}/backends/imgui_impl_glfw.h
+)
+
+# ----------------------------------------------------------------------------
+
+# Create the library
+add_library(imgui STATIC
+${IMGUI_SOURCES}
+${IMGUI_BACKEND_SOURCES}
+)
+
+target_include_directories(imgui PUBLIC
+${IMGUI_DIR}                # ${IMGUI_HEADERS}
+${IMGUI_DIR}/backends       # ${IMGUI_BACKEND_HEADERS}
+)
+
+# Link OpenGL if using OpenGL backend
+find_package(OpenGL REQUIRED)
+target_link_libraries(imgui PUBLIC OpenGL::GL)
+
+# Platform-specific linking
+if(WIN32)
+target_link_libraries(imgui PUBLIC imm32)
+endif()
 ```
 
 ##### Link against precompiled libraries

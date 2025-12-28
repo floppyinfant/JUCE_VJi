@@ -4,7 +4,7 @@
 #include <JuceHeader.h>
 #include "CustomSliderLookAndFeel.h"
 
-#include "../../../examples/juce/opengl/awesome/juce-midi-visualizer-AU-plugin/JuceLibraryCode/BinaryData.h"
+// -----------------------------------------------------------------------
 
 CustomSliderLookAndFeel::CustomSliderLookAndFeel() : LookAndFeel_V4()
 {
@@ -12,6 +12,8 @@ CustomSliderLookAndFeel::CustomSliderLookAndFeel() : LookAndFeel_V4()
     // initialise any special settings that your component needs.
     knobRelease = ImageCache::getFromMemory(BinaryData::knobRelease_png, BinaryData::knobRelease_pngSize);
 }
+
+// -----------------------------------------------------------------------
 
 void CustomSliderLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider)
 {
@@ -22,7 +24,7 @@ void CustomSliderLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int wi
             / (slider.getMaximum()
                 - slider.getMinimum());
 
-        const int frames = 256;
+        const int frames = 128;
         const int frameId = (int)ceil(rotation * ((double)frames - 1.0));
         const float radius = jmin(width / 1.0f, height / 1.0f);
         const float centerX = x + width * 0.5f;
@@ -45,11 +47,12 @@ void CustomSliderLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int wi
     }
 }
 
+// -----------------------------------------------------------------------
+
 void CustomSliderLookAndFeel::drawLabel(Graphics& g, Label& label)
 {
     g.setColour(Colour(uint8(255), 255, 255, 1.0f));
     g.fillRoundedRectangle(label.getLocalBounds().toFloat(), 3.0f);
-
 
     if (!label.isBeingEdited())
     {

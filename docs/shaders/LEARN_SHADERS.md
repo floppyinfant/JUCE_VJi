@@ -2,7 +2,7 @@
 
 ## Libraries, Frameworks, Tools
 
-@see LEARN_LIBRARIES.md
+@see [LEARN_LIBRARIES.md](../cpp/LEARN_LIBRARIES.md)
 
 ---
 
@@ -36,11 +36,23 @@ OpenPBR (Physically Based Rendering)
 
 ## OpenGL
 
+@see [LEARN_OPENGL.md](./LEARN_OPENGL.md)
+
 Keywords:
 - Viewport
 - Projection Matrix
 - Model View Matrix
 - Shape: 3D models (mesh) -> Assimp Library
+- Vertex Buffer Object (VBO)
+  - openGLContext.extensions.glGenBuffers(1, &vbo);
+  - openGLContext.extensions.glBindBuffer(gl::GL_ARRAY_BUFFER, vbo);
+  - openGLContext.extensions.glBufferData(...)
+- Index Buffer Object (IBO)
+  - openGLContext.extensions.glBindBuffer(gl::GL_ELEMENT_ARRAY_BUFFER, ibo);
+- Vertex Attrib Array
+  - openGLContext.extensions.glVertexAttribPointer()
+- Framebuffer Object (FBO)
+  - color, depth, stencil buffers
 - Shader Program
   - Vertex Shaders (position)
     - Attribute
@@ -53,15 +65,6 @@ Keywords:
       - https://wikis.khronos.org/opengl/Sampler_(GLSL)
     - Uniform Buffer Object (UBO)
       - https://wikis.khronos.org/opengl/Uniform_Buffer_Object
-- Framebuffer Object (FBO)
-- Vertex Attrib Array
-  - openGLContext.extensions.glVertexAttribPointer()
-- Vertex Buffer Object (VBO)
-  - openGLContext.extensions.glGenBuffers(1, &vbo);
-  - openGLContext.extensions.glBindBuffer(gl::GL_ARRAY_BUFFER, vbo);
-  - openGLContext.extensions.glBufferData(...)
-- Index Buffer Object (IBO)
-  - openGLContext.extensions.glBindBuffer(gl::GL_ELEMENT_ARRAY_BUFFER, ibo);
 
 ---
 

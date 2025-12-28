@@ -153,6 +153,9 @@ juce_generate_juce_header(VJi)
 juce_add_binary_data(PluginData
     SOURCES
         res/open-source.png
+        res/knobRelease.png
+        #res/ui/public/index.html
+        #res/assets/
 )  # fi
 
 # ----------------------------------------------------------------------------
@@ -170,15 +173,18 @@ target_sources(VJi
         src/Parameters.cpp
         # --- Editors ---
         src/PluginEditor.cpp
-        #src/gui/custom/CustomSlider.cpp    # Juce Custom Component (Example)
-        src/vj/ShaderEditor.cpp             # Main Editor / vj functionality
-        src/gui/medium/OpenGLEditor.cpp     # OpenGL (Example)
-        src/gui/medium/OpenGLComponent.cpp
+        src/gui/custom/CustomSlider.cpp    # Juce Custom Component (Example)
+        src/gui/custom/CustomSliderLookAndFeel.cpp
         src/gui/ogl/OpenGLComponent.cpp     # full OpenGLRenderer, ShaderProgram with VertexShader, Shape, Textures
+        # ---
+        src/vj/ShaderEditor.cpp             # Main Editor / vj functionality
+        # ---
         src/gui/visage/VisageEditor.cpp     # GUI using GLSL
         src/gui/visage/VisageComponent.cpp
+        # ---
         src/gui/imgui/ImGuiEditor.cpp       # imgui_juce + imgui + Extensions (Node-Editor, ImPlot)
         src/gui/imgui/ImGuiComponent.cpp
+        # ---
         src/gui/webview/WebViewEditor.cpp   # with React-native
         # --- GUI - modules, views, widgets, components ---
         src/gui/UI.cpp                      # contains Menu-Overlay

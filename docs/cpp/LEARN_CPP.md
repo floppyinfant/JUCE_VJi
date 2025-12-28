@@ -960,8 +960,171 @@ Generic Programming (GP): Templates, Type Traits, Metaprogramming
 
 ---
 
+## C++ Snippets
+
+### Reading Files
+
+JUCE
+
+https://juce.com/tutorials/tutorial_file_reading/
+
 ```c++
 
+```
+
+JUCE Demo
+
+https://github.com/juce-framework/JUCE/blob/master/examples/GUI/OpenGLDemo.h
+
+```c++
+// https://github.com/juce-framework/JUCE/blob/master/examples/GUI/OpenGLDemo.h#L175
+struct Shape
+{
+    Shape()
+    {
+        if (shapeFile.load (loadEntireAssetIntoString ("teapot.obj")).wasOk())
+            for (auto* s : shapeFile.shapes)
+                vertexBuffers.add (new VertexBuffer (*s));
+    }
+    // ...
+}
+
+// https://github.com/juce-framework/JUCE/blob/master/examples/Assets/WavefrontObjParser.h#L40
+Result load (const String& objFileContent)
+{
+    shapes.clear();
+    return parseObjFile (StringArray::fromLines (objFileContent));
+}
+
+// https://github.com/juce-framework/JUCE/blob/master/examples/Assets/DemoUtilities.h#L155
+inline String loadEntireAssetIntoString (const char* assetName)
+{
+    std::unique_ptr<InputStream> input (createAssetInputStream (assetName));
+
+    if (input == nullptr)
+        return {};
+
+    return input->readString();
+}
+
+// https://github.com/juce-framework/JUCE/blob/master/examples/Assets/DemoUtilities.h#L95
+inline std::unique_ptr<InputStream> createAssetInputStream (const char* resourcePath, [[maybe_unused]] AssertAssetExists assertExists = AssertAssetExists::yes)
+{
+  #if JUCE_ANDROID
+    ZipFile apkZip (File::getSpecialLocation (File::invokedExecutableFile));
+    const auto fileIndex = apkZip.getIndexOfFileName ("assets/" + String (resourcePath));
+
+    if (fileIndex == -1)
+    {
+        jassert (assertExists == AssertAssetExists::no);
+        return {};
+    }
+    return std::unique_ptr<InputStream> (apkZip.createStreamForEntry (fileIndex));
+  #else
+   #if JUCE_IOS
+    auto assetsDir = File::getSpecialLocation (File::currentExecutableFile).getSiblingFile ("Assets");
+   #elif JUCE_MAC
+    auto assetsDir = File::getSpecialLocation (File::currentExecutableFile).getParentDirectory().getSiblingFile ("Resources").getChildFile ("Assets");
+
+    if (! assetsDir.exists())
+        assetsDir = getExamplesDirectory().getChildFile ("Assets");
+   #else
+    auto assetsDir = getExamplesDirectory().getChildFile ("Assets");
+   #endif
+
+    auto resourceFile = assetsDir.getChildFile (resourcePath);
+
+    if (! resourceFile.existsAsFile())
+    {
+        jassert (assertExists == AssertAssetExists::no);
+        return {};
+    }
+
+    return resourceFile.createInputStream();
+  #endif
+}
+
+// https://github.com/juce-framework/JUCE/blob/master/modules/juce_core/files/juce_File.cpp#L744
+std::unique_ptr<FileInputStream> File::createInputStream() const
+{
+    auto fin = std::make_unique<FileInputStream> (*this);
+
+    if (fin->openedOk())
+        return fin;
+
+    return nullptr;
+}
+```
+
+The Cherno
+
+https://github.com/TheCherno/OpenGL/blob/master/OpenGL-Core/src/GLCore/Util/Shader.cpp
+
+```c++
+static std::string ReadFileAsString(const std::string& filepath)
+{
+    std::string result;
+    std::ifstream in(filepath, std::ios::in | std::ios::binary);
+    if (in)
+    {
+        in.seekg(0, std::ios::end);
+        result.resize((size_t)in.tellg());
+        in.seekg(0, std::ios::beg);
+        in.read(&result[0], result.size());
+        in.close();
+    }
+    else
+    {
+        LOG_ERROR("Could not open file '{0}'", filepath);
+    }
+
+    return result;
+}
+```
+
+https://github.com/ianacaburian/LiveShaderPalette/blob/master/Source/MainComponent.cpp
+
+```c++
+void MainComponent::collect_fragment_files()
+{
+    const auto get_shader_folder = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory)
+                                        .getChildFile(JUCEApplication::getInstance()->getApplicationName())
+                                        .getChildFile("CWD");
+    if (const auto result = get_shader_folder.createDirectory();
+        result.wasOk()) {
+        shader_folder = get_shader_folder;
+        refresh_fragment_folder();
+    }
+    else {
+        const auto error = String{ "Could not create a folder in your Documents folder! Error: " }
+                         + result.getErrorMessage();
+        AlertWindow::showMessageBoxAsync(AlertWindow::WarningIcon, "Load error", error);
+    }
+}
+void MainComponent::refresh_fragment_folder()
+{
+    auto refresh_fragment_files = [this]{
+        fragment_files.clear();
+        auto dir = DirectoryIterator{ shader_folder, true, "*.frag", File::findFiles };
+        while (dir.next()) {
+            fragment_files.push_back(dir.getFile());
+        }
+    };
+    if (openGLContext.isAttached()) {
+        refresh_fragment_files();
+        if (const auto num_fragments = static_cast<int>(fragment_files.size());
+            num_fragments) {
+            visit_panels([&, i = 0](auto& panel) mutable {
+                panel.load_shader_file(fragment_files[i % num_fragments]);
+                ++i;
+            });
+            recompile_shaders();
+        }
+    }
+    else {
+        refresh_fragment_files();
+    }
+}
 ```
 
 ---

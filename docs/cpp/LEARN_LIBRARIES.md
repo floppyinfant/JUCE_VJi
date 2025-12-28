@@ -177,6 +177,8 @@ Backends (Rendering APIs / Renderers)
 
 ### OpenGL
 
+@see [LEARN_OPENGL.md](../shaders/LEARN_OPENGL.md) for Examples
+
 https://www.khronos.org/opengl/
 
 https://registry.khronos.org/OpenGL-Refpages/
@@ -197,18 +199,20 @@ https://www.khronos.org/developers/books/
 
 https://wikis.khronos.org/opengl/
 
-Tutorials:
+#### OpenGL Tutorials
 
 https://learnopengl.com/ <==========
 
 https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2 (The Cherno - OpenGL)
+- https://github.com/TheCherno/OpenGL
+- https://github.com/TheCherno/Hazel
 - https://hazelengine.com/
 - https://github.com/StudioCherno
-- https://github.com/TheCherno/Hazel
 - https://github.com/TheChernoCommunity
 
 https://www.youtube.com/playlist?list=PLPaoO-vpZnumdcb4tZc4x5Q-v7CkrQ6M- (Victor Gordan)
 
+@see [LEARN_OPENGL.md](../shaders/LEARN_OPENGL.md)
 
 #### OpenGL ES
 
@@ -230,6 +234,10 @@ https://www.glfw.org/
 https://github.com/glfw/glfw
 
 https://en.wikipedia.org/wiki/GLFW
+
+Examples:
+- LearnOpenGL
+- TheCherno: OpenGL Series
 
 #### Glew
 
@@ -392,6 +400,31 @@ https://github.com/wxFormBuilder/wxFormBuilder
 ---
 
 ### Qt
+
+QT Creator
+
+https://en.wikipedia.org/wiki/Qt_Creator
+
+https://www.qt.io/development/tools
+
+https://doc.qt.io/qtcreator/
+
+https://github.com/qt-creator/qt-creator
+
+QT Designer
+
+QML Designer
+
+QML
+
+### GTK
+
+https://en.wikipedia.org/wiki/GTK
+
+Glade
+
+https://en.wikipedia.org/wiki/Glade_Interface_Designer
+
 
 ---
 
@@ -678,7 +711,7 @@ https://github.com/ffAudio/PluginGuiMagic
 
 https://github.com/ffAudio/foleys_gui_magic
 
-#### Make Custom Slider / Rotary
+#### Custom Slider / Rotary
 
 https://forum.juce.com/t/where-can-i-buy-professional-looking-ui-assets-for-my-plugins/40542 (See what is possible)
 
@@ -712,7 +745,6 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AulusSlider)
 };
 ```
-
 
 ```c++
 // AulusSlider.cpp
