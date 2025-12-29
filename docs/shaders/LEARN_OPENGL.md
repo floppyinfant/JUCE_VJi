@@ -214,11 +214,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 #### Hello Triangle indexed (EBO)
 
-Elemets Buffer Object (EBO) + VBO, VAO, AttribPointer, glUseProgram(shaderProgram):
+Elemets Buffer Object (EBO):
 - glGenBuffers(1, &EBO) 
 - glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO)
 - glBufferData()
 - glDrawElements()
+
+and VBO, VAO, AttribPointer, glUseProgram(shaderProgram)
 
 https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/1.getting_started/2.2.hello_triangle_indexed/hello_triangle_indexed.cpp
 
