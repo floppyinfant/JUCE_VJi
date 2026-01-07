@@ -255,7 +255,27 @@ git commit -m "Remove assimp submodule"
 ```shell
 mkdir examples
 cd examples
+```
 
+```shell
+git clone --recursive https://github.com/JoeyDeVries/LearnOpenGL.git
+# https://learnopengl.com/
+# https://learnopengl.com/book/book_pdf.pdf
+```
+
+```shell
+git clone --recursive https://github.com/patriciogonzalezvivo/thebookofshaders.git
+# https://thebookofshaders.com/
+```
+
+```shell
+git clone --recursive https://github.com/StudioCherno/WalnutAppTemplate.git
+# The Cherno YouTube Channel Serien on C++, OpenGL, Game Engine Development
+# This template uses Dear ImGUI ...
+```
+
+
+```shell
 git clone --recurse-submodules https://github.com/electro-smith/Daisy-JUCE-Example
 # has submodules DaisySP, Juce
 
@@ -267,7 +287,7 @@ cmake --build .  # or open the generated *.sln in Visual Studio
 ```
 
 ```shell
-git clone https://github.com/COx2/juce_meets_DaisySP.git
+git clone --recursive https://github.com/COx2/juce_meets_DaisySP.git
 # has submodules DaisySP, Juce
 ```
 
