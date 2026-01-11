@@ -259,6 +259,9 @@ cd examples
 
 ```shell
 git clone --recursive https://github.com/JoeyDeVries/LearnOpenGL.git
+mkdir build && cd build
+cmake ..
+#cmake --build .
 # https://learnopengl.com/
 # https://learnopengl.com/book/book_pdf.pdf
 ```

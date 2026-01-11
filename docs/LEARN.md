@@ -3,8 +3,21 @@
 - LEARN C++
 - LEARN Libraries
 - LEARN JUCE
-- LEARN Tools    // Jetbrains CLion, Visual Studio, CMake, ...
+- LEARN Tools    // Jetbrains IDE CLion, Visual Studio, CMake, git, WSL2, Docker ...
 - LEARN Shaders  // Starting with Computer Graphics, SDKs, Frameworks, ... GLSL, WebGPU
+
+More:
+- Languages: C++, CMake, C, Python, Linux Shell, JavaScript / Web Technologies
+- Domains: Audio, Graphics, DSP, VST / AU / CLAP
+- Bit-Math, LUT
+- Callbacks
+- Design Patterns
+- Plugin-Design (@SHADERed, @TheCherno Engine, @JUCE Modules)
+
+and more:
+- AI Code Assistant, AI Coding Agent, local AI (on-Premise)
+- DevOps, MLOps, CI/CD, Teams, Issues, Pull Requests, Documentation, Wiki, Marketing, Gamification, Customer Support
+- Monetarization
 
 ---
 

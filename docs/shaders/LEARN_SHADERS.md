@@ -1,4 +1,19 @@
-# LEARN
+# LEARN Shader Programming
+
+- GLSL (OpenGL Shading Language) for OpenGL and Vulkan
+- HLSL (High-Level Shading Language) for DirectX
+- MSL (Metal Shading Language)
+- WGSL (WebGPU Shading Language) for WebGPU
+- OSL for AutoDesk Arnold, Blender Cycles
+- Cg deprecated since 2012
+
+https://github.com/vanrez-nez/awesome-glsl
+
+https://github.com/terkelg/awesome-creative-coding
+
+https://github.com/toplap/awesome-livecoding
+
+---
 
 ## Libraries, Frameworks, Tools
 
@@ -26,9 +41,7 @@ SDF
 4. Path Tracing
 - https://www.youtube.com/watch?v=NIpC53vesHo
 
----
-
-OpenPBR (Physically Based Rendering)
+5. PBR (Physically Based Rendering)
 - https://github.com/AcademySoftwareFoundation/OpenPBR
 - https://academysoftwarefoundation.github.io/OpenPBR/
 
@@ -68,17 +81,7 @@ Keywords:
 
 ---
 
-## Shader Programming
-
-- GLSL (OpenGL Shading Language) for OpenGL and Vulkan
-- HLSL (High-Level Shading Language) for DirectX
-- MSL (Metal Shading Language)
-- WGSL (WebGPU Shading Language) for WebGPU
-- OSL for AutoDesk Arnold, Blender Cycles
-- Cg deprecated since 2012
-
-
-### OpenGL Shading Language (GLSL)
+## OpenGL Shading Language (GLSL)
 
 https://github.com/KhronosGroup/GLSL
 
@@ -94,12 +97,12 @@ https://github.com/g-truc/ogl-samples (Shaders in Data/)
 
 File Extensions: vert.glsl, frag.glsl, *.vert, *.frag, *.fs, *.vs, ... , *.geom, *.tesc, *.tese, *.comp, *.spv
 
-#### Tutorials
+### Tutorials
 - https://learnopengl.com/Getting-started/Shaders+
 - https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
 - https://wikis.khronos.org/opengl/Uniform_(GLSL)
 
-#### Uniforms, Attributes
+### Uniforms, Attributes
 - https://registry.khronos.org/OpenGL-Refpages/gl4/html/gl_FragCoord.xhtml
 
 ```c++
@@ -108,7 +111,7 @@ gl_FragCoord  // is in pixels from 0 .. screen_width, 0 .. screen_height
 gl_FragColor
 ```
 
-#### Example Code
+### Example Code
 
 ```c++
 // vertex shader
@@ -135,7 +138,7 @@ void main() {
 
 ---
 
-### Open Shading Language (OSL)
+## Open Shading Language (OSL)
 
 *.osl
 
@@ -151,7 +154,7 @@ https://www.youtube.com/watch?v=H8nHxRO7eX0 (CGMatter Fractals)
 
 ---
 
-### GLFW
+## GLFW
 
 https://www.glfw.org/
 
@@ -173,7 +176,7 @@ Examples:
 
 ---
 
-### Juce
+## Juce
 
 Code Examples:
 - DemoRunner/GUI/OpenGLDemo2D.h (OpenGLGraphicsContextCustomShader)
@@ -193,7 +196,7 @@ Juce Documentation:
 - https://docs.juce.com/master/classjuce_1_1OpenGLImageType.html
 - https://docs.juce.com/master/classjuce_1_1OpenGLPixelFormat.html
 
-#### 2D (OpenGLGraphicsContextCustomShader)
+### 2D (OpenGLGraphicsContextCustomShader)
 
 @see src/vj/ShderEditor.cpp
 
@@ -222,7 +225,7 @@ std::unique_ptr<OpenGLShaderProgram::Uniform> projectionMatrix;
 projectionMatrix.reset(new OpenGLShaderProgram::Uniform(shaderProgram, "projectionMatrix"));
 ```
 
-#### medium.com
+### medium.com
 
 @see src/gui/medium/OpenGLComponent.cpp
 
@@ -277,7 +280,7 @@ gl_FragColor = pixelAlpha * fragColor;
 
 ```
 
-#### Juce Code Snippets
+### Juce Code Snippets
 
 ```c++
 #ifdef GL_ES
@@ -341,7 +344,7 @@ uniform vec2 imageLimits;
 
 ---
 
-### openFrameworks
+## openFrameworks
 
 https://openframeworks.cc/learning/
 
@@ -360,7 +363,7 @@ shader.load("shadersGL3/shader");  // loads shader.frag and shader.vert from bin
 
 ---
 
-### Assimp
+## Assimp
 
 https://github.com/assimp/assimp
 
@@ -383,7 +386,7 @@ https://youtu.be/kfM-yu0iQBk (Freya Holmer - Unity)
 
 ---
 
-### ShaderToy
+## ShaderToy
 
 https://www.shadertoy.com/
 
@@ -397,6 +400,10 @@ https://www.youtube.com/watch?v=0ifChJ0nJfM (Tutorial linked by ShaderToy)
 
 https://shadertoyunofficial.wordpress.com/ (Tutorial linked by ShaderToy)
 
+https://iquilezles.org/articles/
+
+https://www.youtube.com/c/InigoQuilez
+
 Apps:
 - https://steamcommunity.com/sharedfiles/filedetails/?id=1726697188 (Wallpaper)
 - https://chromewebstore.google.com/detail/shadertoy-unofficial-plug/ohicbclhdmkhoabobgppffepcopomhgl (Chrome Extension)
@@ -404,12 +411,11 @@ Apps:
 - https://addons.mozilla.org/firefox/addon/shadertoy-unofficial-plugin/ (Firefox Extension)
 
 Tools (mentioned in the Tutorial):
-- https://iquilezles.org/articles/
 - https://iquilezles.org/articles/palettes/
 - http://dev.thi.ng/gradients
 - https://graphtoy.com/
 
-#### Uniforms
+### Uniforms
 
 - https://www.shadertoy.com/howto
 - @see ShaderToy Editor Help (? in the bottom left)
@@ -431,7 +437,7 @@ uniform vec4      iDate;                 // (year, month, day, time in seconds)
 
 ---
 
-### The Book of Shaders
+## The Book of Shaders
 
 https://thebookofshaders.com/
 
@@ -439,7 +445,7 @@ https://github.com/patriciogonzalezvivo/thebookofshaders
 
 https://meesrutten.github.io/book-of-shaders/
 
-#### Running Shaders
+### Running Shaders
 
 https://thebookofshaders.com/04/ 
 
@@ -457,7 +463,7 @@ https://github.com/patriciogonzalezvivo/glslViewer
 glslViewer yourShader.frag yourInputImage.png —w 500 -h 500 -E screenshot,yourOutputImage.png
 ```
 
-#### Uniforms
+### Uniforms
 
 - https://thebookofshaders.com/03/
 - https://github.com/patriciogonzalezvivo/ofxshader
@@ -473,7 +479,7 @@ uniform vec4 u_date;         // year, month, day and seconds
 
 ---
 
-### Interactive Shader Format (ISF)
+## Interactive Shader Format (ISF)
 
 https://isf.video/
 
@@ -501,7 +507,7 @@ https://github.com/msfeldstein/interactive-shader-format-js (JS / WebGL Library)
 
 https://github.com/headstash/synesthesia-scripts (ISF to Synesthesia Script Converter)
 
-#### Uniforms
+### Uniforms
 
 - https://docs.isf.video/quickstart.html#automatically-created-uniforms-and-variables-in-isf
 - https://docs.isf.video/ref_variables.html
@@ -519,7 +525,7 @@ gl_FragCoord
 
 ---
 
-### OpenProcessing
+## OpenProcessing
 
 https://openprocessing.org/
 
@@ -539,7 +545,7 @@ https://openprocessing.org/browse?time=anytime&type=tags&q=particle&offset=0#
 
 ---
 
-### Processing
+## Processing
 
 https://processing.org/
 
@@ -547,20 +553,20 @@ Java Mode
 
 Python Mode
 
-#### Py5
+### Py5
 based on Processing (needs Java)
 https://py5coding.org/
 https://github.com/py5coding/py5
 
 ---
 
-### p5.js
+## p5.js
 
 https://p5js.org/
 
 https://github.com/processing/p5.js/blob/main/contributor_docs/webgl_mode_architecture.md
 
-#### Tutorials and Documentation
+### Tutorials and Documentation
 
 https://p5js.org/tutorials/#webgl
 
@@ -568,7 +574,7 @@ https://p5js.org/tutorials/intro-to-shaders/
 
 https://p5js.org/reference/p5/p5.Shader/
 
-#### Uniforms
+### Uniforms
 
 https://p5js.org/reference/p5.Shader/setUniform/
 
@@ -594,7 +600,7 @@ attribute vec3 aVertexColor    // For fills, an optional per-vertex color
 // Materials
 ```
 
-#### Example Sketch
+### Example Sketch
 
 ```javascript
 function setup() {
@@ -609,21 +615,21 @@ function draw() {
 
 ---
 
-### Three.js
+## Three.js
 
 https://threejs.org/
 
 https://github.com/mrdoob/three.js
 
-#### Three.js Example: NASA Solar System
+### Three.js Example: NASA Solar System
 
 https://eyes.nasa.gov/apps/solar-system/#/home
 
 ---
 
-### Web APIs
+## Web APIs
 
-#### WebGL
+### WebGL
 
 https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
 
@@ -633,7 +639,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebGLProgram
 
 https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/uniform
 
-#### WebGPU
+### WebGPU
 
 https://developer.chrome.com/docs/web-platform/webgpu/overview
 
@@ -641,27 +647,27 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
 
 https://eliemichel.github.io/LearnWebGPU/basic-3d-rendering/shader-uniforms/a-first-uniform.html
 
-##### WGSL
+#### WGSL
 
 WebGPU Shading Language (WGSL)
 
 https://gpuweb.github.io/gpuweb/wgsl/
 
-#### WebAsm / WA
+### WebAsm / WA
 
 https://webassembly.org/ (WA)
 
-#### CSS3D
+### CSS3D
 
 ---
 
-### more Galleries, Links, ...
+## more Galleries, Links, ...
 
-#### GLSL Sandbox
+### GLSL Sandbox
 
 https://glslsandbox.com/
 
-##### Uniforms
+#### Uniforms
 
 - https://github.com/mrdoob/glsl-sandbox/blob/master/static/index.html
 
@@ -677,11 +683,11 @@ uniform sampler2D texture;
 backbuffer
 ```
 
-#### One Shader
+### One Shader
 
 https://oneshader.net/
 
-##### Uniforms
+#### Uniforms
 
 You can add adjustable uniforms to your shader by adding the following comment after the declaration of a uniform:
 
@@ -692,19 +698,19 @@ uniform float xxx; // value=y, min=y, max=y, step=y
 uniform vec3 xxx;  // value=x,y,z
 ```
 
-#### TurtleToy
+### TurtleToy
 
 https://turtletoy.net/
 
-#### OpenFrame
+### OpenFrame
 
 https://openframe.io/
 
 ---
 
-### Vertex Shader
+## Vertex Shader
 
-#### Vertex Shader Art
+### Vertex Shader Art
 
 https://www.vertexshaderart.com/
 
