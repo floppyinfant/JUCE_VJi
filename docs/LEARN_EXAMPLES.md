@@ -113,6 +113,8 @@ https://thewolfsound.com/resources/
 
 https://www.youtube.com/c/WolfSoundAudio
 
+https://www.youtube.com/@JUCElibrary/playlists
+
 https://www.youtube.com/watch?v=0ALLRitFE34&list=PLrJPU5Myec8Z-8gEj3kJdMfuuuWFbpy7D (Juce 8 WebViews Series)
 
 https://www.youtube.com/watch?v=Uq7Hwt18s3s (Juce + CMake Project Setup)

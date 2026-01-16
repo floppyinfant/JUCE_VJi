@@ -345,6 +345,8 @@ https://sqlite.org/cintro.html
 
 Microsoft Windows OS
 
+@see [LEARN_TOOLS.md](docs/cpp/LEARN_TOOLS.md)
+
 ---
 
 ### Jetbrains CLion

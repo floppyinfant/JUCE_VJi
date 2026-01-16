@@ -1,9 +1,9 @@
 # LEARN
 
 - [LEARN C++](cpp/LEARN_CPP.md)
+- [LEARN Tools](cpp/LEARN_TOOLS.md) like Jetbrains IDE CLion, Visual Studio, CMake, git, WSL2, etc.
 - [LEARN Libraries](cpp/LEARN_LIBRARIES.md)
 - LEARN JUCE Framework (@see [LEARN_LIBRARIES.md/JUCE](cpp/LEARN_LIBRARIES.md)), Audio Programming, [DSP](dsp/LEARN_DSP.md), GUI
-- [LEARN Tools](cpp/LEARN_TOOLS.md) like Jetbrains IDE CLion, Visual Studio, CMake, git, WSL2, Docker, etc.
 - [LEARN OpenGl](shaders/LEARN_OPENGL.md) Starting with Computer Graphics, SDKs, Frameworks
 - [LEARN Shaders](shaders/LEARN_SHADERS.md) GPU Programming, Shader Languages, ShaderToy, ... GLSL, WebGPU
 
