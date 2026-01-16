@@ -1,23 +1,26 @@
 # LEARN
 
-- LEARN C++
-- LEARN Libraries
-- LEARN JUCE
-- LEARN Tools    // Jetbrains IDE CLion, Visual Studio, CMake, git, WSL2, Docker ...
-- LEARN Shaders  // Starting with Computer Graphics, SDKs, Frameworks, ... GLSL, WebGPU
+- [LEARN C++](cpp/LEARN_CPP.md)
+- [LEARN Libraries](cpp/LEARN_LIBRARIES.md)
+- LEARN JUCE Framework (@see [LEARN_LIBRARIES.md/JUCE](cpp/LEARN_LIBRARIES.md)), Audio Programming, [DSP](dsp/LEARN_DSP.md), GUI
+- [LEARN Tools](cpp/LEARN_TOOLS.md) like Jetbrains IDE CLion, Visual Studio, CMake, git, WSL2, Docker, etc.
+- [LEARN OpenGl](shaders/LEARN_OPENGL.md) Starting with Computer Graphics, SDKs, Frameworks
+- [LEARN Shaders](shaders/LEARN_SHADERS.md) GPU Programming, Shader Languages, ShaderToy, ... GLSL, WebGPU
 
 More:
-- Languages: C++, CMake, C, Python, Linux Shell, JavaScript / Web Technologies
+- Languages: C++, CMake, [C Language](cpp/LEARN_C_LANG.md), Python, Linux Shell, JavaScript / Web Technologies
 - Domains: Audio, Graphics, DSP, VST / AU / CLAP
 - Bit-Math, LUT
 - Callbacks
-- Design Patterns
+- [Design Patterns](cpp/LEARN_SOFTWARE_ENGINEERING.md)
 - Plugin-Design (@SHADERed, @TheCherno Engine, @JUCE Modules)
 
 and more:
 - AI Code Assistant, AI Coding Agent, local AI (on-Premise)
 - DevOps, MLOps, CI/CD, Teams, Issues, Pull Requests, Documentation, Wiki, Marketing, Gamification, Customer Support
 - Monetarization
+
+@see [LEARN by Example](LEARN_EXAMPLES.md)
 
 ---
 
@@ -114,4 +117,10 @@ iQuilez
 
 The Book of Shaders
 - https://thebookofshaders.com/
+
+---
+
+# Examples
+
+@see [LEARN_EXAMPLES.md](LEARN_EXAMPLES.md)
 

@@ -12,7 +12,7 @@ made with JUCE Framework
 
 ## Terminal Commands
 
-### User
+### Usage
 
 ```shell
 # ----------------------------------------------------------------------------
@@ -49,7 +49,11 @@ Open the Projucer project file (VJi.juce) and export to Android Studio.
 
 ---
 
-### Developer
+---
+
+### Development
+
+log of the journey / remember what I did
 
 ```shell
 # ----------------------------------------------------------------------------
@@ -255,57 +259,10 @@ git commit -m "Remove assimp submodule"
 ```shell
 mkdir examples
 cd examples
+# git clone --recursive ...
 ```
 
-```shell
-git clone --recursive https://github.com/JoeyDeVries/LearnOpenGL.git
-mkdir build && cd build
-cmake ..
-#cmake --build .
-# https://learnopengl.com/
-# https://learnopengl.com/book/book_pdf.pdf
-```
-
-```shell
-git clone --recursive https://github.com/patriciogonzalezvivo/thebookofshaders.git
-# https://thebookofshaders.com/
-```
-
-```shell
-git clone --recursive https://github.com/StudioCherno/WalnutAppTemplate.git
-# The Cherno YouTube Channel Serien on C++, OpenGL, Game Engine Development
-# This template uses Dear ImGUI ...
-```
-
-
-```shell
-git clone --recurse-submodules https://github.com/electro-smith/Daisy-JUCE-Example
-# has submodules DaisySP, Juce
-
-cd Daisy-JUCE-Example/plugin
-mkdir build
-cd build
-cmake ..
-cmake --build .  # or open the generated *.sln in Visual Studio
-```
-
-```shell
-git clone --recursive https://github.com/COx2/juce_meets_DaisySP.git
-# has submodules DaisySP, Juce
-```
-
-```shell
-git clone --recursive https://github.com/noizebox/vstimgui.git
-# has submodules imgui, glfw
-```
-
-```shell
-# dead project
-git clone --recursive https://github.com/JoshMarler/react-juce.git
-```
-
-```shell
-```
+@see [LEARN_EXAMPLES.md](docs/LEARN_EXAMPLES.md)
 
 ---
 
@@ -382,9 +339,11 @@ https://sqlite.org/cintro.html
 
 ---
 
+---
+
 ## Development Environment
 
-Microsoft Windows
+Microsoft Windows OS
 
 ---
 
@@ -526,7 +485,9 @@ perf list
 
 ---
 
-### Visual Studio 2022 (compiler / toolchain: MSVC, cl.exe)
+### Visual Studio 2022
+
+compiler, toolchain: MSVC, cl.exe
 
 https://visualstudio.microsoft.com/vs/features/cplusplus/
 
@@ -569,6 +530,14 @@ SDK Manager
 - SDK Platforms (Android 8 / API 26, Android 12 / API 31)
 - SDK Tools (NDK, CMake, Emulator)
 - AVD, ADB
+
+---
+
+### RenderDoc
+
+https://renderdoc.org/
+
+Debugging OpenGL Graphics Pipeline
 
 ---
 
