@@ -742,3 +742,55 @@ Jenkins
 
 ---
 
+## Debugging and Profiling
+
+Debugger
+
+### GDB
+
+### LLDB
+
+### RenderDoc
+
+https://renderdoc.org/
+
+https://github.com/baldurk/renderdoc
+
+https://www.youtube.com/watch?v=EMFG5wmng-M&list=PLWziqE5d25dXo1IE150YJiPT9EIW8ymta
+
+Debugging OpenGL Graphics Pipeline
+
+---
+
+Profiler
+
+### CLion
+
+https://www.jetbrains.com/help/clion/cpu-profiler.html
+
+### Perf
+
+https://perfwiki.github.io/main/
+
+https://en.wikipedia.org/wiki/Perf_(Linux)
+
+https://github.com/KDAB/hotspot (perf GUI)
+
+Linux / WSL2 Profiler
+
+### Valgrind
+
+https://valgrind.org/
+
+https://de.wikipedia.org/wiki/Valgrind
+
+### Visual Studio Profiler
+
+https://learn.microsoft.com/en-us/visualstudio/profiling/profiling-feature-tour?view=visualstudio&pivots=programming-language-cpp
+
+### Tracy
+
+https://github.com/wolfpld/tracy/
+
+---
+

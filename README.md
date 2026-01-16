@@ -539,6 +539,10 @@ SDK Manager
 
 https://renderdoc.org/
 
+https://github.com/baldurk/renderdoc
+
+https://www.youtube.com/watch?v=EMFG5wmng-M&list=PLWziqE5d25dXo1IE150YJiPT9EIW8ymta
+
 Debugging OpenGL Graphics Pipeline
 
 ---
