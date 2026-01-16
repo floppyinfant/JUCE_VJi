@@ -92,6 +92,8 @@ Beautiful C++: 30 Core Guidelines for Writing Clean, Safe, and Fast Code, 2021
 
 Modern CMake for C++: Effortlessly build cutting-edge C++ code and deliver high-quality solutions, 2024
 
+---
+
 ## C++ Tutorials
 
 https://www.youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb (The Cherno - C++)
@@ -103,6 +105,22 @@ https://www.youtube.com/watch?v=8jLOx1hD3_o (C++ in 31 hours)
 https://www.youtube.com/watch?v=_apAsU9ROp0 (C++ in 60 minutes, deutsch)
 
 https://www.youtube.com/user/CppCon/videos (CppCon)
+
+---
+
+Jason Turner
+
+https://www.youtube.com/@cppweekly
+
+https://github.com/lefticus
+
+https://github.com/cpp-best-practices/cppbestpractices
+
+https://lefticus.gitbooks.io/cpp-best-practices/content/ (C++ Best Practices)
+
+https://articles.emptycrate.com/about.html
+
+https://leanpub.com/u/jason_turner
 
 ---
 
