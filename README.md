@@ -487,6 +487,27 @@ perf list
 
 ---
 
+### CMake
+
+https://cmake.org/
+
+https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html
+
+https://github.com/juce-framework/JUCE/blob/master/docs/CMake%20API.md
+
+https://melatonin.dev/blog/how-to-use-cmake-with-juce/
+
+https://thewolfsound.com/how-to-build-audio-plugin-with-juce-cpp-framework-cmake-and-unit-tests/
+
+### git
+
+https://git-scm.com/
+
+- Git Bash (for Windows)
+- Github Desktop
+
+---
+
 ### Visual Studio 2022
 
 compiler, toolchain: MSVC, cl.exe
@@ -498,29 +519,13 @@ Profiler:
 
 ---
 
-### CMake
-
-https://cmake.org/
-
----
-
-### git
-
-https://git-scm.com/
-
-Git Bash (for Windows)
-
-(Github Desktop)
-
----
-
-### JUCE
+### JUCE Projucer
 
 https://juce.com/
 
-Projucer (for Android Export), DemoRunner, AudioPluginHost
-
----
+- Projucer (used for Android Export)
+- DemoRunner (view examples in action)
+- AudioPluginHost
 
 ### Android Studio
 
@@ -531,7 +536,8 @@ https://developer.android.com/build/jdks
 SDK Manager
 - SDK Platforms (Android 8 / API 26, Android 12 / API 31)
 - SDK Tools (NDK, CMake, Emulator)
-- AVD, ADB
+- AVD
+- ADB
 
 ---
 
@@ -547,19 +553,13 @@ Debugging OpenGL Graphics Pipeline
 
 ---
 
----
-
-### Terminal
-
-cmd.exe
-
-(Powershell)
-
 ### WSL2
 
-Bash / Shell
+- Bash / Shell, Ubuntu Linux
 
-Ubuntu Linux
+used for Perf Profiling on Windows
+
+---
 
 ### Docker
 
@@ -577,11 +577,11 @@ https://docs.astral.sh/uv/
 
 https://www.anaconda.com/
 
-Jetbrains PyCharm, Jupyter, Anaconda, Python, uv
+- Jetbrains PyCharm
+- Jupyter
+- Anaconda
+- Python venv
+- uv
 
 ---
-
-### Kodelife
-
-https://hexler.net/kodelife/manual/introduction
 
