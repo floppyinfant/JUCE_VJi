@@ -66,7 +66,7 @@ ShaderEditor::ShaderEditor(PluginAudioProcessor &p)
     // --------------------------------
     // init
     // --------------------------------
-    setFramesPerSecond(fps);
+    setFramesPerSecond(fps); // starts a timer in updateSync()
     isConverted = false;
     u_startTime = juce::Time::getMillisecondCounterHiRes() * 0.001f;
 
@@ -288,7 +288,7 @@ void ShaderEditor::updateSync() {
         const auto timerInterval = 1000 / framesPerSecond;
 
         if (getTimerInterval(TIMER_ANIMATION) != timerInterval)
-            startTimer(TIMER_ANIMATION, timerInterval);
+            startTimer(TIMER_ANIMATION, timerInterval);  // <================ Timer @fps
     }
 }
 

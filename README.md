@@ -553,11 +553,15 @@ Debugging OpenGL Graphics Pipeline
 
 ---
 
-### WSL2
+### VScode
 
-- Bash / Shell, Ubuntu Linux
+https://vscode.dev/
 
-used for Perf Profiling on Windows
+cmd
+
+```shell
+code .
+```
 
 ---
 
@@ -566,6 +570,14 @@ used for Perf Profiling on Windows
 https://www.docker.com/
 
 https://docs.docker.com/desktop/windows/wsl/
+
+### WSL2
+
+- Bash / Shell, Ubuntu Linux
+
+used for Perf Profiling on Windows
+
+---
 
 ### Python
 
@@ -584,4 +596,6 @@ https://www.anaconda.com/
 - uv
 
 ---
+
+SSH, VNC, RDP, VPN ... Home Lab (On Premises)
 
