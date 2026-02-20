@@ -744,11 +744,13 @@ Jenkins
 
 ## Debugging and Profiling
 
-Debugger
-
 ### GDB
 
+GNU Debugger
+
 ### LLDB
+
+---
 
 ### RenderDoc
 
@@ -758,13 +760,19 @@ https://github.com/baldurk/renderdoc
 
 https://www.youtube.com/watch?v=EMFG5wmng-M&list=PLWziqE5d25dXo1IE150YJiPT9EIW8ymta
 
-Debugging OpenGL Graphics Pipeline
+Debugging the Graphics Pipeline (OpenGL, Vulkan, DirectX)
+
+### Nvidia Nsight
+
+https://developer.nvidia.com/nsight-systems
+
+https://developer.nvidia.com/tools-overview
+
+https://developer.nvidia.com/nsight-graphics
 
 ---
 
-Profiler
-
-### CLion
+### CLion Profiler
 
 https://www.jetbrains.com/help/clion/cpu-profiler.html
 

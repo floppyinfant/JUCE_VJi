@@ -192,10 +192,10 @@ bool PluginAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* PluginAudioProcessor::createEditor()
 {
     // return new GenericAudioProcessorEditor(*this);  // control all parameters
-    //return new PluginAudioProcessorEditor (*this);  // Editor (has Components)
+    //return new PluginEditor (*this);                 // Editor (has Components) with CustomSlider
     // return new PluginWebViewEditor (*this);         // WolfSound Tutorial
     return new ShaderEditor (*this);                // <-- VJi
-    // return new OpenGLEditor (*this);                // medium.com Article
+    // return new OpenGLEditor (*this);                // medium.com Article --> moved to examples/juce/opengl
     // return new                                      // gui/ogl/*Component
     // return new VisageEditor(*this);                 // GLSL GUI
     // return new ImGuiEditor(*this);                  // imgui_juce
