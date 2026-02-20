@@ -12,7 +12,7 @@ made with JUCE Framework
 
 ## Terminal Commands
 
-### Usage
+### Usage of Repository
 
 ```shell
 # ----------------------------------------------------------------------------
@@ -45,15 +45,19 @@ To build the Android APK:
 
 Open the Projucer project file (VJi.juce) and export to Android Studio.
 
+You can compile the Projucer from source `libs/juce/extras/Projucer/` using its `CMakeLists.txt` file or download the latest Projucer from https://juce.com/download/
+
+Then you will need to install Android Studio (plus Android SDK and Tools) from https://developer.android.com/studio. The Android Studio Setup Wizard will download some SDK Platform Package and Tools, otherwise use `Menu Tools > SDK Manager`.
+
 **Maybe I forgot to update the Jucer-file between commits: please add the files or libs manually and send me a message!**
 
 ---
 
 ---
 
-### Development
+### Development of Repository
 
-log of the journey / remember what I did
+log to remember what I did
 
 ```shell
 # ----------------------------------------------------------------------------
@@ -533,7 +537,7 @@ https://developer.android.com/
 
 https://developer.android.com/build/jdks
 
-SDK Manager
+Menu Tools > SDK Manager
 - SDK Platforms (Android 8 / API 26, Android 12 / API 31)
 - SDK Tools (NDK, CMake, Emulator)
 - AVD
@@ -551,25 +555,27 @@ https://www.youtube.com/watch?v=EMFG5wmng-M&list=PLWziqE5d25dXo1IE150YJiPT9EIW8y
 
 Debugging OpenGL Graphics Pipeline
 
+### Nvidia Nsight
+
+https://developer.nvidia.com/nsight-systems
+
+https://developer.nvidia.com/tools-overview
+
 ---
 
 ### VScode
 
 https://vscode.dev/
 
-cmd
+Explorer Adresszeile: cmd
+
+oder in WSL2:
 
 ```shell
 code .
 ```
 
 ---
-
-### Docker
-
-https://www.docker.com/
-
-https://docs.docker.com/desktop/windows/wsl/
 
 ### WSL2
 
@@ -597,5 +603,13 @@ https://www.anaconda.com/
 
 ---
 
-SSH, VNC, RDP, VPN ... Home Lab (On Premises)
+### Docker
+
+https://www.docker.com/
+
+https://docs.docker.com/desktop/windows/wsl/
+
+---
+
+SSH, VNC, RDP, VPN (WireGuard, Tailscale, Twingate) ... Home Lab (On-Premise)
 

@@ -18,19 +18,42 @@ https://learnopengl.com/Getting-started/Hello-Triangle
 
 https://github.com/JoeyDeVries/LearnOpenGL
 
+includes:
+- #include <glad/glad.h>
+- #include <GLFW/glfw3.h>
+- #include <stb_image.h>
+- #include <glm/glm.hpp>
+
+GLFW:
+- glfwInit()
+- glfwWindowHint()
+- glfwCreateWindow()
+- glfwMakeContextCurrent()
+- glfwSetFramebufferSizeCallback()
+- gladLoadGLLoader()
+- glfwSwapBuffers()
+- glfwPollEvents()
+- glfwTerminate()
+
 #### Hello Triangle (VAO, VBO)
 
-Vertex Buffer Object (VBO): 
+float vertices[]
+
+Vertex Buffer Object (VBO): actual vertex data
 - glGenBuffers(1, &VBO)
 - glBindBuffer(GL_ARRAY_BUFFER, VBO)
 - glBufferData()
+- glDeleteBuffers()
 
-Vertex Array Object (VAO): 
+Vertex Array Object (VAO): defines the layout of the vertex data
 - glGenVertexArrays(1, &VAO)
 - glBindVertexArray(VAO)
 - glDrawArrays()
+- glDeleteVertexArrays()
 
-glVertexAttribPointer()
+Attributes: position, texture coordinates, normal vector
+- glVertexAttribPointer(0, ...)
+- glEnableVertexAttribArray(0)
 
 https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/1.getting_started/2.1.hello_triangle/hello_triangle.cpp
 
@@ -222,7 +245,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 #### Hello Triangle indexed (EBO)
 
-Elemets Buffer Object (EBO):
+Elements Buffer Object (EBO):
 - glGenBuffers(1, &EBO) 
 - glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO)
 - glBufferData()
@@ -444,11 +467,66 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 ---
 
+#### Graphics Pipeline
+
+Coordinate Systems and Transformation Matrices:
+
+local space (object coordinates) → model matrix (transformation: translation, scaling, rotation) → world space → view matrix (camera) → view space → projection matrix (orthographic w=1, perspective: FOV, aspect ratio) → clip space (normalized device coordinates) → viewport transform → screen space (2D) → Rasterization → Pixels, Fragments → Color → Output Framebuffer
+
+Graphics Pipeline Stages:
+- Vertex Data[] **(VTX)**, Attributes <- VBO, VAO
+- **Vertex Shader (VS)**
+  - `uniform mat4 projection = glm::perspective(FOV, aspect_ratio, 0.1f, 100.0f);`
+  - clip space: `gl_Position = projection * view * model * aPosition;` // Vertex Coords multiplied by Matrices (from right to left); Math: num cols on left-hand side matrix == num rows on right-hand side matrix
+- Shape Assembly, Primitive Topology ← drawing command
+- **Tesselation Control Shader (TCS)**, **Tesselation Evaluation Shader (TES)**
+- **Geometry Shader (GS)**
+- Vertex Post-Processing: 
+  - clipping, 
+  - perspective division (x,y,z divided by w), 
+  - viewport transformation → 2D screen space, normalized device coordinates (NDC) are in the range "-1..1"
+- **Rasterization**
+- **Fragment Shader (FS)** (Pixel, Color) <- Textures, Samplers, Uniforms
+- Tests and Blending: 
+  - Depth Testing, Stencil Testing, Scissor Regions
+  - Depth Masking, Color Masking, 
+  - Blend Functions
+- Output to **Framebuffer**
+
+---
+
 #### Shader Class
 
-@see example above!
+shaders:
+- const char* vertexShaderSource = "#version 330 core\n ...";
+- unsigned int vertexShader
+- `glCreateShader(GL_VERTEX_SHADER)`
+- `glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);`
+- `glCompileShader(vertexShader);`
+- // check for shader compile errors
+- glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+- glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+- // do the same for fragment shader
 
-loading a shader from a file:
+shader program:
+- unsigned int shaderProgram
+- `glCreateProgram()`
+- `glAttachShader(shaderProgram, vertexShader);`
+- `glAttachShader(shaderProgram, fragmentShader);`
+- `glLinkProgram(shaderProgram);`
+- // check for linking errors
+- glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+- glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+- `glUseProgram(shaderProgram);`
+- // delete shaders
+- `glDeleteShader(vertexShader);`
+- `glDeleteShader(fragmentShader);`
+- // render loop
+- glUseProgram()
+- `glUniform1i()`  // ourShader.setInt("texture1", 0);
+
+
+Loading the shaders from files and creating a shader program (wrapped in a Shader class):
 
 ```c++
 // ...
@@ -477,6 +555,11 @@ int main() {
         // ...
 }
 ```
+
+Shader Class (wraps gl-functions):
+- `Shader ourShader("4.2.texture.vs", "4.2.texture.fs");`  // creates and compiles shaders, links shader program, checks for errors
+- `ourShader.use();`  // glUseProgram(shaderProgram);
+- `ourShader.setInt("texture1", 0);`  // glUniform1i()
 
 ```c++
 // shader_s.h
@@ -607,6 +690,32 @@ private:
 
 #### Textures
 
+textures:
+- unsigned int texture1
+- `glGenTextures(1, &texture1);`
+- `glBindTexture(GL_TEXTURE_2D, texture1);`
+- // set the texture wrapping and filtering options
+- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+- // load image, create texture and generate mipmaps
+- stbi_load(path)
+- `glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);`
+- `glGenerateMipmap(GL_TEXTURE_2D);`
+- stbi_image_free(data);
+- // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+- ourShader.use();  // == `glUseProgram()`
+- ourShader.setInt("texture1", 0);  // == `glUniform1i()`  // GLSL: `uniform sampler2D texture1;`
+- // render loop
+- glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+- `glActiveTexture(GL_TEXTURE0);`
+- `glBindTexture(GL_TEXTURE_2D, texture1);`
+- ourShader.use();  // == `glUseProgram()`
+- `ourShader.setMat4()`  // for projection, view, model
+- glBindVertexArray(VAO);
+- glDrawArrays(GL_TRIANGLES, 0, 36);
+
 ```c++
 // ...
 #define STB_IMAGE_IMPLEMENTATION
@@ -693,6 +802,8 @@ int main() {
 }
 ```
 
+Vertex Shader passing the texture coordinates to the fragment shader:
+
 ```c++
 // 4.1texture.vs
 #version 330 core
@@ -711,6 +822,8 @@ void main()
 	TexCoord = vec2(aTexCoord.x, aTexCoord.y);
 }
 ```
+
+Fragment Shader using the texture sampler:
 
 ```c++
 // 4.1texture.fs
@@ -731,6 +844,63 @@ void main()
 	FragColor = texture(texture1, TexCoord);
 }
 ```
+
+---
+
+#### Transformations
+
+```c++
+// LearnOpenGL\src\1.getting_started\6.2.coordinate_systems_depth\coordinate_systems_depth.cpp
+// render loop
+// ...
+
+// activate shader
+ourShader.use();
+
+// create transformations
+glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+glm::mat4 view          = glm::mat4(1.0f);
+glm::mat4 projection    = glm::mat4(1.0f);
+
+model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
+// retrieve the matrix uniform locations
+unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
+unsigned int viewLoc  = glGetUniformLocation(ourShader.ID, "view");
+// pass them to the shaders (3 different ways)
+glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+ourShader.setMat4("projection", projection);
+```
+
+```c++
+#version 330 core
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec2 aTexCoord;
+
+out vec2 TexCoord;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+void main()
+{
+	gl_Position = projection * view * model * vec4(aPos, 1.0f);
+	TexCoord = vec2(aTexCoord.x, aTexCoord.y);
+}
+```
+
+---
+
+
+
+
+
+---
 
 ---
 

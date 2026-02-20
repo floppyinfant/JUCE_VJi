@@ -1,26 +1,21 @@
 # LEARN
 
 - [LEARN C++](cpp/LEARN_CPP.md)
-- [LEARN Tools](cpp/LEARN_TOOLS.md) like Jetbrains IDE CLion, Visual Studio, CMake, git, WSL2, etc.
-- [LEARN Libraries](cpp/LEARN_LIBRARIES.md)
-- LEARN JUCE Framework (@see [LEARN_LIBRARIES.md/JUCE](cpp/LEARN_LIBRARIES.md)), Audio Programming, [DSP](dsp/LEARN_DSP.md), GUI
-- [LEARN OpenGl](shaders/LEARN_OPENGL.md) Starting with Computer Graphics, SDKs, Frameworks
-- [LEARN Shaders](shaders/LEARN_SHADERS.md) GPU Programming, Shader Languages, ShaderToy, ... GLSL, WebGPU
+- [LEARN Tools](cpp/LEARN_TOOLS.md) like Jetbrains IDE CLion, Visual Studio, CMake, git, ...
+- [LEARN Libraries](cpp/LEARN_LIBRARIES.md) like JUCE Framework, ImGui, ...
+- [LEARN DSP](dsp/LEARN_DSP.md) Audio Programming
+- [LEARN OpenGl](shaders/LEARN_OPENGL.md) Computer Graphics API
+- [LEARN Shaders](shaders/LEARN_SHADERS.md) = GPU Programming: OpenGL Shader Language (GLSL), ShaderToy, ...
+- [LEARN by Example](LEARN_EXAMPLES.md) like LearnOpenGL (GLFW), The Cherno (ImGui, GLFW, Raytracing), YouTube, Books and don't forget JUCE DemoRunner, Source Code Examples, Documentation and Forum
 
-More:
-- Languages: C++, CMake, [C Language](cpp/LEARN_C_LANG.md), Python, Linux Shell, JavaScript / Web Technologies
-- Domains: Audio, Graphics, DSP, VST / AU / CLAP
+more to come:
+- Languages: ..., [C Language](cpp/LEARN_C_LANG.md), Python, Linux Shell, JavaScript / Web Technologies
+- Domains: Audio (DSP, VST / AU / CLAP), GUI, Graphics
 - Bit-Math, LUT
 - Callbacks
-- [Design Patterns](cpp/LEARN_SOFTWARE_ENGINEERING.md)
-- Plugin-Design (@SHADERed, @TheCherno Engine, @JUCE Modules)
-
-and more:
-- AI Code Assistant, AI Coding Agent, local AI (on-Premise)
-- DevOps, MLOps, CI/CD, Teams, Issues, Pull Requests, Documentation, Wiki, Marketing, Gamification, Customer Support
-- Monetarization
-
-@see [LEARN by Example](LEARN_EXAMPLES.md)
+- [Design Patterns](cpp/LEARN_SOFTWARE_ENGINEERING.md), Idioms, Software Architecture, Framework Plugin Design (@SHADERed, @TheCherno Engine, @JUCE Modules)
+- AI Code Assistant / Coding Agent, local AI (On-Premise)
+- Software Engineering, DevOps, MLOps, CI/CD, Issues, Pull Requests, Documentation, Wiki, Marketing, Customer Support, Monetarization, Product Life Cycle, Scrum
 
 ---
 

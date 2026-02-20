@@ -16,6 +16,17 @@ int main() {
 }
 ```
 
+- include-headers have the `.h` extension
+- C has a print function
+- C uses structs instead of classes
+- C uses raw pointers and pointer arithmetic
+- arrays can be used as pointers
+- lots of macros
+- functions are first-class citizens
+- functions have side effects or use parameters for return values (output parameters)
+- C is a procedural language
+- C has no Reference Semantics
+
 ### Pointers and Memory
 
 ```c++

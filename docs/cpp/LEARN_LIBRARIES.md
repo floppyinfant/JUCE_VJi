@@ -1,87 +1,5 @@
 # LEARN C++ Libraries
 
-## LICENSES
-
-https://docs.github.com/de/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#disclaimer
-
-https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
-
-https://choosealicense.com/
-
-https://opensource.guide/legal/#which-open-source-license-is-appropriate-for-my-project
-
-Open Source Licenses for Commercial Products
-
-// by Claude 4.5 Sonnet, 2025-11-29
-
-### ✅ Permitted Licenses (commercial use unproblematic)
-
-#### Permissive Licenses (best suited)
-
-- **MIT License** - Very liberal, commercial use without restrictions
-- **Apache 2.0** - Similar to MIT, additionally offers patent protection
-- **BSD (2-Clause/3-Clause)** - Very permissive, minimal requirements
-- **Boost Software License** - Specifically for C++ libraries, very developer-friendly
-- **zlib/libpng License** - Very simple and permissive
-
-**Requirements:** Usually only include copyright notice and license text (not in the product itself, but e.g. in documentation or About dialog).
-
-
-### ⚠️ Licenses with Restrictions
-
-#### LGPL (Lesser GPL)
-- **Allowed:** Dynamic linking (as shared library/.dll/.so)
-- **Not allowed:** Static linking (compiled into your binary)
-- **Condition:** Users must be able to replace the library
-- **Example:** Qt is LGPL (or commercially licensed)
-
-#### MPL 2.0 (Mozilla Public License)
-- Modifications to MPL code must be published
-- Your own code remains proprietary
-- File-level copyleft (not the entire project)
-
-
-### 🚫 NOT Allowed Licenses for Commercial Closed-Source Products
-
-#### GPL (v2/v3) - GNU General Public License
-- **Copyleft license:** Forces you to publish the entire source code of your product
-- **"Viral":** Infects your entire project
-- **Not allowed for commercial closed-source software**
-
-#### AGPL (Affero GPL)
-- Like GPL, but even stricter
-- Also applies when used over network (SaaS)
-
-#### CC-BY-NC (Creative Commons Non-Commercial)
-- Explicitly no commercial use allowed
-
----
-
-Best Practices for Your Project
-
-1. **Conduct License Audit:**
-    - List all used libraries
-    - Check each license
-
-2. **Check Dependencies:**
-
-3. **Documentation:**
-    - Create a `LICENSES.txt` or `THIRD_PARTY_NOTICES.txt`
-    - List all used libraries with their licenses
-
-4. **When in Doubt:**
-    - For commercial products: prefer MIT, Apache 2.0, BSD
-    - Avoid GPL libraries or replace with alternatives
-    - For LGPL: use dynamic linking
-
-Practical Tips
-
-- **JUCE Framework:** You have the choice between GPL or commercial license
-- **Boost Libraries:** Boost License is very permissive and commercially usable
-- Many popular C++ libraries (like fmt, spdlog, GLM) are MIT-licensed
-
----
-
 ## Link Libraries
 
 ### Command Line
@@ -1590,7 +1508,7 @@ A JUCE module that gives you the ability to inspect and visually edit (non-destr
 
 https://melatonin.dev/blog/
 
-### Awesome Juce
+## Awesome Juce
 
 https://github.com/sudara/awesome-juce
 
@@ -1608,7 +1526,7 @@ https://github.com/ianacaburian/LiveShaderPalette
 
 https://github.com/JanosGit/OpenGLRealtimeVisualization4JUCE
 
-#### Surge Synthesizer
+### Surge Synthesizer
 
 https://github.com/surge-synthesizer
 
@@ -1618,7 +1536,7 @@ https://github.com/surge-synthesizer/sst-jucegui/tree/main
 
 https://github.com/surge-synthesizer/OB-Xf (see libs/)
 
-#### Mat Tytel
+### Mat Tytel
 
 https://github.com/mtytel
 
@@ -1628,7 +1546,7 @@ https://github.com/VitalAudio/visage (Visage)
 
 https://github.com/mtytel/helm (Helm)
 
-#### ffAudio
+### ffAudio
 
 https://github.com/ffAudio
 
@@ -1642,7 +1560,7 @@ PluginGuiMagic (obsolete)
 
 https://github.com/ffAudio/PluginGuiMagic
 
-#### ChowDSP
+### ChowDSP
 
 https://github.com/Chowdhury-DSP
 
@@ -1650,7 +1568,7 @@ https://github.com/Chowdhury-DSP/chowdsp_utils
 
 https://github.com/jatinchowdhury18
 
-#### WoldSound
+### WoldSound
 
 https://github.com/JanWilczek
 
@@ -1669,6 +1587,88 @@ https://www.willpirkle.com/
 https://www.willpirkle.com/fx-book/project-gallery/
 
 https://github.com/willpirkleaudio
+
+---
+
+## LICENSES
+
+https://docs.github.com/de/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#disclaimer
+
+https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
+
+https://choosealicense.com/
+
+https://opensource.guide/legal/#which-open-source-license-is-appropriate-for-my-project
+
+Open Source Licenses for Commercial Products
+
+// by Claude 4.5 Sonnet, 2025-11-29
+
+### ✅ Permitted Licenses (commercial use unproblematic)
+
+#### Permissive Licenses (best suited)
+
+- **MIT License** - Very liberal, commercial use without restrictions
+- **Apache 2.0** - Similar to MIT, additionally offers patent protection
+- **BSD (2-Clause/3-Clause)** - Very permissive, minimal requirements
+- **Boost Software License** - Specifically for C++ libraries, very developer-friendly
+- **zlib/libpng License** - Very simple and permissive
+
+**Requirements:** Usually only include copyright notice and license text (not in the product itself, but e.g. in documentation or About dialog).
+
+
+### ⚠️ Licenses with Restrictions
+
+#### LGPL (Lesser GPL)
+- **Allowed:** Dynamic linking (as shared library/.dll/.so)
+- **Not allowed:** Static linking (compiled into your binary)
+- **Condition:** Users must be able to replace the library
+- **Example:** Qt is LGPL (or commercially licensed)
+
+#### MPL 2.0 (Mozilla Public License)
+- Modifications to MPL code must be published
+- Your own code remains proprietary
+- File-level copyleft (not the entire project)
+
+
+### 🚫 NOT Allowed Licenses for Commercial Closed-Source Products
+
+#### GPL (v2/v3) - GNU General Public License
+- **Copyleft license:** Forces you to publish the entire source code of your product
+- **"Viral":** Infects your entire project
+- **Not allowed for commercial closed-source software**
+
+#### AGPL (Affero GPL)
+- Like GPL, but even stricter
+- Also applies when used over network (SaaS)
+
+#### CC-BY-NC (Creative Commons Non-Commercial)
+- Explicitly no commercial use allowed
+
+---
+
+Best Practices for Your Project
+
+1. **Conduct License Audit:**
+    - List all used libraries
+    - Check each license
+
+2. **Check Dependencies:**
+
+3. **Documentation:**
+    - Create a `LICENSES.txt` or `THIRD_PARTY_NOTICES.txt`
+    - List all used libraries with their licenses
+
+4. **When in Doubt:**
+    - For commercial products: prefer MIT, Apache 2.0, BSD
+    - Avoid GPL libraries or replace with alternatives
+    - For LGPL: use dynamic linking
+
+Practical Tips
+
+- **JUCE Framework:** You have the choice between GPL or commercial license
+- **Boost Libraries:** Boost License is very permissive and commercially usable
+- Many popular C++ libraries (like fmt, spdlog, GLM) are MIT-licensed
 
 ---
 
